@@ -23,11 +23,18 @@ USAGE: notifier --type <alert/banner> --message <some message> <options>
 
 OPTIONS:
   --message               message text - REQUIRED if not passing --remove all
-  --messageaction         The action to be performed when the message is clicked. Either pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in their default handler
+  --messageaction         The action to be performed when the message is clicked. Either pass 'logout' or path to 
+                          item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in 
+                          their default handler
   --messagebutton         alert type only. Sets the message buttons text
-  --messagebuttonaction   alert type only. The action to be performed when the message button is clicked. Either pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in their default handler. Requires '--messagebutton' to be passed
-  --remove                "prior" or "all". If passing "prior", the full message will be required too. Including all passed flags
-  --sound                 sound to play. Pass "default" for the default macOS sound, else the name of a sound in /Library/Sounds or /System/Library/Sounds. If the sound cannot be found, macOS will use the "default" sound
+  --messagebuttonaction   alert type only. The action to be performed when the message button is clicked. Either 
+                          pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app 
+                          items being opened in their default handler. Requires '--messagebutton' to be passed
+  --remove                "prior" or "all". If passing "prior", the full message will be required too. Including all 
+                          passed flags
+  --sound                 sound to play. Pass "default" for the default macOS sound, else the name of a sound in 
+                          /Library/Sounds or /System/Library/Sounds. If the sound cannot be found, macOS will use the 
+                          "default" sound
   --subtitle              message subtitle
   --title                 message title
   --type                  alert or banner - REQUIRED
@@ -126,7 +133,7 @@ Below is the process,
 <p align="center"><img src="/../assets/images/Icon2.png" height="400"></p>
 3. Repeat for which of the Alert or Banner applications are to have their icons changed, the main Notifier.app icon doesn't need to be changed as will not be shown to customers when notifications are posted. But could be changed as per the above too if wanted.
 4. Now build the project to test, if the build fails please review the above & attempt again.
-5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So tes in a VM or try to [reset Notification Centre](https://stackoverflow.com/questions/11856766/osx-notification-center-icon). 
+5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So tes in a VM or try to reset Notification Centre as per: https://stackoverflow.com/questions/11856766/osx-notification-center-icon
 
 
 # FAQS
