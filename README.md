@@ -126,7 +126,7 @@ Below is the process,
 <p align="center"><img src="/../assets/images/Icon2.png" height="400"></p>
 3. Repeat for which of the Alert or Banner applications are to have their icons changed, the main Notifier.app icon doesn't need to be changed as will not be shown to customers when notifications are posted. But could be changed as per the above too if wanted.
 4. Now build the project to test, if the build fails please review the above & attempt again.
-5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So tes in a VM or try to reset Notification Centre as per [this.](https://stackoverflow.com/questions/11856766/osx-notification-center-icon)
+5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So tes in a VM or try to reset Notification Centre as per: https://stackoverflow.com/questions/11856766/osx-notification-center-icon
 
 
 # FAQS
