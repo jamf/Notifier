@@ -139,8 +139,18 @@ Below is the process,
 <p align="center"><img src="/../assets/images/Icon2.png" height="400"></p>
 3. Repeat for which of the Alert or Banner applications are to have their icons changed, the main Notifier.app icon doesn't need to be changed as will not be shown to customers when notifications are posted. But could be changed as per the above too if wanted.
 4. Now build the project to test, if the build fails please review the above & attempt again.
-5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So tes in a VM or try to reset Notification Center as per: https://stackoverflow.com/questions/11856766/osx-notification-center-icon
+5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So test in a VM or try to reset Notification Center as per the [Resetting Notifications Center](#resetting-notifications-center) steps below.
 
+# Miscellaneous
+
+## Resetting Notifications Center
+The below _should_ rest Notifications Center, but please test & submit a PR with a better method as applicable.
+
+1. `rm -rf $(getconf DARWIN_USER_DIR)/com.apple.notificationcenter/*`
+2. Logout & then log back in, or:  
+* For macOS 10.10 - 10.15: `killall "NotificationCenter"`
+* For macOS 10.16+: `killall "NotificationCenter2"`
+3. Test the Notifier once more
 
 # FAQs
 
@@ -179,7 +189,7 @@ Below is the process,
 ##
 **Q8:** I've rebranded, but the old icon is being shown..
 
-**A8:** Try the link in step 5 of [Changing Icons](#changing-icons) to reset the notifications database, then try again.
+**A8:** Please reset Notification Center as per the [Resetting Notifications Center](#resetting-notifications-center), then try again.
 ##
 **Q9:** I'm struggling with rebranding &/or would like some changes for my organisation that are bespoke to us.
 
