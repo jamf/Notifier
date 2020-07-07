@@ -172,5 +172,13 @@ Below is the process,
 **Q6:** I'm seeing alerts when expecting banner notifications, & vice versa
 
 **A6:** Check step 12 of [Renaming](#renaming), it's likely the wrong app is in the wrong folder.
+##
+**Q7:** --remove prior, didn't clear my last message.
 
+**A7:** Make sure you pass EXACTLY the same message to be cleared.
+
+##
+**Q8:** I'm struggling with rebranding &/or would like some changes for my organisation that are bespoke to us.
+
+**A8:** We might be able to assist, please visit our [website](https://datajar.co.uk) & fill out the contact form or join us in the [#datajar](https://macadmins.slack.com/archives/C016TM14R7A) channel on the [macadmins.org slack](https://macadmins.org)
 
