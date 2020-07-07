@@ -9,7 +9,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 Notifier is a Swift app which can post macOS alert or banner notifications on 10.10+ clients.
 
-On macOS 10.10-10.14 the depreceated [NSUserNotifications](https://developer.apple.com/documentation/foundation/nsusernotification) API is used, for 10.15+ the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications) are used.
+On macOS 10.10-10.14 the depreceated [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification) is used, for 10.15+ the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications) are used.
 
 This project was originally intened for use with [jamJAR](https://github.com/dataJAR/jamJAR)
 
@@ -103,7 +103,7 @@ Other verbs apply to the main message area, the red box.
 ## PKG
 PKG's will be supplied for every release, & can be found in the [releases](https://github.com/dataJAR/Notifier/releases) section
 
-This will place the Notifier.app within /Applications/Utilities/.
+This will place the Notifier.app within /Applications/Utilities/, removing /Applications/Utilities/Notifier.app if found prior.
 
 ## macOS 10.15+
 If running Notifer on macOS 10.15+, you'll want to deploy the supplied profile (https://github.com/dataJAR/Notifier/blob/master/profile/Allow%20Notifier%20Notifications.mobileconfig) to UAMDM devices.
@@ -111,6 +111,11 @@ If running Notifer on macOS 10.15+, you'll want to deploy the supplied profile (
 This will allow Notifier to post Notifications without prompting the user to allow & needs to be deployed when a device is running 10.15+ & not before.
 
 # How it works
+When using the deprecated [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification, the notification type (alert or banner), is defined by the [NSUserNotificationAlertStyle](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html) key in the Applications info.plist.
+
+For the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications), the user can choose the notificaiton type or an admin can define this in a [profile](#macos-10.15+).
+
+
 
 # Rebranding
 If you find the Notifier logo to garish &/or want to rename the notifications as they show in Notification Center, then you can follow the below rebrand guidelines. 
@@ -245,4 +250,21 @@ The below _should_ rest Notifications Center, but please test & submit a PR with
 **Q9:** I'm struggling with rebranding &/or would like some changes for my organisation that are bespoke to us.
 
 **A9:** We should be able to help, please visit our [website](https://datajar.co.uk) & fill out the contact form or join us in the [#datajar](https://macadmins.slack.com/archives/C016TM14R7A) channel on the [macadmins.org slack](https://macadmins.org) & we can arrange a quote as needed.
+##
+**Q10:** The [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification) was deprecated in 10.14, why not use the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications) for 10.14+ instead of 10.15+?
+
+**A10:** Simply, macOS 10.14 didn't support managing the notification type via a [profile](#macos-10.15+), where 10.15+ does.
+##
+**Q11:** Some functionality is missing.. why is this?
+
+**A11:** Notifier supports 10.10+, multiple API's & notification types. One of the main drivers was for consistency across the vast OS versions & differing API's, so if one API doesn't support a function.. it'll not be added to keep a consistent KISS approach.
+
+# Alternatives
+The below projects can be used instead of Notifier & were very much intrumental in Notifiers creation:
+
+## Alert Notifications
+[Yo](https://github.com/sheagcraig/yo)
+
+## Banner Notifications
+[Terminal Notifier](https://github.com/julienXX/terminal-notifier)
 
