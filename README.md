@@ -142,7 +142,7 @@ Below is the process,
 5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So tes in a VM or try to reset Notification Centre as per: https://stackoverflow.com/questions/11856766/osx-notification-center-icon
 
 
-# FAQS
+# FAQs
 
 **Q1:** Why start at version 2?
 
