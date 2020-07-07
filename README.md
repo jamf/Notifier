@@ -61,12 +61,14 @@ Other verbs apply to the main message area, the red box.
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout" --messagebuttonaction "Logout"`
 ##
-**Example 3** This example shows both alert & banner notifications.
+**Example 3** This example shows both alert & banner notifications, (sleep used for the example gif, not needed in use but below for completeness sake).
 <p align="center"><img src="/../assets/images/Example6.gif"></p>
 
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "Please Logout" --messagebutton "Logout"  --title "Logout"`
-`sleep 2` (used for the example, not needed in use)
+
+`sleep 2`
+
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message" --title "Notification ;)"`
 ##
 **Example 4** This example shows removal of a prior notification, (sleep used for the example gif, not needed in use but below for completeness sake).
@@ -74,17 +76,27 @@ Other verbs apply to the main message area, the red box.
 <p align="center"><img src="/../assets/images/Example5.gif"></p>
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!'`
+
 `sleep 5` 
-`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout"` `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!' --remove prior`
+
+`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout"`
+
+`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!' --remove prior`
 ##
 **Example 5** This example shows removal of all alert notifications, for banner alerts this will remove from Notification Center. Sleep used for the example gif, not needed in use but below for completeness sake.
 <p align="center"><img src="/../assets/images/Example7.gif"></p>
 
-`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout"` 
+`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout"`
+
 `sleep 2`
+
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message2" --messagebutton "Logout"`
+
 `sleep 2`
-`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message3" --messagebutton "Logout"` `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --remove all`
+
+`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message3" --messagebutton "Logout"` 
+
+`/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --remove all`
 
 # Deployment
 
