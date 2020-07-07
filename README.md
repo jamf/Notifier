@@ -57,7 +57,7 @@ This will place the Notifier.app within /Applications/Utilities/.
 ## macOS 10.15+
 If running Notifer on macOS 10.15+, you'll want to deploy the supplied profile (https://github.com/dataJAR/Notifier/blob/master/profile/Allow%20Notifier%20Notifications.mobileconfig) to UAMDM devices.
 
-This will allow Notifier to post Notifications without prompting the user to allow.
+This will allow Notifier to post Notifications without prompting the user to allow & needs to be deployed when a device is running 10.15+ & not before.
 
 # How it works
 
@@ -143,16 +143,34 @@ Below is the process,
 
 
 # FAQS
-##
+
 **Q1:** Why start at version 2?
 
 **A1:** At dataJAR, we already had a v1 "Notifier" app deployed.
 ##
 **Q2:** How can you post both banner & alert notifications?
 
-**A2:** See [How it works](#-how-it-works)
+**A2:** See [How it works](#how-it-works)
 ##
-**Q3:** How can you post both banner & alert notifications?
+**Q3:** The users are being prompted to allow.. help!
 
-**A3:** Banner or Notifications?
+**A3:** This can be due to a few things:
+
+1. Was the notifications profile installed? If not, install.
+1. Was the notifications profile installed when running macOS 10.10-10.14? If it was, re-install when running 10.15+.
+1. Is the device under UAMDM? If not, check with your MDM vendor on making the device UAMDM. Then try again & maybe reinstall the profile once under UAMDM.
+1. Did you change the bundleid of either the Alert or Banner applications? If so you'll need to amend the notifications profile accordingly.
+##
+**Q4:** Is that logo magen...
+
+**A4:** No, it's a shade of pink...
+##
+**Q5:** Banner or Notifications?
+
+**A5:** The temporary notifications are referred to as "banner" notifications in Apple's documentation, but it seems that most folks call them "Notifications" with the persistent notifications being referred to as alerts byt folks as well as within Apple's documentation.
+##
+**Q6:** I'm seeing alerts when expecting banner notifications, & vice versa
+
+**A6:** Check step 12 of [Renaming](#renaming), it's likely the wrong app is in the wrong folder.
+
 
