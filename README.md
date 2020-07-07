@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 # Notifier
-NOTIFIER.PNG
+<p align="center"><img src="/../assets/images/Notifier.png" width="256" height="256"></p>
 
 Notifier is a Swift app which can post macOS alert or banner notifications on 10.10+ clients.
 
@@ -67,23 +67,35 @@ See [this guide](https://help.apple.com/xcode/mac/current/#/dev23aab79b4), for w
 
 Those steps will need to be repeated for each of the 3 apps, & they are highlighted in the Xcode screenshot below:
 
-APPS-HIGHLIGHTED
+<p align="center"><img src="/../assets/images/Apps-Highlighted.png" height="400"></p>
 
 ### Renaming
 The name which is shown within Notification Centre is the name of the applications themselves capitalised, so to change them follow the below. This will need tp be repeated for both the Alert & Banner applications.
 
-1. Select the app that you're looking to rename in Xcodes project navigator. RENAME1
-2. Slowly double click, or press enter to make the field editable & change the name as needed, presssing enter when done. RENAME2
-3. Approve the changes in the drop down. RENAME3
-4. Click the disclosure triangle need to the app target you renamed above, change the folder name to the same as the application name. RENAME4
-5. Repeat steps 2-4 for the other application as wanted, note: you cannot name both applications the same. RENAME5
-6. With the applications renamed, from Xcodes menubar click "Projects" > "Schemes" > "Manage Schemes" RENAME6
-7. For each renamed app, select the scheme & rename. RENAME7
-8. Repeat 7 until all the renamed apps have had their schemes renamed. RENAME8
-9. With the apps renamed, we need to add them back to the main Notifier.app. Click the Notifier target in Xcodes project navigator, then in Xcodes project editor click "Build Phases" & expand "Dependencies". If you renamed both the Alert & Banner applications then this will be empty, if you've renamed just one then that will be missing only. RENAME9
-10. Click the + button, select the missing renamed Alert & Banner applications as required & click "Add". RENAME1O
-11. Still within the "Build Phases" tab of the main Notifier.app scroll down to the "Copy Files" steps, this will be empty where the Alert or Banner application was renamed earlier. RENAME11
-12. Click the + button to add the wanted application, it's important that you pay attention to the "subpath" value. As one is called "alerts" & is for the Alert application, the other "banner" & is for the Banner application. RENAME12
+1. Select the app that you're looking to rename in Xcodes project navigator. 
+<p align="center"><img src="/../assets/images/Rename1.png" height="400"></p>
+2. Slowly double click, or press enter to make the field editable & change the name as needed, presssing enter when done.
+<p align="center"><img src="/../assets/images/Rename2.png" height="400"></p>
+3. Approve the changes in the drop down.
+<p align="center"><img src="/../assets/images/Rename3.png" height="400"></p>
+4. Click the disclosure triangle need to the app target you renamed above, change the folder name to the same as the application name.
+<p align="center"><img src="/../assets/images/Rename4.png" height="400"></p>
+5. Repeat steps 2-4 for the other application as wanted, note: you cannot name both applications the same.
+<p align="center"><img src="/../assets/images/Rename5.png" height="400"></p>
+6. With the applications renamed, from Xcodes menubar click "Projects" > "Schemes" > "Manage Schemes".
+<p align="center"><img src="/../assets/images/Rename6.png" height="400"></p>
+7. For each renamed app, select the scheme & rename.
+<p align="center"><img src="/../assets/images/Rename7.png" height="400"></p>
+8. Repeat 7 until all the renamed apps have had their schemes renamed.
+<p align="center"><img src="/../assets/images/Rename8.png" height="400"></p>
+9. With the apps renamed, we need to add them back to the main Notifier.app. Click the Notifier target in Xcodes project navigator, then in Xcodes project editor click "Build Phases" & expand "Dependencies". If you renamed both the Alert & Banner applications then this will be empty, if you've renamed just one then that will be missing only.
+<p align="center"><img src="/../assets/images/Rename9.png" height="400"></p>
+10. Click the + button, select the missing renamed Alert & Banner applications as required & click "Add".
+<p align="center"><img src="/../assets/images/Rename10.png" height="400"></p>
+11. Still within the "Build Phases" tab of the main Notifier.app scroll down to the "Copy Files" steps, this will be empty where the Alert or Banner application was renamed earlier.
+<p align="center"><img src="/../assets/images/Rename11.png" height="400"></p>
+12. Click the + button to add the wanted application, it's important that you pay attention to the "subpath" value. As one is called "alerts" & is for the Alert application, the other "banner" & is for the Banner application.
+<p align="center"><img src="/../assets/images/Rename12.png" height="400"></p>
 13. Now build the project to test, if the build fails please review the above & attempt again.
 
 ### Changing Icons
@@ -108,8 +120,10 @@ But if you'd like to supply all the sizes offered, then you'll want PNG's in the
 • 16 x 16
 
 Below is the process, 
-1. Select the application that you're looking to change the icon in Xcodes project navigator, click the disclosure triangle for the application, click the sub folder, click "Assets.xcassets" & lastly click "AppIcon". ICON1
-2. Either replace each icon with icons of the correct size (a :warning: will be shown if the wrong size PNG is supplied), or delete all & just supply the last "AppStore -2x" ICON2
+1. Select the application that you're looking to change the icon in Xcodes project navigator, click the disclosure triangle for the application, click the sub folder, click "Assets.xcassets" & lastly click "AppIcon".
+<p align="center"><img src="/../assets/images/Icon1.png" height="400"></p>
+2. Either replace each icon with icons of the correct size (a :warning: will be shown if the wrong size PNG is supplied), or delete all & just supply the last "AppStore -2x".
+<p align="center"><img src="/../assets/images/Icon2.png" height="400"></p>
 3. Repeat for which of the Alert or Banner applications are to have their icons changed, the main Notifier.app icon doesn't need to be changed as will not be shown to customers when notifications are posted. But could be changed as per the above too if wanted.
 4. Now build the project to test, if the build fails please review the above & attempt again.
 5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So tes in a VM or try to [reset Notification Centre](https://stackoverflow.com/questions/11856766/osx-notification-center-icon). 
