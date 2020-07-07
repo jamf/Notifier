@@ -23,11 +23,18 @@ USAGE: notifier --type <alert/banner> --message <some message> <options>
 
 OPTIONS:
   --message               message text - REQUIRED if not passing --remove all
-  --messageaction         The action to be performed when the message is clicked. Either pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in their default handler
+  --messageaction         The action to be performed when the message is clicked. Either pass 'logout' or path to item 
+                          to open on click. Can be a .app, file, URL etc. With non-.app items being opened in their 
+                          default handler
   --messagebutton         alert type only. Sets the message buttons text
-  --messagebuttonaction   alert type only. The action to be performed when the message button is clicked. Either pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in their default handler. Requires '--messagebutton' to be passed
-  --remove                "prior" or "all". If passing "prior", the full message will be required too. Including all passed flags
-  --sound                 sound to play. Pass "default" for the default macOS sound, else the name of a sound in /Library/Sounds or /System/Library/Sounds. If the sound cannot be found, macOS will use the "default" sound
+  --messagebuttonaction   alert type only. The action to be performed when the message button is clicked. Either pass 
+                          'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app items 
+                          being opened in their default handler. Requires '--messagebutton' to be passed
+  --remove                "prior" or "all". If passing "prior", the full message will be required too. Including all 
+                          passed flags
+  --sound                 sound to play. Pass "default" for the default macOS sound, else the name of a sound in 
+                          /Library/Sounds or /System/Library/Sounds. If the sound cannot be found, macOS will use the 
+                          "default" sound
   --subtitle              message subtitle
   --title                 message title
   --type                  alert or banner - REQUIRED
