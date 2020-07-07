@@ -9,9 +9,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 Notifier is a Swift app which can post macOS alert or banner notifications on 10.10+ clients.
 
-On macOS 10.10-10.14 the depreceated [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification) is used, for 10.15+ the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications) are used.
+On macOS 10.10-10.14 the deprecated [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification) is used, for 10.15+ the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications) are used.
 
-This project was originally intened for use with [jamJAR](https://github.com/dataJAR/jamJAR)
+This project was originally intended for use with [jamJAR](https://github.com/dataJAR/jamJAR)
 
 # Usage
 ## Basic Usage
@@ -106,19 +106,37 @@ PKG's will be supplied for every release, & can be found in the [releases](https
 This will place the Notifier.app within /Applications/Utilities/, removing /Applications/Utilities/Notifier.app if found prior.
 
 ## macOS 10.15+
-If running Notifer on macOS 10.15+, you'll want to deploy the supplied profile (https://github.com/dataJAR/Notifier/blob/master/profile/Allow%20Notifier%20Notifications.mobileconfig) to UAMDM devices.
+If running Notifier on macOS 10.15+, you'll want to deploy the supplied profile (https://github.com/dataJAR/Notifier/blob/master/profile/Allow%20Notifier%20Notifications.mobileconfig) to UAMDM devices.
 
 This will allow Notifier to post Notifications without prompting the user to allow & needs to be deployed when a device is running 10.15+ & not before.
 
 # How it works
-When using the deprecated [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification, the notification type (alert or banner), is defined by the [NSUserNotificationAlertStyle](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html) key in the Applications info.plist.
+When using the deprecated [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification), the notification type (alert or banner), is defined by the [NSUserNotificationAlertStyle](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html) key in the Applications info.plist.
 
-For the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications), the user can choose the notificaiton type or an admin can define this in a [profile](#macos-10.15+).
+For the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications), the user can choose the notification type or an admin can define this in a [profile](#macos-10.15+).
 
+Notifier follows the above rules, by actually being not one but three applications.
 
+An enclosing Notifier.app & two sub apps, with one used to post Alert notifications & another Banner notifications. As per the below:
+
+```
+Notifier.app/Contents/Resources/
+                               alert/Notifier - Alerts.app
+                               banner/Notifier - Notifications.app
+```
+
+These sub applications contain code for both the [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification) & [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications), as well as the relevant [NSUserNotificationAlertStyle](https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html) key in the Applications info.plist for the [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification).
+
+The apps themselves seamlessly transition between the [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification) when running on macOS 10.10-10.14, & the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications) when running on 10.15+ via the [@available declaration attribute](https://docs.swift.org/swift-book/ReferenceManual/Attributes.html).
+
+So why the Notifier.app?
+
+This is to give a single app to call, the Notifier.app will also check the parsed args & then pass to the required sub application.
+
+Notifier.app also checks tha Notification Center is running, & runs the sub apps in the user context. As well as having an enclosing Notifier.app allows for some of the rebrand options below without adjusting any code.
 
 # Rebranding
-If you find the Notifier logo to garish &/or want to rename the notifications as they show in Notification Center, then you can follow the below rebrand guidelines. 
+If you find the Notifier logo too garish &/or want to rename the notifications as they show in Notification Center, then you can follow the below rebrand guidelines. 
 
 `NOTE: It's likely that these will change regularly, PR's accepted to correct &/or clarify any of the below or any or this README.`
 
@@ -128,13 +146,13 @@ If you find the Notifier logo to garish &/or want to rename the notifications as
 3. A copy of this project downloaded, & the Notifier.xcodeproj file loaded into Xcode
 
 ### Re-signing
-Notifier is made up of 3 applications, the enclosing Notifier.app & the sub apps with one used to post Alert notifications & another Banner notifications.
+Notifier is made up of three applications, the enclosing Notifier.app & the sub apps with one used to post Alert notifications & another Banner notifications.
 
-As such, all three will need to be re-signed with your developer cerificate & it worth making sure this is all compileable before proceeding.
+As such, all three will need to be re-signed with your developer certificate & it worth making sure this is all compile-able before proceeding.
 
 See [this guide](https://help.apple.com/xcode/mac/current/#/dev23aab79b4), for where to change the signing identity per app.
 
-Those steps will need to be repeated for each of the 3 apps, & they are highlighted in the Xcode screenshot below:
+Those steps will need to be repeated for each of the three apps, & they are highlighted in the Xcode screenshot below:
 
 <p align="center"><img src="/../assets/images/Apps-Highlighted.png" height="400"></p>
 
@@ -225,7 +243,7 @@ The below _should_ rest Notifications Center, but please test & submit a PR with
 1. Was the notifications profile installed? If not, install.
 1. Was the notifications profile installed when running macOS 10.10-10.14? If it was, re-install when running 10.15+.
 1. Is the device under UAMDM? If not, check with your MDM vendor on making the device UAMDM. Then try again & maybe reinstall the profile once under UAMDM.
-1. Did you change the bundleid of either the Alert or Banner applications? If so you'll need to amend the notifications profile accordingly.
+1. Did you change the Bundle ID of either the Alert or Banner applications? If so you'll need to amend the notifications profile accordingly.
 ##
 **Q4:** Is that logo magen...
 
