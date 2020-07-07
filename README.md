@@ -55,6 +55,7 @@ Other verbs apply to the main message area, the red box.
 This example shows a basic banner notification.
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"`
+##
 
 <p align="center"><img src="/../assets/images/Example3.gif"></p>
 This example shows a basic alert notification.
