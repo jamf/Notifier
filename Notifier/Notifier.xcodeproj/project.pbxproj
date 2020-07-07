@@ -12,8 +12,6 @@
 		7C6D15812270BA300092D34E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6D157F2270BA300092D34E /* MainMenu.xib */; };
 		7C720952227888E10033B2E2 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C720951227888E10033B2E2 /* Functions.swift */; };
 		7C8F69EE2278A6EF002D317B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CBF17F62278A2DF0043E853 /* Assets.xcassets */; };
-		B506001E24B3833300427FA1 /* Notifier - Alerts.app in Resources */ = {isa = PBXBuildFile; fileRef = B506001C24B3833300427FA1 /* Notifier - Alerts.app */; };
-		B506001F24B3833300427FA1 /* Notifier - Notifications.app in Resources */ = {isa = PBXBuildFile; fileRef = B506001D24B3833300427FA1 /* Notifier - Notifications.app */; };
 		B5B4977224B3837000CF9409 /* Notifier - Alerts.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5B4976E24B3835E00CF9409 /* Notifier - Alerts.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B5B4977324B3837700CF9409 /* Notifier - Notifications.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5B4977124B3835E00CF9409 /* Notifier - Notifications.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -33,14 +31,14 @@
 			remoteGlobalIDString = 7C8AB5DC22724FD6008E3160;
 			remoteInfo = "Notifier - Notifications";
 		};
-		B5C1241224B3880D0001BF93 /* PBXContainerItemProxy */ = {
+		B5FC207324B4ABF900CD078A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7C9C700A23C14A9600A1A363 /* Notifier - Notifications.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 7C8AB5DB22724FD6008E3160;
 			remoteInfo = "Notifier - Notifications";
 		};
-		B5C1241424B3880D0001BF93 /* PBXContainerItemProxy */ = {
+		B5FC207524B4ABF900CD078A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7CD4280223BFA4D500F9D5B9 /* Notifier - Alerts.xcodeproj */;
 			proxyType = 1;
@@ -181,8 +179,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				B5C1241324B3880D0001BF93 /* PBXTargetDependency */,
-				B5C1241524B3880D0001BF93 /* PBXTargetDependency */,
+				B5FC207424B4ABF900CD078A /* PBXTargetDependency */,
+				B5FC207624B4ABF900CD078A /* PBXTargetDependency */,
 			);
 			name = Notifier;
 			packageProductDependencies = (
@@ -269,9 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B506001E24B3833300427FA1 /* Notifier - Alerts.app in Resources */,
 				7C8F69EE2278A6EF002D317B /* Assets.xcassets in Resources */,
-				B506001F24B3833300427FA1 /* Notifier - Notifications.app in Resources */,
 				7C6D15812270BA300092D34E /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,15 +307,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B5C1241324B3880D0001BF93 /* PBXTargetDependency */ = {
+		B5FC207424B4ABF900CD078A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Notifier - Notifications";
-			targetProxy = B5C1241224B3880D0001BF93 /* PBXContainerItemProxy */;
+			targetProxy = B5FC207324B4ABF900CD078A /* PBXContainerItemProxy */;
 		};
-		B5C1241524B3880D0001BF93 /* PBXTargetDependency */ = {
+		B5FC207624B4ABF900CD078A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Notifier - Alerts";
-			targetProxy = B5C1241424B3880D0001BF93 /* PBXContainerItemProxy */;
+			targetProxy = B5FC207524B4ABF900CD078A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

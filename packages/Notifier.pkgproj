@@ -471,6 +471,23 @@
 			<key>VERSION</key>
 			<integer>5</integer>
 		</dict>
+		<key>PACKAGE_SCRIPTS</key>
+		<dict>
+			<key>POSTINSTALL_PATH</key>
+			<dict>
+				<key>PATH_TYPE</key>
+				<integer>0</integer>
+			</dict>
+			<key>PREINSTALL_PATH</key>
+			<dict>
+				<key>PATH</key>
+				<string>preinstall/preinstall-notifier.sh</string>
+				<key>PATH_TYPE</key>
+				<integer>1</integer>
+			</dict>
+			<key>RESOURCES</key>
+			<array/>
+		</dict>
 		<key>PACKAGE_SETTINGS</key>
 		<dict>
 			<key>AUTHENTICATION</key>
@@ -682,7 +699,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Notifier</string>
+			<string>dataJAR-Notifier-2.2</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
 		</dict>
