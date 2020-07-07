@@ -50,8 +50,14 @@ SEE ALSO: https://github.com/dataJAR/Notifier
 # Deployment
 
 ## PKG
+PKG's will be supplied for every release, & can be found in the [releases](https://github.com/dataJAR/Notifier/releases) section
+
+This will place the Notifier.app within /Applications/Utilities/.
 
 ## macOS 10.15+
+If running Notifer on macOS 10.15+, you'll want to deploy the supplied profile (https://github.com/dataJAR/Notifier/blob/master/profile/Allow%20Notifier%20Notifications.mobileconfig) to UAMDM devices.
+
+This will allow Notifier to post Notifications without prompting the user to allow.
 
 # How it works
 
@@ -144,7 +150,7 @@ Below is the process,
 ##
 **Q2:** How can you post both banner & alert notifications?
 
-**A2:** The 
+**A2:** See [How it works](#-how-it-works)
 ##
 **Q3:** How can you post both banner & alert notifications?
 
