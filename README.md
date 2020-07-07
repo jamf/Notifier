@@ -260,7 +260,7 @@ The below _should_ rest Notifications Center, but please test & submit a PR with
 **A11:** Notifier supports 10.10+, multiple API's & notification types. One of the main drivers was for consistency across the vast OS versions & differing API's, so if one API doesn't support a function.. it'll not be added to keep a consistent KISS approach.
 
 # Alternatives
-The below projects can be used instead of Notifier & were very much intrumental in Notifiers creation:
+The below projects can be used instead of Notifier & were very much instrumental in Notifiers creation
 
 ## Alert Notifications
 [Yo](https://github.com/sheagcraig/yo)
