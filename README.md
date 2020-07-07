@@ -50,28 +50,38 @@ Other verbs apply to the main message area, the red box.
 <p align="center"><img src="/../assets/images/Areas.png" height="200"></p>
 
 ## Example Usage
+
 <p align="center"><img src="/../assets/images/Example2.gif"></p>
 This example shows a basic banner notification.
+
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"`
 
 <p align="center"><img src="/../assets/images/Example3.gif"></p>
 This example shows a basic alert notification.
+
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout" --messagebuttonaction "Logout"`
+##
 
 <p align="center"><img src="/../assets/images/Example6.gif"></p>
 This example shows both alert & banner notifications.
+
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "Please Logout" --messagebutton "Logout"  --title "Logout"`
 `sleep 2` (used for the example, not needed in use)
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message" --title "Notification ;)"`
+##
 
 <p align="center"><img src="/../assets/images/Example5.gif"></p>
-This example shows removal of a prior notification.
+This example shows removal of a prior notification, (sleep used for the example gif, not needed in use but below for completeness sake).
+
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!'`
-`sleep 5` (used for the example, not needed in use)
+`sleep 5` 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout"` `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!' --remove prior`
+##
 
 <p align="center"><img src="/../assets/images/Example7.gif"></p>
-This example shows removal of all alert notifications (for banner alerts this will remove from Notification Center)
+
+This example shows removal of all alert notifications, for banner alerts this will remove from Notification Center. Sleep used for the example gif, not needed in use but below for completeness sake.
+
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout"` 
 `sleep 2`
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message2" --messagebutton "Logout"`
