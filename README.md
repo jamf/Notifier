@@ -47,7 +47,7 @@ SEE ALSO: https://github.com/dataJAR/Notifier
 When looking at the above, --messagebutton & --messagebuttonaction refer to the button for Alert notifications as shown in the green box.
 
 Other verbs apply to the main message area, the red box.
-<p align="center"><img src="/../assets/images/Areas.png" height="400"></p>
+<p align="center"><img src="/../assets/images/Areas.png" height="200"></p>
 
 ## Example Usage
 
