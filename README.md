@@ -148,7 +148,7 @@ If you find the Notifier logo too garish &/or want to rename the notifications a
 ### Re-signing
 Notifier is made up of three applications, the enclosing Notifier.app & the sub apps with one used to post Alert notifications & another Banner notifications.
 
-As such, all three will need to be re-signed with your developer certificate & it worth making sure this is all compile-able before proceeding.
+As such, all three will need to be re-signed with your developer certificate & it is worth making sure this is all compile-able before proceeding.
 
 See [this guide](https://help.apple.com/xcode/mac/current/#/dev23aab79b4), for where to change the signing identity per app.
 
@@ -157,25 +157,25 @@ Those steps will need to be repeated for each of the three apps, & they are high
 <p align="center"><img src="/../assets/images/Apps-Highlighted.png" height="400"></p>
 
 ### Renaming
-The name which is shown within Notification Center is the name of the applications themselves capitalised, so to change them follow the below. This will need tp be repeated for both the Alert & Banner applications.
+The name which is shown within Notification Center is the name of the applications themselves capitalised, so to change them follow the below. This will need to be repeated for both the Alert & Banner applications.
 
-1. Select the app that you're looking to rename in Xcodes project navigator. 
+1. Select the app that you're looking to rename in Xcode's project navigator. 
 <p align="center"><img src="/../assets/images/Rename1.png" height="400"></p>
 2. Slowly double click, or press enter to make the field editable & change the name as needed, presssing enter when done.
 <p align="center"><img src="/../assets/images/Rename2.png" height="400"></p>
 3. Approve the changes in the drop down.
 <p align="center"><img src="/../assets/images/Rename3.png" height="400"></p>
-4. Click the disclosure triangle need to the app target you renamed above, change the folder name to the same as the application name.
+4. Click the disclosure triangle next to the app target you renamed above, change the folder name to the same as the application name.
 <p align="center"><img src="/../assets/images/Rename4.png" height="400"></p>
 5. Repeat steps 2-4 for the other application as wanted, note: you cannot name both applications the same.
 <p align="center"><img src="/../assets/images/Rename5.png" height="400"></p>
-6. With the applications renamed, from Xcodes menubar click "Projects" > "Schemes" > "Manage Schemes".
+6. With the applications renamed, from Xcode's menubar click "Projects" > "Schemes" > "Manage Schemes".
 <p align="center"><img src="/../assets/images/Rename6.png" height="400"></p>
 7. For each renamed app, select the scheme & rename.
 <p align="center"><img src="/../assets/images/Rename7.png" height="400"></p>
 8. Repeat 7 until all the renamed apps have had their schemes renamed.
 <p align="center"><img src="/../assets/images/Rename8.png" height="400"></p>
-9. With the apps renamed, we need to add them back to the main Notifier.app. Click the Notifier target in Xcodes project navigator, then in Xcodes project editor click "Build Phases" & expand "Dependencies". If you renamed both the Alert & Banner applications then this will be empty, if you've renamed just one then that will be missing only.
+9. With the apps renamed, we need to add them back to the main Notifier.app. Click the Notifier target in Xcode's project navigator, then in Xcode's project editor click "Build Phases" & expand "Dependencies". If you renamed both the Alert & Banner applications then this will be empty, if you've renamed just one then that will be missing only.
 <p align="center"><img src="/../assets/images/Rename9.png" height="400"></p>
 10. Click the + button, select the missing renamed Alert & Banner applications as required & click "Add".
 <p align="center"><img src="/../assets/images/Rename10.png" height="400"></p>
@@ -207,13 +207,13 @@ But if you'd like to supply all the sizes offered, then you'll want PNG's in the
 • 16 x 16
 
 Below is the process, 
-1. Select the application that you're looking to change the icon in Xcodes project navigator, click the disclosure triangle for the application, click the sub folder, click "Assets.xcassets" & lastly click "AppIcon".
+1. Select the application that you're looking to change the icon in Xcode's project navigator, click the disclosure triangle for the application, click the sub folder, click "Assets.xcassets" & lastly click "AppIcon".
 <p align="center"><img src="/../assets/images/Icon1.png" height="400"></p>
 2. Either replace each icon with icons of the correct size (a :warning: will be shown if the wrong size PNG is supplied), or delete all & just supply the last "AppStore -2x".
 <p align="center"><img src="/../assets/images/Icon2.png" height="400"></p>
-3. Repeat for which of the Alert or Banner applications are to have their icons changed, the main Notifier.app icon doesn't need to be changed as will not be shown to customers when notifications are posted. But could be changed as per the above too if wanted.
-4. Now build the project to test, if the build fails please review the above & attempt again.
-5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So test in a VM or try to reset Notification Center as per the [Resetting Notifications Center](#resetting-notifications-center) steps below.
+3. Repeat for which of the Alert or Banner applications are to have their icons changed, the main Notifier.app icon doesn't need to be changed as will not be shown to customers when notifications are posted. But could be changed as per the above too if wanted.<br />
+4. Now build the project to test, if the build fails please review the above & attempt again.<br />
+5. If you now test your new icons on a macOS device on which Notifier has run before, you'll likely see the previous icon. So test in a VM or try to reset Notification Center as per the Resetting Notifications Center steps below.
 
 # Miscellaneous
 
@@ -251,7 +251,7 @@ The below _should_ rest Notifications Center, but please test & submit a PR with
 ##
 **Q5:** Banner or Notifications?
 
-**A5:** The temporary notifications are referred to as "banner" notifications in Apple's documentation, but it seems that most folks call them "Notifications" with the persistent notifications being referred to as alerts byt folks as well as within Apple's documentation.
+**A5:** The temporary notifications are referred to as "banner" notifications in Apple's documentation, but it seems that most folks call them "Notifications" with the persistent notifications being referred to as alerts by folks as well as within Apple's documentation.
 ##
 **Q6:** I'm seeing alerts when expecting banner notifications, & vice versa
 
