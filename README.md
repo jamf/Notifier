@@ -169,7 +169,7 @@ The name which is shown within Notification Center is the name of the applicatio
 <p align="center"><img src="/../assets/images/Rename4.png" height="400"></p>
 5. Repeat steps 2-4 for the other application as wanted, note: you cannot name both applications the same.
 <p align="center"><img src="/../assets/images/Rename5.png" height="400"></p>
-6. With the applications renamed, from Xcode's menubar click "Projects" > "Schemes" > "Manage Schemes".
+6. With the applications renamed, from Xcode's menubar click "Product" > "Schemes" > "Manage Schemes".
 <p align="center"><img src="/../assets/images/Rename6.png" height="400"></p>
 7. For each renamed app, select the scheme & rename.
 <p align="center"><img src="/../assets/images/Rename7.png" height="400"></p>
