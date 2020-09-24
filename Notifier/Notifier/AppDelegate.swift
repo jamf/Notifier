@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         var verboseMode = false
 
         // Exit if notificaiton center isn't running for the user
-        if #available(macOS 10.16, *) {
+        if #available(macOS 11.0, *) {
             guard !NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.notificationcenterui2").isEmpty else {
                 print("ERROR: Notification Center is not running...")
                 exit(1)
