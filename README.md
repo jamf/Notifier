@@ -152,6 +152,8 @@ As such, all three will need to be re-signed with your developer certificate & i
 
 See [this guide](https://help.apple.com/xcode/mac/current/#/dev23aab79b4), for where to change the signing identity per app.
 
+*(Note: You may also need to change the signing in "Build Settings" as well as "Signing and Capabilities" for each app.)*
+
 Those steps will need to be repeated for each of the three apps, & they are highlighted in the Xcode screenshot below:
 
 <p align="center"><img src="/../assets/images/Apps-Highlighted.png" height="400"></p>
