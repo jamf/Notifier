@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63B92DE7282AAECD00B44340 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 63B92DE6282AAECD00B44340 /* ArgumentParser */; };
-		63B92DED282AAF2500B44340 /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B92DEC282AAF2500B44340 /* ArgParser.swift */; };
+		7C3ECE5523E07499008E3D9D /* SPMUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3ECE5423E07499008E3D9D /* SPMUtility */; };
 		7C516FF923BFA5BD00608BEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C516FF123BFA5BC00608BEB /* Assets.xcassets */; };
 		7C516FFA23BFA5BD00608BEB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C516FF223BFA5BC00608BEB /* MainMenu.xib */; };
 		7C516FFC23BFA5BD00608BEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C516FF523BFA5BC00608BEB /* AppDelegate.swift */; };
@@ -16,7 +15,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		63B92DEC282AAF2500B44340 /* ArgParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgParser.swift; sourceTree = "<group>"; };
 		7C516FF123BFA5BC00608BEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C516FF323BFA5BC00608BEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		7C516FF523BFA5BC00608BEB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -30,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B92DE7282AAECD00B44340 /* ArgumentParser in Frameworks */,
+				7C3ECE5523E07499008E3D9D /* SPMUtility in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +43,6 @@
 				7C7BF31F23BFA6B00054F8D8 /* Functions.swift */,
 				7C516FF623BFA5BC00608BEB /* Info.plist */,
 				7C516FF223BFA5BC00608BEB /* MainMenu.xib */,
-				63B92DEC282AAF2500B44340 /* ArgParser.swift */,
 			);
 			path = "Notifier - Alerts";
 			sourceTree = "<group>";
@@ -83,7 +80,7 @@
 			);
 			name = "Notifier - Alerts";
 			packageProductDependencies = (
-				63B92DE6282AAECD00B44340 /* ArgumentParser */,
+				7C3ECE5423E07499008E3D9D /* SPMUtility */,
 			);
 			productName = "test-banner-2";
 			productReference = 7C8AB5DC22724FD6008E3160 /* Notifier - Alerts.app */;
@@ -126,7 +123,7 @@
 			);
 			mainGroup = 7C8AB5D322724FD6008E3160;
 			packageReferences = (
-				63B92DE5282AAECD00B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				7C3ECE5323E07499008E3D9D /* XCRemoteSwiftPackageReference "swift-package-manager" */,
 			);
 			productRefGroup = 7C8AB5DD22724FD6008E3160 /* Products */;
 			projectDirPath = "";
@@ -156,7 +153,6 @@
 			files = (
 				7C516FFC23BFA5BD00608BEB /* AppDelegate.swift in Sources */,
 				7C7C65BB23BFC32C00980A05 /* Functions.swift in Sources */,
-				63B92DED282AAF2500B44340 /* ArgParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,7 +222,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -282,7 +278,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -306,7 +302,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -330,7 +326,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -363,21 +359,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		63B92DE5282AAECD00B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		7C3ECE5323E07499008E3D9D /* XCRemoteSwiftPackageReference "swift-package-manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			repositoryURL = "https://github.com/apple/swift-package-manager.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 0.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		63B92DE6282AAECD00B44340 /* ArgumentParser */ = {
+		7C3ECE5423E07499008E3D9D /* SPMUtility */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 63B92DE5282AAECD00B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
+			package = 7C3ECE5323E07499008E3D9D /* XCRemoteSwiftPackageReference "swift-package-manager" */;
+			productName = SPMUtility;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

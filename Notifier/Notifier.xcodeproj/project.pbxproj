@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63B92DE1282AAEB700B44340 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 63B92DE0282AAEB700B44340 /* ArgumentParser */; };
-		63B92DE9282AAEDE00B44340 /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B92DE8282AAEDE00B44340 /* ArgParser.swift */; };
+		7C3ECE5023E057FE008E3D9D /* SPMUtility in Frameworks */ = {isa = PBXBuildFile; productRef = 7C3ECE4F23E057FE008E3D9D /* SPMUtility */; };
 		7C6D157C2270BA2F0092D34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6D157B2270BA2F0092D34E /* AppDelegate.swift */; };
 		7C6D15812270BA300092D34E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6D157F2270BA300092D34E /* MainMenu.xib */; };
 		7C720952227888E10033B2E2 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C720951227888E10033B2E2 /* Functions.swift */; };
@@ -72,7 +71,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		63B92DE8282AAEDE00B44340 /* ArgParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgParser.swift; sourceTree = "<group>"; };
 		7C6D15782270BA2F0092D34E /* Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C6D157B2270BA2F0092D34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C6D15802270BA300092D34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -91,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B92DE1282AAEB700B44340 /* ArgumentParser in Frameworks */,
+				7C3ECE5023E057FE008E3D9D /* SPMUtility in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +123,6 @@
 				7C720951227888E10033B2E2 /* Functions.swift */,
 				7C6D15822270BA300092D34E /* Info.plist */,
 				7C6D157F2270BA300092D34E /* MainMenu.xib */,
-				63B92DE8282AAEDE00B44340 /* ArgParser.swift */,
 			);
 			path = Notifier;
 			sourceTree = "<group>";
@@ -187,7 +184,7 @@
 			);
 			name = Notifier;
 			packageProductDependencies = (
-				63B92DE0282AAEB700B44340 /* ArgumentParser */,
+				7C3ECE4F23E057FE008E3D9D /* SPMUtility */,
 			);
 			productName = oioi;
 			productReference = 7C6D15782270BA2F0092D34E /* Notifier.app */;
@@ -227,7 +224,7 @@
 			);
 			mainGroup = 7C6D156F2270BA2F0092D34E;
 			packageReferences = (
-				63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				7C3ECE4E23E057FE008E3D9D /* XCRemoteSwiftPackageReference "swift-package-manager" */,
 			);
 			productRefGroup = 7C6D15792270BA2F0092D34E /* Products */;
 			projectDirPath = "";
@@ -304,7 +301,6 @@
 			files = (
 				7C6D157C2270BA2F0092D34E /* AppDelegate.swift in Sources */,
 				7C720952227888E10033B2E2 /* Functions.swift in Sources */,
-				63B92DE9282AAEDE00B44340 /* ArgParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,7 +383,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -443,7 +439,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -457,17 +453,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 82K2XFN8L6;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Notifier/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -492,7 +488,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -526,21 +522,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		7C3ECE4E23E057FE008E3D9D /* XCRemoteSwiftPackageReference "swift-package-manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			repositoryURL = "https://github.com/apple/swift-package-manager.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 0.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		63B92DE0282AAEB700B44340 /* ArgumentParser */ = {
+		7C3ECE4F23E057FE008E3D9D /* SPMUtility */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
+			package = 7C3ECE4E23E057FE008E3D9D /* XCRemoteSwiftPackageReference "swift-package-manager" */;
+			productName = SPMUtility;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
