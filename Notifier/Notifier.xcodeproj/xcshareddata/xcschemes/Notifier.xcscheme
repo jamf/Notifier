@@ -52,20 +52,20 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--help"
+            argument = "--message &quot;Hello World!&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--verbose true"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--message &quot;Hello there!&quot;"
+            argument = "--type banner"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--type alert"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "--sound default"
-            isEnabled = "YES">
+            argument = "--help"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

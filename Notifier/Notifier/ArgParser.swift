@@ -44,7 +44,6 @@ struct argParser: ParsableCommand {
     
     @Option(help: "Enables logging of actions. Check console for  'Notifier Log:' messages")
       var verbose: Bool?
-    
 
 }
 

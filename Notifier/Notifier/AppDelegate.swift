@@ -42,8 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             // Get the parsed args
             let parsedResult = try argParser.parse(passedArgs)
-            print(parsedResult)
-            
+                        
             // If verbose mode is enabled
             verboseMode = parsedResult.verbose ?? false
             if verboseMode {
