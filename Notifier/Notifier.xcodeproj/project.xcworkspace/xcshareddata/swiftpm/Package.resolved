@@ -1,21 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "swift-llbuild",
+      "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-llbuild.git",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
-        "revision" : "f73b84bc1525998e5e267f9d830c1411487ac65e",
-        "version" : "0.2.0"
-      }
-    },
-    {
-      "identity" : "swift-package-manager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-package-manager.git",
-      "state" : {
-        "revision" : "9abcc2260438177cecd7cf5185b144d13e74122b",
-        "version" : "0.5.0"
+        "revision" : "f3c9084a71ef4376f2fabbdf1d3d90a49f1fabdb",
+        "version" : "1.1.2"
       }
     }
   ],
