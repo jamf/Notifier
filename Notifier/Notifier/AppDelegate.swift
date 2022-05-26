@@ -7,7 +7,7 @@
 
 import Cocoa
 import CoreFoundation
-
+import SPMUtility
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -32,6 +32,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Define args to be parsed
         do {
 
+            let argParser = ArgumentParser(commandName: "notifier", usage: "--type <alert/banner> --message <some message> <options>", overview: "Notifier: Sends banner or alert notifications.", seeAlso: "https://github.com/dataJAR/Notifier")
+            let ncMessage = argParser.add(option: "--message", kind: String.self, usage: "message text - REQUIRED if not passing --remove all")
+            let ncMessageAction = argParser.add(option: "--messageaction", kind: String.self, usage: "The action to be performed when the message is clicked. Either pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in their default handler")
+            let ncMessageButton = argParser.add(option: "--messagebutton", kind: String.self, usage: "alert type only. Sets the message buttons text")
+            let ncMessageButtonAction = argParser.add(option: "--messagebuttonaction", kind: String.self, usage: "alert type only. The action to be performed when the message button is clicked. Either pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in their default handler. Requires '--messagebutton' to be passed")
+            let ncRemove = argParser.add(option: "--remove", kind: String.self, usage: "\"prior\" or \"all\". If passing \"prior\", the full message will be required too. Including all passed flags")
+            let ncSound = argParser.add(option: "--sound", kind: String.self, usage: "sound to play. Pass \"default\" for the default macOS sound, else the name of a sound in /Library/Sounds or /System/Library/Sounds. If the sound cannot be found, macOS will use the \"default\" sound" )
+            let ncSubtitle = argParser.add(option: "--subtitle", kind: String.self, usage: "message subtitle")
+            let ncTitle = argParser.add(option: "--title", kind: String.self, usage: "message title")
+            let ncType = argParser.add(option: "--type", kind: String.self, usage: "alert or banner - REQUIRED")
+            let ncVerbose = argParser.add(option: "--verbose", kind: Bool.self, usage: "Enables logging of actions. Check console for  'Notifier Log:' messages")
+
             // The first argument is always the executable, drop it
             let passedArgs = Array(CommandLine.arguments.dropFirst())
 
@@ -42,27 +54,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             // Get the parsed args
             let parsedResult = try argParser.parse(passedArgs)
-                        
+
             // If verbose mode is enabled
-            verboseMode = parsedResult.verbose ?? false
+            verboseMode = parsedResult.get(ncVerbose) ?? false
             if verboseMode {
                 NSLog("Notifier Log: notifier - verbose enabled")
                 notifierArgsArray.append("--verbose")
-                notifierArgsArray.append(String(verboseMode))
             }
 
             // Check parsed args to make sure at least base args are found, if not show help
-            if parsedResult.type != nil {
-                if ((parsedResult.message == "") || (parsedResult.message == nil )) && ((parsedResult.remove == "") || (parsedResult.remove == nil)){
+            if (parsedResult.get(ncType) != nil){
+                if ((parsedResult.get(ncMessage) == "") || (parsedResult.get(ncMessage) == nil )) && ((parsedResult.get(ncRemove) == "") || (parsedResult.get(ncRemove) == nil)){
                     try _ = argParser.parse(["--help"])
                 } else {
-                    if let type = parsedResult.type {
-                        if type != "alert" && type != "banner" {
-                            try _ = argParser.parse(["--help"])
-                        } else {
-                            parsedType = type.lowercased()
-                        }
-                    } else {
+                    parsedType = parsedResult.get(ncType)!.lowercased()
+                    if parsedType != "alert" && parsedType != "banner" {
                         try _ = argParser.parse(["--help"])
                     }
                 }
@@ -70,9 +76,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 try _ = argParser.parse(["--help"])
             }
 
-
            // If --remove all passed
-           if (parsedResult.remove == "all") {
+           if (parsedResult.get(ncRemove) == "all") {
                 if verboseMode {
                      NSLog("Notifier Log: notifier - remove all")
                 }
@@ -82,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // If not parse other args
             } else {
 
-                if (parsedResult.remove == "prior") {
+                if (parsedResult.get(ncRemove) == "prior") {
                     if verboseMode {
                          NSLog("Notifier Log: notifier - remove prior")
                     }
@@ -90,105 +95,77 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     notifierArgsArray.append("prior")
                 }
 
-                if (parsedResult.message != nil) {
+                if (parsedResult.get(ncMessage) != nil) {
                     if verboseMode {
                          NSLog("Notifier Log: notifier - message")
                     }
                     notifierArgsArray.append("--message")
-                    if (parsedResult.message == "") {
+                    if (parsedResult.get(ncMessage) == "") {
                         notifierArgsArray.append(" ")
                     } else {
-                        if let message = parsedResult.message {
-                            notifierArgsArray.append(message)
-                        } else {
-                            try _ = argParser.parse(["--help"])
-                        }
+                        notifierArgsArray.append(parsedResult.get(ncMessage)!)
                     }
                     if verboseMode {
                          NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
                     }
                 }
-
-                if (parsedResult.messageaction != nil) {
+            
+                if (parsedResult.get(ncMessageAction) != nil) {
                     if verboseMode {
                          NSLog("Notifier Log: notifier - messageaction")
                     }
                     notifierArgsArray.append("--messageaction")
-                    if let messageaction = parsedResult.messageaction {
-                        notifierArgsArray.append(messageaction)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
+                    notifierArgsArray.append(parsedResult.get(ncMessageAction)!)
                     if verboseMode {
                          NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
                     }
                 }
 
-                if (parsedResult.sound != nil) {
+                if (parsedResult.get(ncSound) != nil) {
                     if verboseMode {
                          NSLog("Notifier Log: notifier - sound")
                     }
                     notifierArgsArray.append("--sound")
-                    if let sound = parsedResult.sound {
-                        notifierArgsArray.append(sound)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
+                    notifierArgsArray.append(parsedResult.get(ncSound)!)
                     if verboseMode {
                          NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
                     }
                 }
 
-                if (parsedResult.subtitle != nil) {
+                if (parsedResult.get(ncSubtitle) != nil) {
                     if verboseMode {
                          NSLog("Notifier Log: notifier - subtitle")
                     }
                     notifierArgsArray.append("--subtitle")
-                    if let subtitle = parsedResult.subtitle {
-                        notifierArgsArray.append(subtitle)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
+                    notifierArgsArray.append(parsedResult.get(ncSubtitle)!)
                     if verboseMode {
                          NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
                     }
                 }
 
-                if (parsedResult.title != nil) {
+                if (parsedResult.get(ncTitle) != nil) {
                     if verboseMode {
                          NSLog("Notifier Log: notifier - title")
                     }
                     notifierArgsArray.append("--title")
-                    if let title = parsedResult.title {
-                        notifierArgsArray.append(title)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
+                    notifierArgsArray.append(parsedResult.get(ncTitle)!)
                     if verboseMode {
                          NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
                     }
                 }
 
-                if parsedType == "alert" && (parsedResult.messagebutton != nil) {
+                if parsedType == "alert" && (parsedResult.get(ncMessageButton) != nil) {
                     if verboseMode {
                          NSLog("Notifier Log: notifier - messagebutton")
                     }
                     notifierArgsArray.append("--messagebutton")
-                    if let messagebutton = parsedResult.messagebutton {
-                        notifierArgsArray.append(messagebutton)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
-                    if (parsedResult.messagebuttonaction != nil){
+                    notifierArgsArray.append(parsedResult.get(ncMessageButton)!)
+                    if (parsedResult.get(ncMessageButtonAction) != nil){
                         if verboseMode {
                              NSLog("Notifier Log: notifier - messagebuttonaction")
                         }
                         notifierArgsArray.append("--messagebuttonaction")
-                        if let messagebuttonaction = parsedResult.messagebuttonaction {
-                            notifierArgsArray.append(messagebuttonaction)
-                        } else {
-                            try _ = argParser.parse(["--help"])
-                        }
+                        notifierArgsArray.append(parsedResult.get(ncMessageButtonAction)!)
                     }
                     if verboseMode {
                          NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
@@ -197,25 +174,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
 
         // If we're missing a value for an arg
-//        } catch ArgumentParserError.expectedValue(let value) {
-//            print("Missing value for argument \(value).")
-//            if verboseMode {
-//                 NSLog("Notifier Log: notifier - Missing value for argument \(value).")
-//            }
-//            exit(1)
+        } catch ArgumentParserError.expectedValue(let value) {
+            print("Missing value for argument \(value).")
+            if verboseMode {
+                 NSLog("Notifier Log: notifier - Missing value for argument \(value).")
+            }
+            exit(1)
         // If we're missing a value for an arg
-//        } catch ArgumentParserError.expectedArguments( _, let stringArray) {
-//            print("Missing arguments: \(stringArray.joined()).")
-//            if verboseMode {
-//                 NSLog("Notifier Log: notifier - Missing value for argument \(stringArray.joined()).")
-//            }
-//            exit(1)
+        } catch ArgumentParserError.expectedArguments( _, let stringArray) {
+            print("Missing arguments: \(stringArray.joined()).")
+            if verboseMode {
+                 NSLog("Notifier Log: notifier - Missing value for argument \(stringArray.joined()).")
+            }
+            exit(1)
         // Other errors
         } catch {
-            let message = argParser.message(for: error)
-            print(message)
+            print(error.localizedDescription)
             if verboseMode {
-                 NSLog("Notifier Log: notifier - \(message).")
+                 NSLog("Notifier Log: notifier - \(error.localizedDescription).")
             }
             exit(1)
         }

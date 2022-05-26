@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63B92DE4282AAEC200B44340 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 63B92DE3282AAEC200B44340 /* ArgumentParser */; };
-		63B92DEB282AAF0300B44340 /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B92DEA282AAF0300B44340 /* ArgParser.swift */; };
 		7C8AB5E022724FD6008E3160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8AB5DF22724FD6008E3160 /* AppDelegate.swift */; };
 		7C8AB5E222724FD8008E3160 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C8AB5E122724FD8008E3160 /* Assets.xcassets */; };
 		7C8AB5E522724FD8008E3160 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C8AB5E322724FD8008E3160 /* MainMenu.xib */; };
 		7CD4E57922A90DFE001DB944 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD4E57822A90DFE001DB944 /* Functions.swift */; };
+		B510785C243F6DB5005A0BB8 /* SPMUtility in Frameworks */ = {isa = PBXBuildFile; productRef = B510785B243F6DB5005A0BB8 /* SPMUtility */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,7 +28,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		63B92DEA282AAF0300B44340 /* ArgParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgParser.swift; sourceTree = "<group>"; };
 		7C8AB5DC22724FD6008E3160 /* Notifier - Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8AB5DF22724FD6008E3160 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C8AB5E122724FD8008E3160 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -43,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B92DE4282AAEC200B44340 /* ArgumentParser in Frameworks */,
+				B510785C243F6DB5005A0BB8 /* SPMUtility in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +73,6 @@
 				7CD4E57822A90DFE001DB944 /* Functions.swift */,
 				7C8AB5E622724FD8008E3160 /* Info.plist */,
 				7C8AB5E322724FD8008E3160 /* MainMenu.xib */,
-				63B92DEA282AAF0300B44340 /* ArgParser.swift */,
 			);
 			path = "Notifier - Notifications";
 			sourceTree = "<group>";
@@ -105,7 +102,7 @@
 			);
 			name = "Notifier - Notifications";
 			packageProductDependencies = (
-				63B92DE3282AAEC200B44340 /* ArgumentParser */,
+				B510785B243F6DB5005A0BB8 /* SPMUtility */,
 			);
 			productName = "test-banner-2";
 			productReference = 7C8AB5DC22724FD6008E3160 /* Notifier - Notifications.app */;
@@ -148,7 +145,7 @@
 			);
 			mainGroup = 7C8AB5D322724FD6008E3160;
 			packageReferences = (
-				63B92DE2282AAEC200B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				B510785A243F6DB5005A0BB8 /* XCRemoteSwiftPackageReference "swift-package-manager" */,
 			);
 			productRefGroup = 7C8AB5DD22724FD6008E3160 /* Products */;
 			projectDirPath = "";
@@ -178,7 +175,6 @@
 			files = (
 				7C8AB5E022724FD6008E3160 /* AppDelegate.swift in Sources */,
 				7CD4E57922A90DFE001DB944 /* Functions.swift in Sources */,
-				63B92DEB282AAF0300B44340 /* ArgParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +324,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -352,7 +348,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -385,21 +381,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		63B92DE2282AAEC200B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		B510785A243F6DB5005A0BB8 /* XCRemoteSwiftPackageReference "swift-package-manager" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			repositoryURL = "https://github.com/apple/swift-package-manager.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 0.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		63B92DE3282AAEC200B44340 /* ArgumentParser */ = {
+		B510785B243F6DB5005A0BB8 /* SPMUtility */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 63B92DE2282AAEC200B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
+			package = B510785A243F6DB5005A0BB8 /* XCRemoteSwiftPackageReference "swift-package-manager" */;
+			productName = SPMUtility;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
