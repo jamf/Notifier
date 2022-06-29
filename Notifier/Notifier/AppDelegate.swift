@@ -44,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let parsedResult = try argParser.parse(passedArgs)
                         
             // If verbose mode is enabled
-            verboseMode = parsedResult.verbose ?? false
+            verboseMode = parsedResult.verbose
             if verboseMode {
                 NSLog("Notifier Log: notifier - verbose enabled")
                 notifierArgsArray.append("--verbose")
@@ -196,20 +196,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
 
-        // If we're missing a value for an arg
-//        } catch ArgumentParserError.expectedValue(let value) {
-//            print("Missing value for argument \(value).")
-//            if verboseMode {
-//                 NSLog("Notifier Log: notifier - Missing value for argument \(value).")
-//            }
-//            exit(1)
-        // If we're missing a value for an arg
-//        } catch ArgumentParserError.expectedArguments( _, let stringArray) {
-//            print("Missing arguments: \(stringArray.joined()).")
-//            if verboseMode {
-//                 NSLog("Notifier Log: notifier - Missing value for argument \(stringArray.joined()).")
-//            }
-//            exit(1)
         // Other errors
         } catch {
             let message = argParser.message(for: error)

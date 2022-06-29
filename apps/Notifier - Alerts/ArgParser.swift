@@ -42,8 +42,8 @@ struct argParser: ParsableCommand {
     @Option(help: "\"prior\" or \"all\". If passing \"prior\", the full message will be required too. Including all passed flags")
       var remove: String?
     
-    @Option(help: "Enables logging of actions. Check console for  'Notifier Log:' messages")
-      var verbose: Bool?
+    @Flag(help: "Enables logging of actions. Check console for  'Notifier Log:' messages")
+      var verbose = false
     
 
 }

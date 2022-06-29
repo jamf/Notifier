@@ -48,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let passedArgs = Array(CommandLine.arguments.dropFirst())
             let parsedResult = try argParser.parse(passedArgs)
 
-            verboseMode = parsedResult.verbose ?? false
+            verboseMode = parsedResult.verbose
 
             if verboseMode {
                 NSLog("Notifier Log: banner - verbose enabled")
@@ -314,12 +314,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                 }
             }
-//        } catch ArgumentParserError.expectedValue(let value) {
-//            print("Missing value for argument \(value).")
-//            exit(1)
-//        } catch ArgumentParserError.expectedArguments( _, let stringArray) {
-//            print("Missing arguments: \(stringArray.joined()).")
-//            exit(1)
         } catch {
             let message = argParser.message(for: error)
             print(message)
