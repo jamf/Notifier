@@ -188,7 +188,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             } else {
 
                 if verboseMode {
-                    NSLog("Notifier Log: banner - running on 10.10 - 10.14")
+                    NSLog("Notifier Log: banner - running on 10.13 - 10.14")
                 }
 
                 let ncCenter =  NSUserNotificationCenter.default
