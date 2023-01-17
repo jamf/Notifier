@@ -48,7 +48,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if verboseMode {
                 NSLog("Notifier Log: notifier - verbose enabled")
                 notifierArgsArray.append("--verbose")
-                notifierArgsArray.append(String(verboseMode))
             }
 
             // Check parsed args to make sure at least base args are found, if not show help
