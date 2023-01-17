@@ -2,8 +2,7 @@
 //  ArgParser.swift
 //  Notifier - Notifications
 //
-//  Created by David Norris on 10/05/2022.
-//  Copyright © 2022 dataJAR Ltd. All rights reserved.
+//  Copyright © 2023 dataJAR Ltd. All rights reserved.
 //
 
 import ArgumentParser

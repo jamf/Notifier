@@ -2,7 +2,7 @@
 //  Functions.swift
 //  Notifier
 //
-//  Copyright © 2020 dataJAR Ltd. All rights reserved.
+//  Copyright © 2023 dataJAR Ltd. All rights reserved.
 //
 
 import Cocoa
