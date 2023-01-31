@@ -8,7 +8,7 @@
 import Cocoa
 import SystemConfiguration
 
-// Return the username of the logged in user
+// Return the username of the logged in user, quitting if not one is logged in
 func atLoginWindow() -> String {
     let loggedInUser = SCDynamicStoreCopyConsoleUser(nil, nil, nil)! as String
     if loggedInUser == "loginwindow" || loggedInUser == "" {

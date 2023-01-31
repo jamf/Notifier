@@ -14,9 +14,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
 
+    // Check to see if at the login window, and quit if we are
+    func applicationWillFinishLaunching(_ aNotification: Notification) {
+        _ = atLoginWindow()
+    }
+
     // Check arguments passed to app, then OS if a valid argument is passed else print usage
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
         let loggedInUser = atLoginWindow()
         var notifierArgsArray = [String]()
         var notifierPath = ""
