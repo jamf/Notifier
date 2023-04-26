@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Notifier Alerts
 //
-//  Copyright © 2020 dataJAR Ltd. All rights reserved.
+//  Copyright © 2023 dataJAR Ltd. All rights reserved.
 //
 
 import Cocoa
@@ -48,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let passedArgs = Array(CommandLine.arguments.dropFirst())
             let parsedResult = try argParser.parse(passedArgs)
 
-            verboseMode = parsedResult.verbose ?? false
+            verboseMode = parsedResult.verbose
 
             if verboseMode {
                 NSLog("Notifier Log: alert - verbose enabled")
@@ -228,7 +228,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             } else {
 
                 if verboseMode {
-                    NSLog("Notifier Log: alert - running on 10.10 - 10.14")
+                    NSLog("Notifier Log: alert - running on 10.13 - 10.14")
                 }
 
                 let ncCenter =  NSUserNotificationCenter.default
@@ -396,12 +396,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                 }
             }
-//        } catch ArgumentParserError.expectedValue(let value) {
-//            print("Missing value for argument \(value).")
-//            exit(1)
-//        } catch ArgumentParserError.expectedArguments( _, let stringArray) {
-//            print("Missing arguments: \(stringArray.joined()).")
-//            exit(1)
         } catch {
             let message = argParser.message(for: error)
             print(message)

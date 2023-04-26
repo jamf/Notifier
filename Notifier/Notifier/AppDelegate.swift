@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Notifier
 //
-//  Copyright © 2020 dataJAR Ltd. All rights reserved.
+//  Copyright © 2023 dataJAR Ltd. All rights reserved.
 //
 
 import Cocoa
@@ -14,9 +14,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
 
+    // Check to see if at the login window, and quit if we are
+    func applicationWillFinishLaunching(_ aNotification: Notification) {
+        _ = atLoginWindow()
+    }
+
     // Check arguments passed to app, then OS if a valid argument is passed else print usage
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
         let loggedInUser = atLoginWindow()
         var notifierArgsArray = [String]()
         var notifierPath = ""
@@ -44,11 +48,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let parsedResult = try argParser.parse(passedArgs)
                         
             // If verbose mode is enabled
-            verboseMode = parsedResult.verbose ?? false
+            verboseMode = parsedResult.verbose
             if verboseMode {
                 NSLog("Notifier Log: notifier - verbose enabled")
                 notifierArgsArray.append("--verbose")
-                notifierArgsArray.append(String(verboseMode))
             }
 
             // Check parsed args to make sure at least base args are found, if not show help
@@ -196,20 +199,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
 
-        // If we're missing a value for an arg
-//        } catch ArgumentParserError.expectedValue(let value) {
-//            print("Missing value for argument \(value).")
-//            if verboseMode {
-//                 NSLog("Notifier Log: notifier - Missing value for argument \(value).")
-//            }
-//            exit(1)
-        // If we're missing a value for an arg
-//        } catch ArgumentParserError.expectedArguments( _, let stringArray) {
-//            print("Missing arguments: \(stringArray.joined()).")
-//            if verboseMode {
-//                 NSLog("Notifier Log: notifier - Missing value for argument \(stringArray.joined()).")
-//            }
-//            exit(1)
         // Other errors
         } catch {
             let message = argParser.message(for: error)

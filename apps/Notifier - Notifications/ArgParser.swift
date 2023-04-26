@@ -2,8 +2,7 @@
 //  ArgParser.swift
 //  Notifier - Notifications
 //
-//  Created by David Norris on 10/05/2022.
-//  Copyright © 2022 dataJAR Ltd. All rights reserved.
+//  Copyright © 2023 dataJAR Ltd. All rights reserved.
 //
 
 import ArgumentParser
@@ -36,8 +35,8 @@ struct argParser: ParsableCommand {
     @Option(help: "\"prior\" or \"all\". If passing \"prior\", the full message will be required too. Including all passed flags")
       var remove: String?
     
-    @Option(help: "Enables logging of actions. Check console for  'Notifier Log:' messages")
-      var verbose: Bool?
+    @Flag(help: "Enables logging of actions. Check console for  'Notifier Log:' messages")
+      var verbose = false
     
 
 }
