@@ -223,9 +223,8 @@ Below is the process,
 The below _should_ rest Notifications Center, but please test & submit a PR with a better method as applicable.
 
 1. `rm -rf $(getconf DARWIN_USER_DIR)/com.apple.notificationcenter/*`
-2. Logout & then log back in, or:  
-* For macOS 10.10 - 10.15: `killall "NotificationCenter"`
-* For macOS 10.16+: `killall "NotificationCenter2"`
+2. Logout & then log back in, or:
+* For macOS 10.16+: `killall "NotificationCenter"`
 3. Test the Notifier once more
 
 # FAQs
