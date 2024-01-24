@@ -309,14 +309,14 @@ func removeAllPriorNotifications(ncCenter: UNUserNotificationCenter, parsedResul
 }
 
 // Request authorisation
-func requestAuthorisation(verboseMode: Bool) {
+func requestAuthorisation(parsedResult: ArgParser) {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, _) in
         // If we're not been granted authorization to post notifications
         if !granted {
             // Print error
             print("ERROR: Authorisation not granted, exiting...")
             // If verbose mode is set
-            if verboseMode {
+            if parsedResult.verbose {
                 // Progress log
                 NSLog("Notifier Log: banner - ERROR: Authorisation not granted, exiting...")
             }

@@ -15,7 +15,7 @@ import UserNotifications
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     // IBOutlet declaration
     @IBOutlet weak var window: NSWindow!
-    // Main function
+    // Primary function
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Exit if notificaiton center isn't running for the user
         isNotificationCenterRunning()
@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             // Get the parsed args
             let parsedResult = ArgParser.parseOrExit(passedArgs)
             // Ask permission
-            requestAuthorisation(verboseMode: parsedResult.verbose)
+            requestAuthorisation(parsedResult: parsedResult)
             // See if we have any .userInfo when launched, such as from user interaction
             if let response = (aNotification as NSNotification).userInfo?[
                 // Launch the app with the response in the .userInfo
