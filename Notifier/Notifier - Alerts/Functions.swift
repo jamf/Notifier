@@ -1,5 +1,5 @@
 //
-//  Funcions.swift
+//  Functions.swift
 //  Notifier - Alerts
 //
 //  Copyright © 2024 dataJAR Ltd. All rights reserved.
