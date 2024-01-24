@@ -15,7 +15,7 @@ import UserNotifications
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     // IBOutlet declaration
     @IBOutlet weak var window: NSWindow!
-    // Primary function
+    // When we've finished launching
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Exit if notificaiton center isn't running for the user
         isNotificationCenterRunning()

@@ -16,7 +16,7 @@ struct ArgParser: ParsableCommand {
         usage: "--message <some message> <options>"
     )
     // Required, the notifications message
-    @Option(help: "message text - REQUIRED")
+    @Argument(help: "message text - REQUIRED")
     var message: String = ""
     // Optional action
     @Option(help: """
@@ -33,10 +33,10 @@ struct ArgParser: ParsableCommand {
                   """)
     var sound: String = ""
     // Optional subtitle for the notification
-    @Option(help: "message subtitle.")
+    @Option(help: "The notifications subtitle.")
     var subtitle: String = ""
     // Optional Title for the notification
-    @Option(help: "message title.")
+    @Option(help: "The notifications title.")
     var title: String = ""
     // Option to remove a specific notification or all notifications delivered
     @Option(help: """
