@@ -91,16 +91,18 @@ func processArguments(ncCenter: UNUserNotificationCenter, parsedResult: ArgParse
         // If we have a value for subtitle
         if parsedResult.subtitle != "" {
             // Add the subtitle to the notification
-            (ncContent, notificationString) = addNotificationSubtitle(ncContent: ncContent,
-                                                                      notificationString: notificationString,
-                                                                      parsedResult: parsedResult)
+            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "subtitle",
+                                                                             ncContent: ncContent,
+                                                                             notificationString: notificationString,
+                                                                        parsedResult: parsedResult)
         }
         // If we have a value for title
         if parsedResult.title != "" {
             // Add the title to the notification
-            (ncContent, notificationString) = addNotificationTitle(ncContent: ncContent,
-                                                                   notificationString: notificationString,
-                                                                   parsedResult: parsedResult)
+            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "title",
+                                                                             ncContent: ncContent,
+                                                                             notificationString: notificationString,
+                                                                             parsedResult: parsedResult)
         }
         // If we're to remove prior posted notificastions
         if parsedResult.remove.lowercased() == "prior" {

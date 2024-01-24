@@ -109,47 +109,34 @@ func addNotificationSound(ncContent: UNMutableNotificationContent, notificationS
     return(ncContent, tempString)
 }
 
-// Adds a subtitle to the notification
-func addNotificationSubtitle(ncContent: UNMutableNotificationContent, notificationString: String,
-                             parsedResult: ArgParser) -> (UNMutableNotificationContent, String) {
+// Adds a subtitle or title to the notification
+func addNotificationSubtitleOrTitle(contentKey: String, ncContent: UNMutableNotificationContent,
+                                    notificationString: String,
+                                    parsedResult: ArgParser) -> (UNMutableNotificationContent, String) {
     // Var declaration
     var tempString = notificationString
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - subtitle")
+        NSLog("Notifier Log: banner - \(contentKey)")
     }
-    // Set the notifications subtitle
-    ncContent.subtitle = parsedResult.subtitle
-    // Append to notificationString
-    tempString += ncContent.subtitle
+    // If we're to set the subtitle
+    if contentKey == "subtitle" {
+        // Set the notifications subtitle
+        ncContent.subtitle = parsedResult.subtitle
+        // Append to notificationString
+        tempString += ncContent.subtitle
+    // If we're to set the title
+    } else {
+        // Set the notifications title
+        ncContent.title = parsedResult.title
+        // Append to notificationString
+        tempString += ncContent.title
+    }
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - notificationString - %@", notificationString)
-    }
-    // Return the modified vars
-    return(ncContent, tempString)
-}
-
-// Adds a title to the notification
-func addNotificationTitle(ncContent: UNMutableNotificationContent, notificationString: String,
-                          parsedResult: ArgParser) -> (UNMutableNotificationContent, String) {
-    // Var declaration
-    var tempString = notificationString
-    // If we're in verbose mode
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("Notifier Log: banner - title")
-    }
-    // Set the notifications title
-    ncContent.title = parsedResult.title
-    // Append to notificationString
-    tempString += ncContent.title
-    // If we're in verbose mode
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("Notifier Log: banner - notificationString - %@", notificationString)
+        NSLog("Notifier Log: banner - notificationString - \(notificationString)")
     }
     // Return the modified vars
     return(ncContent, tempString)
@@ -169,7 +156,7 @@ func handleUNNotification(forResponse response: UNNotificationResponse) {
         // Progress log
         NSLog("Notifier Log: banner - message - interacted")
     }
-    // If the response actionIdentifier is ths default one
+    // Triggered when the notification message is clicked 
     if response.actionIdentifier == "com.apple.UNNotificationDefaultActionIdentifier" {
         // If verbose mode is set
         if verboseMode {
@@ -261,6 +248,7 @@ func postNotification(ncCenter: UNUserNotificationCenter, ncContent: UNMutableNo
     // Exit
     exit(0)
 }
+
 // If we're to remove a specific prior posted notification
 func removePriorNotification(ncCenter: UNUserNotificationCenter, notificationString: String, parsedResult: ArgParser) {
     // If we're in verbose mode
@@ -326,7 +314,7 @@ func requestAuthorisation(parsedResult: ArgParser) {
     }
 }
 
-// Respond notification message click
+// Respond to notification message click
 func userNotificationCenter(_ center: UNUserNotificationCenter,
                             didReceive response: UNNotificationResponse,
                             withCompletionHandler completionHandler: @escaping () -> Void) {
