@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		7C516FFA23BFA5BD00608BEB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C516FF223BFA5BC00608BEB /* MainMenu.xib */; };
 		7C516FFC23BFA5BD00608BEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C516FF523BFA5BC00608BEB /* AppDelegate.swift */; };
 		7C7C65BB23BFC32C00980A05 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7BF31F23BFA6B00054F8D8 /* Functions.swift */; };
+		841F5F372B61637200473103 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841F5F362B61637200473103 /* UserNotifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		7C516FF623BFA5BC00608BEB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C7BF31F23BFA6B00054F8D8 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		7C8AB5DC22724FD6008E3160 /* Notifier - Alerts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Alerts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		841F5F362B61637200473103 /* UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,11 +43,12 @@
 			isa = PBXGroup;
 			children = (
 				7C516FF523BFA5BC00608BEB /* AppDelegate.swift */,
-				7C516FF123BFA5BC00608BEB /* Assets.xcassets */,
+				63B92DEC282AAF2500B44340 /* ArgParser.swift */,
 				7C7BF31F23BFA6B00054F8D8 /* Functions.swift */,
+				841F5F362B61637200473103 /* UserNotifications.swift */,
+				7C516FF123BFA5BC00608BEB /* Assets.xcassets */,
 				7C516FF623BFA5BC00608BEB /* Info.plist */,
 				7C516FF223BFA5BC00608BEB /* MainMenu.xib */,
-				63B92DEC282AAF2500B44340 /* ArgParser.swift */,
 			);
 			path = "Notifier - Alerts";
 			sourceTree = "<group>";
@@ -80,6 +83,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				841F5F392B61646E00473103 /* PBXTargetDependency */,
 			);
 			name = "Notifier - Alerts";
 			packageProductDependencies = (
@@ -95,11 +99,12 @@
 		7C8AB5D422724FD6008E3160 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				KnownAssetTags = (
 					New,
 				);
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = "dataJAR Ltd";
 				TargetAttributes = {
 					7C8AB5DB22724FD6008E3160 = {
@@ -117,7 +122,7 @@
 				};
 			};
 			buildConfigurationList = 7C8AB5D722724FD6008E3160 /* Build configuration list for PBXProject "Notifier - Alerts" */;
-			compatibilityVersion = "Xcode 11.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -127,6 +132,7 @@
 			mainGroup = 7C8AB5D322724FD6008E3160;
 			packageReferences = (
 				63B92DE5282AAECD00B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				841F5F352B61635A00473103 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 7C8AB5DD22724FD6008E3160 /* Products */;
 			projectDirPath = "";
@@ -157,10 +163,18 @@
 				7C516FFC23BFA5BD00608BEB /* AppDelegate.swift in Sources */,
 				7C7C65BB23BFC32C00980A05 /* Functions.swift in Sources */,
 				63B92DED282AAF2500B44340 /* ArgParser.swift in Sources */,
+				841F5F372B61637200473103 /* UserNotifications.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		841F5F392B61646E00473103 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 841F5F382B61646E00473103 /* SwiftLintPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7C516FF223BFA5BC00608BEB /* MainMenu.xib */ = {
@@ -178,6 +192,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -213,6 +228,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -227,7 +243,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -241,6 +257,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -276,6 +293,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -284,7 +302,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -298,19 +316,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 82K2XFN8L6;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 2.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -323,19 +344,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 82K2XFN8L6;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 2.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -375,6 +399,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		841F5F352B61635A00473103 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -382,6 +414,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63B92DE5282AAECD00B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
+		};
+		841F5F382B61646E00473103 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 841F5F352B61635A00473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

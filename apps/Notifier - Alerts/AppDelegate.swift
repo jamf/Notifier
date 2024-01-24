@@ -1,451 +1,130 @@
 //
 //  AppDelegate.swift
-//  Notifier Alerts
+//  Notifier - Alerts
 //
-//  Copyright © 2023 dataJAR Ltd. All rights reserved.
+//  Copyright © 2024 dataJAR Ltd. All rights reserved.
 //
 
+// Imports
 import Cocoa
 import UserNotifications
 
+// Declaration
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
-
+// The apps class
+class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
+    // IBOutlet declaration
     @IBOutlet weak var window: NSWindow!
-
-    // Gimme some applicationDidFinishLaunching
+    // Primary function
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
-        let actionIdentifier = "alert"
-        var notificationString = ""
-        var verboseMode = false
-
         // Exit if notificaiton center isn't running for the user
-        guard !NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.notificationcenterui").isEmpty else {
-            print("ERROR: Notification Center is not running...")
-            exit(1)
-        }
-
-        // Ask permission, 10.15+ only
-        if #available(macOS 10.15, *) {
-            requestAuthorisation(verboseMode: verboseMode)
-        }
-
-        // See if we have any .userInfo when launched on, such as from user interaction
-        if #available(macOS 10.15, *) {
-            if let response = (aNotification as NSNotification).userInfo?[NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
+        isNotificationCenterRunning()
+        // The first argument is always the executable, drop it
+        let passedArgs = Array(CommandLine.arguments.dropFirst())
+        // If no args passed, show help
+        if passedArgs.isEmpty {
+            // If no args, show help
+            _ = ArgParser.parseOrExit(["--help"])
+            // If we have args
+        } else {
+            // Get the parsed args
+            let parsedResult = ArgParser.parseOrExit(passedArgs)
+            // Ask permission
+            requestAuthorisation(parsedResult: parsedResult)
+            // See if we have any .userInfo when launched, such as from user interaction
+            if let response = (aNotification as NSNotification).userInfo?[
+                // Launch the app with the response in the .userInfo
+                NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
+                // Handle the notification
                 handleUNNotification(forResponse: response)
             }
-        } else {
-            if let notification = (aNotification as NSNotification).userInfo![NSApplication.launchUserNotificationUserInfoKey] as? NSUserNotification {
-                handleNSUserNotification(forNotification: notification)
-            }
-        }
-
-        // Parse arguments & post notification
-        do {
-
-            let passedArgs = Array(CommandLine.arguments.dropFirst())
-            let parsedResult = try argParser.parse(passedArgs)
-
-            verboseMode = parsedResult.verbose
-
-            if verboseMode {
+            // Create a notification center object
+            let ncCenter =  UNUserNotificationCenter.current()
+            // Set delegate
+            ncCenter.delegate = self
+            // If verbose mode is set
+            if parsedResult.verbose {
+                // Progress log
                 NSLog("Notifier Log: alert - verbose enabled")
             }
-
-            // User UNUser API's for 10.15+, NSUser for older
-            if #available(macOS 10.15, *) {
-
-                if verboseMode {
-                    NSLog("Notifier Log: alert - running on 10.15+")
-                }
-
-                let ncCenter =  UNUserNotificationCenter.current()
-                let ncContent = UNMutableNotificationContent()
-
-                ncCenter.delegate = self
-
-                if verboseMode {
-                    ncContent.userInfo["verboseMode"] = "enabled"
-                }
-
-                if parsedResult.remove?.lowercased() == "all" {
-                    if verboseMode {
-                        NSLog("Notifier Log: alert - ncRemove all")
-                    }
-                    ncCenter.removeAllDeliveredNotifications()
-                    sleep(1)
-                    if verboseMode {
-                        NSLog("Notifier Log: alert - ncRemove all - done")
-                    }
-                    exit(0)
-
-                } else {
-
-                    if (parsedResult.message != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - ncMessage")
-                        }
-                        ncContent.body = parsedResult.message!
-                        notificationString += ncContent.body
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                        }
-                    }
-
-                    if (parsedResult.messageaction != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messageaction")
-                        }
-                        if parsedResult.messageaction?.lowercased() == "logout" {
-                            ncContent.userInfo["messageAction"] = "logout"
-                            notificationString += "logout"
-                            notificationString += actionIdentifier
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        } else {
-                            ncContent.userInfo["messageAction"] = parsedResult.messageaction!
-                            notificationString += "\(String(describing: parsedResult.messageaction))"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        }
-                    }
-
-                    if (parsedResult.messagebutton != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messagebutton")
-                        }
-                        let actionTitle = parsedResult.messagebutton
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messagebutton - %@", "\(String(describing: parsedResult.messagebutton))")
-                        }
-                        let ncAction = UNNotificationAction(identifier: "messagebutton", title: actionTitle!, options: .init(rawValue: 0))
-                        let ncCategory = UNNotificationCategory(identifier: actionIdentifier, actions: [ncAction], intentIdentifiers: [], options: .customDismissAction)
-                        ncCenter.setNotificationCategories([ncCategory])
-                        ncContent.categoryIdentifier = actionIdentifier
-                    } else {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - no messagebutton")
-                        }
-                        let ncCategory = UNNotificationCategory(identifier: actionIdentifier, actions: [], intentIdentifiers: [], options: .customDismissAction)
-                        ncCenter.setNotificationCategories([ncCategory])
-                        ncContent.categoryIdentifier = actionIdentifier
-                    }
-
-                    if (parsedResult.messagebuttonaction != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messagebuttonaction")
-                        }
-                        if parsedResult.messagebuttonaction!.lowercased() == "logout" {
-                            ncContent.userInfo["messageButtonAction"] = "logout"
-                            notificationString += "logout"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        } else {
-                            ncContent.userInfo["messageButtonAction"] = parsedResult.messagebuttonaction!
-                            notificationString += "\(String(describing: parsedResult.messagebuttonaction))"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        }
-                    }
-
-                    if (parsedResult.sound != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - sound")
-                        }
-                        if parsedResult.sound?.lowercased() == "default" {
-                            ncContent.sound = UNNotificationSound.default
-                            notificationString += "\(String(describing: ncContent.sound))"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        } else {
-                            ncContent.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: parsedResult.sound!))
-                            notificationString += "\(String(describing: ncContent.sound))"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        }
-                    }
-
-                    if (parsedResult.subtitle != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - subtitle")
-                        }
-                        ncContent.subtitle = parsedResult.subtitle!
-                        notificationString += ncContent.subtitle
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                        }
-                    }
-
-                    if (parsedResult.title != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - ncTitle")
-                        }
-                        ncContent.title = parsedResult.title!
-                        notificationString += ncContent.title
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                        }
-                    }
-
-                    let ncContentbase64 = base64String(stringContent: notificationString)
-                    if verboseMode {
-                        NSLog("Notifier Log: alert - ncContentbase64 - %@", ncContentbase64)
-                    }
-
-                    if parsedResult.remove?.lowercased() == "prior" {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - ncRemove prior")
-                        }
-                        ncCenter.removeDeliveredNotifications(withIdentifiers: [ncContentbase64])
-                        sleep(1)
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - ncRemove prior - done")
-                        }
-                        exit(0)
-                    } else {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notification request")
-                        }
-                        let ncTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-                        let ncRequest = UNNotificationRequest(identifier: ncContentbase64, content: ncContent, trigger: ncTrigger)
-                        ncCenter.add(ncRequest)
-                        sleep(1)
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notification delivered")
-                        }
-                        exit(0)
-                    }
-                }
-
-            } else {
-
-                if verboseMode {
-                    NSLog("Notifier Log: alert - running on 10.13 - 10.14")
-                }
-
-                let ncCenter =  NSUserNotificationCenter.default
-                let ncContent = NSUserNotification()
-                var userInfoDict:[String:Any] = [:]
-
-                ncCenter.delegate = self
-
-                if verboseMode {
-                    userInfoDict["verboseMode"] = "enabled"
-                }
-
-                if parsedResult.remove?.lowercased() == "all" {
-                    if verboseMode {
-                        NSLog("Notifier Log: alert - ncRemove all")
-                    }
-                    ncCenter.removeAllDeliveredNotifications()
-                    sleep(1)
-                    if verboseMode {
-                        NSLog("Notifier Log: alert - ncRemove all - done")
-                    }
-                    exit(0)
-
-                } else {
-
-                    if (parsedResult.message != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - message")
-                        }
-                        ncContent.informativeText = parsedResult.message
-                        notificationString += "\(String(describing: ncContent.informativeText))"
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                        }
-                    }
-
-                    if (parsedResult.messageaction != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messageaction")
-                        }
-                        if parsedResult.messageaction?.lowercased() == "logout" {
-                            userInfoDict["messageAction"] = "logout"
-                            notificationString += "logout"
-                            notificationString += actionIdentifier
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        } else {
-                            userInfoDict["messageAction"] = parsedResult.messageaction
-                            notificationString += "\(String(describing: parsedResult.messageaction))"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        }
-                    }
-
-                    if (parsedResult.messagebutton != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messagebutton")
-                        }
-                        ncContent.actionButtonTitle = parsedResult.messagebutton!
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messagebutton - %@", "\(String(describing: parsedResult.messagebutton))")
-                        }
-                        notificationString += "\(String(describing: ncContent.hasActionButton))"
-                        notificationString += ncContent.actionButtonTitle
-                    } else {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - no ncMessageButton")
-                        }
-                        ncContent.hasActionButton = false
-                        ncContent.otherButtonTitle = "Close"
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - ncMessageButton - set to close")
-                        }
-                        notificationString += "\(String(describing: ncContent.hasActionButton))"
-                        notificationString += ncContent.otherButtonTitle
-                    }
-
-                    if (parsedResult.messagebuttonaction != nil) {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - messagebuttonaction")
-                        }
-                        if parsedResult.messagebuttonaction!.lowercased() == "logout" {
-                            userInfoDict["messageButtonAction"] = "logout"
-                            notificationString += "logout"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        } else {
-                            userInfoDict["messageButtonAction"] = parsedResult.messagebuttonaction
-                            notificationString += "\(String(describing: parsedResult.messagebuttonaction))"
-                            if verboseMode {
-                                NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                            }
-                        }
-                    }
-
-                    if (parsedResult.sound != nil){
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - sound")
-                        }
-                        if parsedResult.sound?.lowercased() == "default" {
-                            ncContent.soundName = NSUserNotificationDefaultSoundName
-                        } else {
-                            ncContent.soundName = parsedResult.sound!
-                        }
-                        notificationString += "\(String(describing: ncContent.soundName))"
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                        }
-                    }
-
-                    if (parsedResult.subtitle != nil){
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - subtitle")
-                        }
-                        ncContent.subtitle = parsedResult.subtitle!
-                        notificationString += ncContent.subtitle!
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                        }
-                    }
-
-                    if (parsedResult.title != nil){
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - title")
-                        }
-                        ncContent.title = parsedResult.title!
-                        notificationString += ncContent.title!
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notificationString - %@", notificationString)
-                        }
-                    }
-
-                    let ncContentbase64 = base64String(stringContent: notificationString)
-                    ncContent.identifier = ncContentbase64
-                    if verboseMode {
-                        NSLog("Notifier Log: alert - ncContentbase64 - %@", ncContentbase64)
-                    }
-
-                    ncContent.userInfo = userInfoDict
-
-                    if parsedResult.remove?.lowercased() == "prior" {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - remove prior")
-                        }
-                        ncCenter.removeDeliveredNotification(ncContent)
-                        sleep(1)
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - remove prior - done")
-                        }
-                        exit(0)
-                    } else {
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notification request")
-                        }
-                        NSLog("Notifier Log: alert - message - userInfo %@", String(describing: ncContent.userInfo))
-                        ncCenter.deliver(ncContent)
-                        sleep(1)
-                        if verboseMode {
-                            NSLog("Notifier Log: alert - notification delivered")
-                        }
-                        exit(0)
-                    }
-                }
-            }
-        } catch {
-            let message = argParser.message(for: error)
-            print(message)
-            print(error.localizedDescription)
-            exit(1)
+            // Process the arguments as needed
+            processArguments(ncCenter: ncCenter, parsedResult: parsedResult)
         }
     }
-
-    // Insert code here to tear down your application
-    func applicationWillTerminate(_ aNotification: Notification) {
-    }
-
-    // NSUser - Respond to click
-    @available(macOS, obsoleted: 10.15)
-    func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
-        handleNSUserNotification(forNotification: notification)
-    }
-
-    // NSUser  - Ensure that notification is shown, even if app is active
-    @available(macOS, obsoleted: 10.15)
-    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
-        return true
-    }
-
-    // NSUser - Get value of the otherButton, used to mimic single button UNUser alerts
-    @available(macOS, obsoleted: 10.15)
-    @objc
-    func userNotificationCenter(_ center: NSUserNotificationCenter, didDismissAlert notification: NSUserNotification){
-        center.removeDeliveredNotification(notification)
-        exit(0)
-    }
-
-    // UNUser - Respond to click
-    @available(macOS 10.14, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NewNotification") , object: nil, userInfo: response.notification.request.content.userInfo)
-        handleUNNotification(forResponse: response)
-    }
-
-    // UNUser - Ensure that notification is shown, even if app is active
-    @available(macOS 10.14, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler(.alert)
-    }
 }
 
-@available(macOS 10.15, *)
-    extension AppDelegate: UNUserNotificationCenterDelegate {
-}
+// Process the arguments as needed
+func processArguments(ncCenter: UNUserNotificationCenter, parsedResult: ArgParser) {
+    // Var declaration
+    var notificationString = ""
+    // Create a notification content object
+    var ncContent = UNMutableNotificationContent()
+    // If we're to remove all delivered notifications
+    if parsedResult.remove.lowercased() == "all" {
+        // Remove all notifications
+        removeAllPriorNotifications(ncCenter: ncCenter, parsedResult: parsedResult)
+    // If we're not removing
+    } else {
+        // Confirm that we have a message
+        if parsedResult.message != "" {
+            // Create the notifications body
+            (ncContent, notificationString) = addNotificationBody(ncContent: ncContent,
+                                                                  notificationString: notificationString,
+                                                                  parsedResult: parsedResult)
+        }
+        // If we have a value for messageaction passed
+        if parsedResult.messageaction != "" {
+            // Add the notification message action
+            (ncContent, notificationString) = addNotificationBodyOrButtonAction(contentKey: "messageAction",
+                                                                                ncContent: ncContent,
+                                                                                notificationString: notificationString,
+                                                                                parsedResult: parsedResult)
+        }
+        // Process the notifications message button, this is performed whether set or not
+        (ncContent, notificationString) = processNotificationButton(ncCenter: ncCenter, ncContent: ncContent,
+                                                                    notificationString: notificationString,
+                                                                    parsedResult: parsedResult)
 
-@available(macOS, obsoleted: 10.15)
-    extension AppDelegate: NSUserNotificationCenterDelegate {
+        // If we have a value for messagebuttonaction passed
+        if parsedResult.messagebuttonaction != "" {
+            // Set the notifications message button
+            (ncContent, notificationString) = addNotificationBodyOrButtonAction(contentKey: "messageButtonAction",
+                                                                                ncContent: ncContent,
+                                                                                notificationString: notificationString,
+                                                                                parsedResult: parsedResult)
+        }
+        // If we have a value for sound passed
+        if parsedResult.sound != "" {
+            // Add sound to the notification
+            (ncContent, notificationString) = addNotificationSound(ncContent: ncContent,
+                                                                   notificationString: notificationString,
+                                                                   parsedResult: parsedResult)
+        }
+        // If we have a value for subtitle
+        if parsedResult.subtitle != "" {
+            // Add the subtitle to the notification
+            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "subtitle",
+                                                                             ncContent: ncContent,
+                                                                             notificationString: notificationString,
+                                                                             parsedResult: parsedResult)
+        }
+        // If we have a value for title
+        if parsedResult.title != "" {
+            // Add the title to the notification
+            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "title", ncContent: ncContent,
+                                                                             notificationString: notificationString,
+                                                                             parsedResult: parsedResult)
+        }
+        // If we're to remove prior posted notificastions
+        if parsedResult.remove.lowercased() == "prior" {
+            // Remove a specific prior posted notification
+            removePriorNotification(ncCenter: ncCenter, notificationString: notificationString,
+                                    parsedResult: parsedResult)
+        // If we're not removing
+        } else {
+            // Post the notification
+            postNotification(ncCenter: ncCenter, ncContent: ncContent,
+                             notificationString: notificationString, parsedResult: parsedResult)
+        }
+    }
 }
