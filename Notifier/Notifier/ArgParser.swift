@@ -7,17 +7,28 @@
 
 // Imports
 import ArgumentParser
+import Foundation
 
 // Struct for ArgParser
 struct ArgParser: ParsableCommand {
     // Set overview and usage text
     static let configuration = CommandConfiguration(
-        abstract: "Notifier: Sends banner or alert notifications.",
-        usage: "--type <alert/banner> --message <some message> <options>"
+        abstract: """
+                  Notifier \(String(describing:
+                                    Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")!)): \
+                  Sends banner or alert notifications.
+                  """,
+        usage: """
+               --type <alert/banner> --message <some message> <options>
+               --type <alert/banner> --remove prior <some message> <options>
+               --type <alert/banner> --remove all
+               --rebrand <path to image>
+               """,
+        helpNames: [.long]
     )
     // Notification type
-    @Argument(help: "alert or banner - REQUIRED")
-    var type: String
+    @Option(help: "alert or banner - REQUIRED")
+    var type: String = ""
     // Required, the notifications message
     @Option(help: "The notifications message")
     var message: String = ""
@@ -52,6 +63,9 @@ struct ArgParser: ParsableCommand {
                   Requires '--messagebutton' to be passed.
                   """)
     var messagebuttonaction: String = ""
+    // Triggers rebrand function
+    @Option(help: "Rebrands Notifier using the image passed. Requires root privileges.")
+    var rebrand: String = ""
     // Option to remove a specific notification or all notifications delivered
     @Option(help: """
                   \"prior\" or \"all\". If passing \"prior\", the full message will be required too. \
