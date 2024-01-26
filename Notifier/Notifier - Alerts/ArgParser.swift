@@ -16,7 +16,7 @@ struct ArgParser: ParsableCommand {
         usage: "--message <some message> <options>"
     )
     // Required, the notifications message
-    @Argument(help: "message text - REQUIRED")
+    @Option(help: "message text - REQUIRED")
     var message: String = ""
     // Optional action
     @Option(help: """
