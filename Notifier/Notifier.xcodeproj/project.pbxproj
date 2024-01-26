@@ -27,8 +27,6 @@
 		84E333822B61BBBB00BE750F /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333812B61BBBB00BE750F /* Functions.swift */; };
 		84E333842B61BBC200BE750F /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333832B61BBC200BE750F /* UserNotifications.swift */; };
 		84E333862B61BBE000BE750F /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 84E333852B61BBE000BE750F /* ArgumentParser */; };
-		84FA74952B61C2C8009B4068 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84FA74942B61C2C8009B4068 /* Info.plist */; };
-		84FA74972B61C2D1009B4068 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84FA74962B61C2D1009B4068 /* Info.plist */; };
 		84FA74982B61C4A6009B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */; };
 		84FA74992B61C4B7009B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -54,8 +52,8 @@
 		7CAB609623DF4C8B0029E310 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = Contents/Helpers;
-			dstSubfolderSpec = 1;
+			dstPath = banner;
+			dstSubfolderSpec = 7;
 			files = (
 				84524FD52B61BC620046367B /* Notifier - Notifications.app in CopyFiles */,
 			);
@@ -64,8 +62,8 @@
 		7CF89A4023BF9F6000723A3B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = Contents/Helpers;
-			dstSubfolderSpec = 1;
+			dstPath = alert;
+			dstSubfolderSpec = 7;
 			files = (
 				84E1A6CB2B61C03F00D7F7C9 /* Notifier - Alerts.app in CopyFiles */,
 			);
@@ -78,7 +76,6 @@
 		7C6D15782270BA2F0092D34E /* Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C6D157B2270BA2F0092D34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C6D15802270BA300092D34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		7C6D15822270BA300092D34E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C720951227888E10033B2E2 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848FC8962B61BB1F009B4915 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,8 +94,6 @@
 		84E3337F2B61BBB100BE750F /* ArgParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgParser.swift; sourceTree = "<group>"; };
 		84E333812B61BBBB00BE750F /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		84E333832B61BBC200BE750F /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
-		84FA74942B61C2C8009B4068 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84FA74962B61C2D1009B4068 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifierRelease.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,7 +153,6 @@
 				63B92DE8282AAEDE00B44340 /* ArgParser.swift */,
 				7C720951227888E10033B2E2 /* Functions.swift */,
 				84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */,
-				7C6D15822270BA300092D34E /* Info.plist */,
 				7C6D157F2270BA300092D34E /* MainMenu.xib */,
 				B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */,
 			);
@@ -180,7 +174,6 @@
 				84E333812B61BBBB00BE750F /* Functions.swift */,
 				84E333832B61BBC200BE750F /* UserNotifications.swift */,
 				84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */,
-				84FA74962B61C2D1009B4068 /* Info.plist */,
 				848FC89A2B61BB20009B4915 /* MainMenu.xib */,
 				848FC89D2B61BB20009B4915 /* Notifier___Notifications.entitlements */,
 			);
@@ -195,7 +188,6 @@
 				84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */,
 				84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */,
 				84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */,
-				84FA74942B61C2C8009B4068 /* Info.plist */,
 				84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */,
 				84E1A6C12B61C00500D7F7C9 /* Notifier___Alerts.entitlements */,
 			);
@@ -342,7 +334,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84FA74982B61C4A6009B4068 /* Assets.xcassets in Resources */,
-				84FA74972B61C2D1009B4068 /* Info.plist in Resources */,
 				848FC89C2B61BB20009B4915 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,7 +344,6 @@
 			files = (
 				84E1A6BD2B61C00500D7F7C9 /* Assets.xcassets in Resources */,
 				84E1A6C02B61C00500D7F7C9 /* MainMenu.xib in Resources */,
-				84FA74952B61C2C8009B4068 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +475,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				"DEVELOPMENT_TEAM[sdk=*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -507,7 +498,9 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp";
 				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -552,6 +545,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -567,7 +561,9 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp";
 				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -589,6 +585,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Notifier/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -598,6 +595,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -619,6 +617,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Notifier/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -628,6 +627,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -649,6 +649,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -663,6 +664,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -685,6 +687,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -699,6 +702,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -720,6 +724,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -733,6 +738,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -755,6 +761,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -768,6 +775,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
