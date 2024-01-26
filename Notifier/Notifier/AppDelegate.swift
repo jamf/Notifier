@@ -18,38 +18,38 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     // Check arguments passed to app, then OS if a valid argument is passed else print usage
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // The first argument is always the executable, drop it
+        let passedArgs = Array(CommandLine.arguments.dropFirst())
+        // Get the parsed args
+        let parsedResult = ArgParser.parseOrExit(passedArgs)
         // Get the username of the logged in user
         let loggedInUser = loggedInUser()
-        // Check to see if at the loginwindow, and exit if we are
-        if loggedInUser == "" {
-            // Print error
-            print("ERROR: No user logged in...")
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - verbose enabled - arguments: \(parsedResult)")
+        }
+        // If rebrand has been passed
+        if parsedResult.rebrand != "" {
+            // Confirm we're root before proceeding
+            rootCheck(parsedResult: parsedResult, passedArg: "--rebrand")
+            // Rebrand Notifier apps
+            changeIcon(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
+        // If we're not rebranding and no user is logged in exit
+        } else if loggedInUser == "" {
+            // Post error to stdout and NSLog if verbose mode is enabled
+            postError(errorMessage: "ERROR: No user logged in...",
+                      functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
             // Exit
             exit(1)
         }
         // Exit if notificaiton center isn't running for the user
-        isNotificationCenterRunning()
-        // The first argument is always the executable, drop it
-        let passedArgs = Array(CommandLine.arguments.dropFirst())
-        // If no args passed, show help
-        if passedArgs.isEmpty {
-            // If no args, show help
-            _ = ArgParser.parseOrExit(["--help"])
-            // Exit
-            exit(1)
-        }
-        // Get the parsed args
-        let parsedResult = ArgParser.parseOrExit(passedArgs)
-        // If verbose mode is enabled
-        if parsedResult.verbose {
-            // Progress log
-            NSLog("Notifier Log: notifier - verbose enabled")
-        }
-        // Set parsedtype to lowercase of type
-        let parsedType = parsedResult.type.lowercased()
-        // If an invalid type is pased, or we have don't have a message and we're not removing
-        if parsedType != "alert" && parsedType != "banner" ||
-            parsedResult.message == "" && parsedResult.remove == "" {
+        isNotificationCenterRunning(parsedResult: parsedResult)
+        // If an invalid type OR remove option has been passed OR there is no message & we're not rebranding
+        if (parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner") ||
+            parsedResult.remove != "" &&
+            (parsedResult.remove.lowercased() != "all" && parsedResult.remove.lowercased() != "prior") ||
+            parsedResult.message == "" && parsedResult.rebrand == "" {
             // Show help
             _ = ArgParser.parseOrExit(["--help"])
             // Exit
@@ -58,10 +58,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // If verbose mode is enabled
         if parsedResult.verbose {
             // Progress log
-            NSLog("Notifier Log: notifier - type - %@", parsedType)
+            NSLog("\(#function.components(separatedBy: "(")[0]) - type - \(parsedResult.type)")
         }
-        // Look for the corresponding app's bundle
-        var notifierPath = Bundle.main.path(forResource: nil, ofType: "app", inDirectory: parsedType)!
+        // Look for the corresponding app's directory
+        var notifierPath = Bundle.main.path(forResource: nil, ofType: "app", inDirectory: parsedResult.type)!
         + "/Contents/MacOS/"
         // Check that the expected .app exists
         do {
@@ -72,17 +72,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // If verbose mode is enabled
             if parsedResult.verbose {
                 // Progress log
-                NSLog("Notifier Log: notifier - path - %@", notifierPath)
+                NSLog("\(#function.components(separatedBy: "(")[0]) - path - \(notifierPath)")
             }
             // If we cannot find the expected app
         } catch {
-            // Print error
-            print("ERROR: Cannot find an app bundle at: \(notifierPath)...")
-            // If verbose mode is enabled
-            if parsedResult.verbose {
-                // Progress log
-                NSLog("ERROR: Cannot find an app bundle at: \(notifierPath)...")
-            }
+            // Post error to stdout and NSLog if verbose mode is enabled
+            postError(errorMessage: "ERROR: Cannot find an app bundle at: \(notifierPath)...",
+                      functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
             // Exit
             exit(1)
         }
@@ -98,17 +94,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Append --remove all
             notifierArgsArray = appendRemoveAll(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
             // Post the arguments to the relevant app, exiting afterwards
-            postToApp(loggedInUser: loggedInUser, notifierArgsArray: notifierArgsArray, notifierPath: notifierPath)
+            postToApp(loggedInUser: loggedInUser, notifierArgsArray: notifierArgsArray, notifierPath: notifierPath,
+                      parsedResult: parsedResult)
+        } else {
+            // Format the args as needed
+            formatArgs(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedResult: parsedResult)
         }
-        // Format the args as needed
-        formatArgs(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedResult: parsedResult,
-                   parsedType: parsedType)
     }
+
 }
 
 // Format the args as needed
-func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgParser,
-                parsedType: String) {
+func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgParser) {
     // Var declaration
     var notifierArgsArray = [String]()
     // If verbose mode is enabled
@@ -126,6 +123,11 @@ func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgPar
         // Append --messageaction
         notifierArgsArray = appendMessageaction(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
     }
+    // If we've been passed a sound
+    if parsedResult.sound != "" {
+        // Append --sound
+        notifierArgsArray = appendSound(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
+    }
     // If we've been passed a subtitle
     if parsedResult.subtitle != "" {
         // Append --subtitle
@@ -136,24 +138,13 @@ func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgPar
         // Append --title
         notifierArgsArray = appendTitle(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
     }
-    // If we've been passed a sound
-    if parsedResult.sound != "" {
-        // Append --sound
-        notifierArgsArray = appendSound(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
-    }
     // If we're to remove a prior posted notification
     if parsedResult.remove.lowercased() == "prior" {
         // Append --remove prior
         notifierArgsArray = appendRemovePrior(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
-    // If we've been passed something other than all or prior
-    } else {
-        // Show help
-        _ = ArgParser.parseOrExit(["--help"])
-        // Exit
-        exit(1)
     }
     // If we're dealing with an alert, check for additional items
-    if parsedType == "alert" {
+    if parsedResult.type.lowercased() == "alert" {
         // If we've been passed a messagebutton
         if parsedResult.messagebutton != "" {
             // Append --messagebutton
@@ -167,16 +158,6 @@ func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgPar
         }
     }
     // Post the arguments to the relevant app, exiting afterwards
-    postToApp(loggedInUser: loggedInUser, notifierArgsArray: notifierArgsArray, notifierPath: notifierPath)
-}
-
-// Post the arguments to the relevant app, exiting afterwards
-func postToApp(loggedInUser: String, notifierArgsArray: [String], notifierPath: String) {
-    // Build the taskArgumentsArray
-    let taskArgumentsArray = buildTaskArgumentsArray(loggedInUser: loggedInUser,
-                                                     notifierArgsArray: notifierArgsArray, notifierPath: notifierPath)
-    // Launch the wanted notification app as the user
-    let (_, _) = runTask(taskPath: "/usr/bin/su", taskArguments: taskArgumentsArray)
-    // Exit
-    exit(0)
+    postToApp(loggedInUser: loggedInUser, notifierArgsArray: notifierArgsArray, notifierPath: notifierPath,
+              parsedResult: parsedResult)
 }
