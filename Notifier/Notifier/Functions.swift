@@ -256,7 +256,8 @@ func buildTaskArguments(loggedInUser: String, notifierArgsArray: [String], notif
     return (taskArgumentsArray, taskPath)
 }
 
-func changeIcon(brandingImage: String, loggedInUser: String, parsedResult: ArgParser) {
+// Changes the notifier apps icons, and if logged in restarts notificatoin center
+func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgParser) {
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
@@ -264,20 +265,14 @@ func changeIcon(brandingImage: String, loggedInUser: String, parsedResult: ArgPa
     }
     // Get the details of the file at brandingImage
     let imageData = getImageDetails(brandingImage: brandingImage, parsedResult: parsedResult)
-    // Get path to the main Notifier.app
-    let notifierAppPath = Bundle.main.bundlePath
-    // Get path to the Alert app
-    let notifierAlertPath = (Bundle.main.path(forResource: nil, ofType: "app", inDirectory: "alert") ?? "") as String
-    // Get path to the Banner app
-    let notifierBannerPath = (Bundle.main.path(forResource: nil, ofType: "app", inDirectory: "banner") ?? "") as String
-    // Create Array of apps to update the icons of
-    let notifierApps = [notifierAppPath, notifierAlertPath, notifierBannerPath]
     // Create an array to log progress for icon changes
     var brandingStatus = [Bool]()
     // For each application in brandingArray
-    for notifierApp in notifierApps {
-        brandingStatus.append(updateIcon(brandingImage: brandingImage, imageData: imageData!, objectPath: notifierApp,
-                                         parsedResult: parsedResult))
+    for notifierApp in [GlobalVariables.mainAppPath, GlobalVariables.alertAppPath,
+                        GlobalVariables.bannerAppPath] {
+        // Returns bool for ther  the branding status for each app
+        brandingStatus.append(updateIcon(brandingImage: brandingImage, imageData: imageData!,
+                                         objectPath: notifierApp, parsedResult: parsedResult))
     }
     // If brandingStatus just contains true
     if !brandingStatus.contains(false) {
@@ -290,6 +285,7 @@ func changeIcon(brandingImage: String, loggedInUser: String, parsedResult: ArgPa
         if loggedInUser != "" {
             // If we're logged in, look to restart apps for branding changes
             restartNotificationCenter(loggedInUser: loggedInUser, parsedResult: parsedResult)
+            // Exit
             exit(0)
         }
     } else {
@@ -450,23 +446,22 @@ func runTask(parsedResult: ArgParser, taskPath: String, taskArguments: [String])
 
 // Attempts to update the app passed to objectPath's icon
 func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, parsedResult: ArgParser) -> Bool {
-    // Register app
-    LSRegisterURL(objectPath as! CFURL, true)
     // Get the items at the root of the .app bundle
-    let appRootItems = try? FileManager.default.contentsOfDirectory(atPath: objectPath)
-    // If we have items
-    if (appRootItems?.isEmpty) != nil {
+    do {
+        // Get the list of items in the apps bundle
+        let appRootItems = try? FileManager.default.contentsOfDirectory(atPath: objectPath)
         // For each item found, wherethe item starts with Icon\r
         for appRootItem in appRootItems! where appRootItem.hasSuffix("Icon\r") {
             // If verbose mode is enabled
             if parsedResult.verbose {
                 // Progress log
                 NSLog("""
-                      \(#function.components(separatedBy: "(")[0]) - Deleting: \(objectPath + "/" + appRootItem)...
-                      """)
+                  \(#function.components(separatedBy: "(")[0]) - Deleting: \(objectPath + "/" + appRootItem)...
+                  """)
             }
             // Delete the file
             try? FileManager.default.removeItem(atPath: objectPath + "/" + appRootItem)
+            // Sleep for 1 second
             sleep(1)
         }
     }
