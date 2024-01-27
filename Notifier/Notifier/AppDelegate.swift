@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Confirm we're root before proceeding
             rootCheck(parsedResult: parsedResult, passedArg: "--rebrand")
             // Rebrand Notifier apps
-            changeIcon(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
+            changeIcons(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
         // If we're not rebranding and no user is logged in exit
         } else if loggedInUser == "" {
             // Post error to stdout and NSLog if verbose mode is enabled
@@ -60,27 +60,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - type - \(parsedResult.type)")
         }
-        // Look for the corresponding app's directory
-        var notifierPath = Bundle.main.path(forResource: nil, ofType: "app", inDirectory: parsedResult.type)!
-        + "/Contents/MacOS/"
-        // Check that the expected .app exists
-        do {
-            // Confirm that we can find the wanted app bundle
-            let appBundle = try FileManager.default.contentsOfDirectory(atPath: notifierPath)
-            // Append to path
-            notifierPath += appBundle.first!
-            // If verbose mode is enabled
-            if parsedResult.verbose {
-                // Progress log
-                NSLog("\(#function.components(separatedBy: "(")[0]) - path - \(notifierPath)")
-            }
-            // If we cannot find the expected app
-        } catch {
-            // Post error to stdout and NSLog if verbose mode is enabled
-            postError(errorMessage: "ERROR: Cannot find an app bundle at: \(notifierPath)...",
-                      functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
-            // Exit
-            exit(1)
+
+        // Var declaration
+        var notifierPath = String()
+        // If we're looking for the alert app
+        if parsedResult.type == "alert" {
+            // Get the alert apps path
+            notifierPath = GlobalVariables.alertAppPath + "/Contents/MacOS/Notifier - Alerts"
+        // If we're looking for the banner app
+        } else {
+            // Get the alert apps path
+            notifierPath = GlobalVariables.bannerAppPath + "/Contents/MacOS/Notifier - Notifications"
         }
         // If --remove all has been passed
         if parsedResult.remove.lowercased() == "all" {
