@@ -45,11 +45,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         // Exit if notificaiton center isn't running for the user
         isNotificationCenterRunning(parsedResult: parsedResult)
-        // If an invalid type OR remove option has been passed OR there is no message & we're not rebranding
-        if (parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner") ||
-            parsedResult.remove != "" &&
-            (parsedResult.remove.lowercased() != "all" && parsedResult.remove.lowercased() != "prior") ||
-            parsedResult.message == "" && parsedResult.rebrand == "" {
+        // If an invalid type OR remove option has been passed AND there is no message and we're not rebranding
+        if ((parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner") ||
+            parsedResult.remove != "" && (parsedResult.remove.lowercased() != "all" &&
+                                          parsedResult.remove.lowercased() != "prior")
+            ) && (parsedResult.message == "" && parsedResult.rebrand == "") {
             // Show help
             _ = ArgParser.parseOrExit(["--help"])
             // Exit
@@ -74,6 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         // If --remove all has been passed
         if parsedResult.remove.lowercased() == "all" {
+            /*
             // Var declaration
             var notifierArgsArray = [String]()
             // If verbose mode is enabled
@@ -81,6 +82,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 // Append --verbose
                 notifierArgsArray.append("--verbose")
             }
+             */
+            var notifierArgsArray = [String]()
             // Append --remove all
             notifierArgsArray = appendRemoveAll(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
             // Post the arguments to the relevant app, exiting afterwards

@@ -17,8 +17,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     @IBOutlet weak var window: NSWindow!
     // When we've finished launching
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Exit if notificaiton center isn't running for the user
-        isNotificationCenterRunning()
+        // If .userInfo ios populated, we've baen launched by interation with a prior posted notification
+        if let response = (aNotification as NSNotification).userInfo?[
+            NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
+            // Handle the notification
+            handleNotification(forResponse: response)
+            //
+            exit(0)
+        }
         // The first argument is always the executable, drop it
         let passedArgs = Array(CommandLine.arguments.dropFirst())
         // If no args passed, show help
@@ -29,19 +35,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         } else {
             // Get the parsed args
             let parsedResult = ArgParser.parseOrExit(passedArgs)
+            // Exit if notificaiton center isn't running
+            isNotificationCenterRunning(parsedResult: parsedResult)
             // Ask permission
             requestAuthorisation(parsedResult: parsedResult)
-            // See if we have any .userInfo when launched, such as from user interaction
-            if let response = (aNotification as NSNotification).userInfo?[
-                // Launch the app with the response in the .userInfo
-                NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
-                // Handle the notification
-                handleUNNotification(forResponse: response)
-            }
             // Create a notification center object
             let ncCenter =  UNUserNotificationCenter.current()
             // Set delegate
             ncCenter.delegate = self
+            // If verbose mode is set
+            if parsedResult.verbose {
+                // Progress log
+                NSLog("\(#function.components(separatedBy: "(")[0]) - verbose enabled")
+            }
             // Process the arguments as needed
             processArguments(ncCenter: ncCenter, parsedResult: parsedResult)
         }
@@ -54,11 +60,6 @@ func processArguments(ncCenter: UNUserNotificationCenter, parsedResult: ArgParse
     var notificationString = ""
     // Create a notification content object
     var ncContent = UNMutableNotificationContent()
-    // If verbose mode is set
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("Notifier Log: banner - verbose enabled")
-    }
     // If we're to remove all delivered notifications
     if parsedResult.remove.lowercased() == "all" {
         // Remove all notifications
@@ -69,17 +70,16 @@ func processArguments(ncCenter: UNUserNotificationCenter, parsedResult: ArgParse
         if parsedResult.message != "" {
             // Create the notifications body
             (ncContent, notificationString) = addNotificationBody(ncContent: ncContent,
-                                                                       notificationString: notificationString,
-                                                                       parsedResult: parsedResult)
-
+                                                                  notificationString: notificationString,
+                                                                  parsedResult: parsedResult)
         }
-        // If we have a value for message action passed
+        // If we have a value for messageaction passed
         if parsedResult.messageaction != "" {
             // Add the notification message action
-            (ncContent, notificationString) = addNotificationBodyAction(ncContent: ncContent,
-                                                                        notificationString: notificationString,
-                                                                        parsedResult: parsedResult)
-
+            (ncContent, notificationString) = addNotificationAction(contentKey: "messageAction",
+                                                                                ncContent: ncContent,
+                                                                                notificationString: notificationString,
+                                                                                parsedResult: parsedResult)
         }
         // If we have a value for sound passed
         if parsedResult.sound != "" {
@@ -94,21 +94,19 @@ func processArguments(ncCenter: UNUserNotificationCenter, parsedResult: ArgParse
             (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "subtitle",
                                                                              ncContent: ncContent,
                                                                              notificationString: notificationString,
-                                                                        parsedResult: parsedResult)
+                                                                             parsedResult: parsedResult)
         }
         // If we have a value for title
         if parsedResult.title != "" {
             // Add the title to the notification
-            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "title",
-                                                                             ncContent: ncContent,
+            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "title", ncContent: ncContent,
                                                                              notificationString: notificationString,
                                                                              parsedResult: parsedResult)
         }
         // If we're to remove prior posted notificastions
         if parsedResult.remove.lowercased() == "prior" {
             // Remove a specific prior posted notification
-            removePriorNotification(ncCenter: ncCenter,
-                                    notificationString: notificationString,
+            removePriorNotification(ncCenter: ncCenter, notificationString: notificationString,
                                     parsedResult: parsedResult)
         // If we're not removing
         } else {

@@ -16,7 +16,7 @@ struct ArgParser: ParsableCommand {
         abstract: """
                   Notifier \(String(describing:
                                     Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")!)): \
-                  Sends banner or alert notifications.
+                  Posts alert or banner notifications.
                   """,
         usage: """
                --type <alert/banner> --message <some message> <options>
@@ -73,6 +73,6 @@ struct ArgParser: ParsableCommand {
                   """)
     var remove: String = ""
     // Enables verbose logging
-    @Flag(help: "Enables logging of actions. Check console for  'Notifier Log:' messages.")
+    @Flag(help: "Enables logging of actions. Check console for  'Notifier' messages.")
     var verbose = false
 }

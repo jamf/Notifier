@@ -12,7 +12,7 @@ import ArgumentParser
 struct ArgParser: ParsableCommand {
     // Set overview and usage text
     static let configuration = CommandConfiguration(
-        abstract: "Notifier: Sends banner notifications.",
+        abstract: "Notifier: Posts banner notifications.",
         usage: "--message <some message> <options>"
     )
     // Required, the notifications message
@@ -45,6 +45,6 @@ struct ArgParser: ParsableCommand {
                   """)
     var remove: String = ""
     // Enables verbose logging
-    @Flag(help: "Enables logging of actions. Check console for  'Notifier Log:' messages.")
-      var verbose = false
+    @Flag(help: "Enables logging of actions. Check console for  'Notifier - Alerts' messages.")
+    var verbose = false
 }

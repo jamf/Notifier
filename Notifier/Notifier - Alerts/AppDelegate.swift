@@ -17,8 +17,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     @IBOutlet weak var window: NSWindow!
     // When we've finished launching
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Exit if notificaiton center isn't running for the user
-        isNotificationCenterRunning()
+        // If .userInfo ios populated, we've baen launched by interation with a prior posted notification
+        if let response = (aNotification as NSNotification).userInfo?[
+            NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
+            // Handle the notification
+            handleNotification(forResponse: response)
+            //
+            exit(0)
+        }
         // The first argument is always the executable, drop it
         let passedArgs = Array(CommandLine.arguments.dropFirst())
         // If no args passed, show help
@@ -29,15 +35,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         } else {
             // Get the parsed args
             let parsedResult = ArgParser.parseOrExit(passedArgs)
+            // Exit if notificaiton center isn't running
+            isNotificationCenterRunning(parsedResult: parsedResult)
             // Ask permission
             requestAuthorisation(parsedResult: parsedResult)
-            // See if we have any .userInfo when launched, such as from user interaction
-            if let response = (aNotification as NSNotification).userInfo?[
-                // Launch the app with the response in the .userInfo
-                NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
-                // Handle the notification
-                handleUNNotification(forResponse: response)
-            }
             // Create a notification center object
             let ncCenter =  UNUserNotificationCenter.current()
             // Set delegate
@@ -45,20 +46,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             // If verbose mode is set
             if parsedResult.verbose {
                 // Progress log
-                NSLog("Notifier Log: alert - verbose enabled")
+                NSLog("\(#function.components(separatedBy: "(")[0]) - verbose enabled")
+            }
+            // Create a notification content object
+            let baseContent = UNMutableNotificationContent()
+            // If verbose mode is set
+            if parsedResult.verbose {
+                // Add verboseMode to userInfo
+                baseContent.userInfo["verboseMode"] = "enabled"
             }
             // Process the arguments as needed
-            processArguments(ncCenter: ncCenter, parsedResult: parsedResult)
+            processArguments(baseContent: baseContent, ncCenter: ncCenter, parsedResult: parsedResult)
         }
     }
 }
 
 // Process the arguments as needed
-func processArguments(ncCenter: UNUserNotificationCenter, parsedResult: ArgParser) {
+func processArguments(baseContent: UNMutableNotificationContent, ncCenter: UNUserNotificationCenter,
+                      parsedResult: ArgParser) {
     // Var declaration
     var notificationString = ""
-    // Create a notification content object
-    var ncContent = UNMutableNotificationContent()
+    // Change to a var
+    var ncContent = baseContent
     // If we're to remove all delivered notifications
     if parsedResult.remove.lowercased() == "all" {
         // Remove all notifications

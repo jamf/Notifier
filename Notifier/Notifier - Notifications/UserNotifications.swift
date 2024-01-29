@@ -1,6 +1,6 @@
 //
 //  UserNotifications.swift
-//  Notifier - Notifications
+//  Notifiers - Alerts
 //
 //  Copyright © 2024 dataJAR Ltd. All rights reserved.
 //
@@ -16,7 +16,7 @@ func addNotificationBody(ncContent: UNMutableNotificationContent, notificationSt
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - message")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - message")
     }
     // Set the message to the body of the notification
     ncContent.body = parsedResult.message
@@ -25,46 +25,44 @@ func addNotificationBody(ncContent: UNMutableNotificationContent, notificationSt
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - notificationString - %@", notificationString)
+        NSLog("\(#function.components(separatedBy: "(")[0]) - notificationString - \(tempString)")
     }
     // Return the modified vars
     return(ncContent, tempString)
 }
 
 // Adds an action to the notification body
-func addNotificationBodyAction(ncContent: UNMutableNotificationContent, notificationString: String,
-                               parsedResult: ArgParser) -> (UNMutableNotificationContent, String) {
+func addNotificationAction(contentKey: String, ncContent: UNMutableNotificationContent,
+                           notificationString: String, parsedResult: ArgParser)
+                                       -> (UNMutableNotificationContent, String) {
     // Var declaration
     var tempString = notificationString
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - message")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - \(contentKey)")
     }
-    // The action, in lowecase is logout
-    if parsedResult.messageaction.lowercased() == "logout" {
-        // Set the action in .userinfo to logout
-        ncContent.userInfo["messageAction"] = "logout"
-        // Append action to notificationString
-        tempString += "logout"
-        // Append type to notificationString
-        tempString += "banner"
-        // If we're in verbose mode
-        if parsedResult.verbose {
-            // Progress log
-            NSLog("Notifier Log: banner - notificationString - %@", notificationString)
+    // If we're looking at the messageAction
+    if contentKey == "messageAction" {
+        // If the action, in lowercase is logout
+        if parsedResult.messageaction.lowercased() == "logout" {
+            // Set the action in .userinfo to logout
+            ncContent.userInfo[contentKey] = "logout"
+            // Append action to notificationString
+            tempString += "logout"
+            // If we're in verbose mode
+            if parsedResult.verbose {
+                // Progress log
+                NSLog("\(#function.components(separatedBy: "(")[0]) - added logout action")
+            }
+        // If the action isn't logout
+        } else {
+            // Set the action in .userinfo
+            ncContent.userInfo[contentKey] = parsedResult.messageaction
+            // Append action to notificationString
+            tempString += "\(String(describing: parsedResult.messageaction))"
         }
-    // If the action isn't logout
-    } else {
-        // Set the action in .userinfo
-        ncContent.userInfo["messageAction"] = parsedResult.messageaction
-        // Append type to notificationString
-        tempString += "\(String(describing: parsedResult.messageaction))"
-        // If we're in verbose mode
-        if parsedResult.verbose {
-            // Progress log
-            NSLog("Notifier Log: banner - notificationString - %@", notificationString)
-        }
+    // If we're looking at messeageButtonAction
     }
     // Return the modified vars
     return(ncContent, tempString)
@@ -78,18 +76,18 @@ func addNotificationSound(ncContent: UNMutableNotificationContent, notificationS
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - sound")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - sound")
     }
     // If we've been passed default for the sound
     if parsedResult.sound.lowercased() == "default" {
         // Set the notifications sound, to macOS's default
         ncContent.sound = UNNotificationSound.default
         // Append to notificationString
-        tempString += "\(String(describing: ncContent.sound))"
+        tempString += "\(String(describing: parsedResult.sound))"
         // If we're in verbose mode
         if parsedResult.verbose {
             // Progress log
-            NSLog("Notifier Log: banner - notificationString - %@", notificationString)
+            NSLog("\(#function.components(separatedBy: "(")[0]) - notificationString - \(tempString)")
         }
     // If we've been passed another sound
     } else {
@@ -98,11 +96,11 @@ func addNotificationSound(ncContent: UNMutableNotificationContent, notificationS
                                                 UNNotificationSoundName(rawValue:
                                                                             parsedResult.sound))
         // Append to notificationString
-        tempString += "\(String(describing: ncContent.sound))"
+        tempString += "\(String(describing: parsedResult.sound))"
         // If we're in verbose mode
         if parsedResult.verbose {
             // Progress log
-            NSLog("Notifier Log: banner - notificationString - %@", notificationString)
+            NSLog("\(#function.components(separatedBy: "(")[0]) - notificationString - \(tempString)")
         }
     }
     // Return the modified vars
@@ -111,14 +109,14 @@ func addNotificationSound(ncContent: UNMutableNotificationContent, notificationS
 
 // Adds a subtitle or title to the notification
 func addNotificationSubtitleOrTitle(contentKey: String, ncContent: UNMutableNotificationContent,
-                                    notificationString: String,
-                                    parsedResult: ArgParser) -> (UNMutableNotificationContent, String) {
+                                    notificationString: String, parsedResult: ArgParser)
+                                    -> (UNMutableNotificationContent, String) {
     // Var declaration
     var tempString = notificationString
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - \(contentKey)")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - \(contentKey)")
     }
     // If we're to set the subtitle
     if contentKey == "subtitle" {
@@ -136,71 +134,86 @@ func addNotificationSubtitleOrTitle(contentKey: String, ncContent: UNMutableNoti
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - notificationString - \(notificationString)")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - notificationString - \(tempString)")
     }
     // Return the modified vars
     return(ncContent, tempString)
 }
 
+// Handles when a notification is interacted with
+func handleNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any]) {
+    // If we have a userInfoKey in the notifications userinfo
+    if userInfo[userInfoKey] != nil {
+        // iIf the action is logout
+        if (userInfo[userInfoKey] as? String) == "logout" {
+            // If verbose mode is set
+            if userInfo["verboseMode"] != nil {
+                // Progress log
+                NSLog("\(#function.components(separatedBy: "(")[0]) - \(userInfoKey) - logout")
+            }
+            // Prompt to logout
+            gracefulLogout(userInfo: userInfo)
+            // If we have an action thaty's not logout
+        } else {
+            // If verbose mode is set
+            if userInfo["verboseMode"] != nil {
+                // Progress log
+                NSLog("""
+                      \(#function.components(separatedBy: "(")[0]) - \(userInfoKey) \
+                      - \(String(describing: userInfo["messageButtonAction"]))
+                      """)
+            }
+            // Open the item passed
+            openItem(userInfo: userInfo)
+        }
+    }
+}
+
 // Process userinfo for UNNotification
-func handleUNNotification(forResponse response: UNNotificationResponse) {
-    // Var declarations
-    var verboseMode = false
-    var messageDismissed = true
+func handleNotification(forResponse response: UNNotificationResponse) {
     // Retrieve userInfo from the response object
     let userInfo = response.notification.request.content.userInfo
     // If verboseMode is set
     if userInfo["verboseMode"] != nil {
-        // Then enable verboseMode
-        verboseMode = true
         // Progress log
-        NSLog("Notifier Log: banner - message - interacted")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - message - interacted")
     }
-    // Triggered when the notification message is clicked 
+    // Triggered when the notification message is clicked
     if response.actionIdentifier == "com.apple.UNNotificationDefaultActionIdentifier" {
         // If verbose mode is set
-        if verboseMode {
+        if userInfo["verboseMode"] != nil {
             // Progress log
-            NSLog("Notifier Log: banner - message - clicked")
+            NSLog("""
+                  \(#function.components(separatedBy: "(")[0]) - message - clicked \
+                  - userInfo \(String(describing: userInfo))
+                  """)
+        }
+        // Performs any actions set when the user clicks the message
+        handleNotificationActions(userInfoKey: "messageAction", userInfo: userInfo)
+    // If the notification was dismissed
+    } else if response.actionIdentifier == "com.apple.UNNotificationDismissActionIdentifier" {
+        // If verbose mode is set
+        if userInfo["verboseMode"] != nil {
             // Progress log
-            NSLog("Notifier Log: banner - message - userInfo %@", String(describing: userInfo))
+            NSLog("\(#function.components(separatedBy: "(")[0]) - message - message was dismissed")
         }
-        // If the notification has a messageAction
-        if userInfo["messageAction"] != nil {
-            // If the notification's messageAction is logout
-            if (userInfo["messageAction"] as? String) == "logout" {
-                // If verbose mode is set
-                if verboseMode {
-                    // Progress log
-                    NSLog("Notifier Log: banner - message - logout")
-                }
-                // Prompt to logout
-                gracefullLogout(verboseMode: verboseMode)
-                // Set messageDismissed to false
-                messageDismissed = false
-            // If the messageAction is something else
-            } else {
-                // If verbose mode is set
-                if verboseMode {
-                    // Progress log
-                    NSLog("Notifier Log: banner - message - %@", String(describing: userInfo["messageAction"]))
-                }
-                // Open the requested item
-                openItem(globalOpenItem: [(userInfo["messageAction"] as? String)!], verboseMode: verboseMode)
-                // Set messageDismissed to false
-                messageDismissed = false
-            }
+    // If the messageButton was clicked
+    } else {
+        // If verbose mode is set
+        if userInfo["verboseMode"] != nil {
+            // Progress log
+            NSLog("""
+                  \(#function.components(separatedBy: "(")[0]) - message button - \
+                  clicked - userInfo \(String(describing: userInfo))
+                  """)
         }
-    }
-    // If verbose mode is set and the notification was dismissed
-    if verboseMode && messageDismissed {
-        // Progress log
-        NSLog("Notifier Log: banner - message - dismissed by user")
+        // Performs any actions set when the user clicks the messagebutton
+        handleNotificationActions(userInfoKey: "messageButton", userInfo: userInfo)
     }
     // If verbose mode is set
-    if verboseMode {
+    if userInfo["verboseMode"] != nil {
         // Progress log
-        NSLog("Notifier Log: banner - message - removing notification")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - message - removing notification")
     }
     // Remove the delivered notification
     UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers:
@@ -208,9 +221,12 @@ func handleUNNotification(forResponse response: UNNotificationResponse) {
     // Sleep for a second
     sleep(1)
     // If verbose mode is set
-    if verboseMode {
+    if userInfo["verboseMode"] != nil {
         // Progress log
-        NSLog("Notifier Log: banner - message - removing notification - done")
+        NSLog("""
+              \(#function.components(separatedBy: "(")[0]) - message - \
+              removing notification - done
+              """)
     }
     // Exit
     exit(0)
@@ -219,23 +235,20 @@ func handleUNNotification(forResponse response: UNNotificationResponse) {
 // Post the notification
 func postNotification(ncCenter: UNUserNotificationCenter, ncContent: UNMutableNotificationContent,
                       notificationString: String, parsedResult: ArgParser) {
-    // If we're in verbose mode
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("Notifier Log: banner - notification request")
-    }
     // Convert notificationString into base64
     let ncContentbase64 = base64String(stringContent: notificationString)
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - ncContentbase64 - %@", ncContentbase64)
+        NSLog("""
+              \(#function.components(separatedBy: "(")[0]) - notification \
+              request - ncContentbase64 - \(ncContentbase64)
+              """)
     }
     // Set the notification to be posted in 1 second
     let ncTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
     // Create the request object
-    let ncRequest = UNNotificationRequest(identifier: ncContentbase64,
-                                          content: ncContent, trigger: ncTrigger)
+    let ncRequest = UNNotificationRequest(identifier: ncContentbase64, content: ncContent, trigger: ncTrigger)
     // Post the notification
     ncCenter.add(ncRequest)
     // Sleep for a second
@@ -243,7 +256,7 @@ func postNotification(ncCenter: UNUserNotificationCenter, ncContent: UNMutableNo
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - notification delivered")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - notification delivered")
     }
     // Exit
     exit(0)
@@ -251,17 +264,15 @@ func postNotification(ncCenter: UNUserNotificationCenter, ncContent: UNMutableNo
 
 // If we're to remove a specific prior posted notification
 func removePriorNotification(ncCenter: UNUserNotificationCenter, notificationString: String, parsedResult: ArgParser) {
-    // If we're in verbose mode
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("Notifier Log: banner - remove prior")
-    }
     // Convert notificationString into base64
     let ncContentbase64 = base64String(stringContent: notificationString)
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - ncContentbase64 - %@", ncContentbase64)
+        NSLog("""
+              \(#function.components(separatedBy: "(")[0]) - remove prior \
+              - ncContentbase64 - \(notificationString)
+              """)
     }
     // Remove any prior notifications with the same identifier as ncContentbase64
     ncCenter.removeDeliveredNotifications(withIdentifiers: [ncContentbase64])
@@ -270,7 +281,7 @@ func removePriorNotification(ncCenter: UNUserNotificationCenter, notificationStr
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - remove prior - done")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - remove prior - done")
     }
     // Exit
     exit(0)
@@ -281,7 +292,7 @@ func removeAllPriorNotifications(ncCenter: UNUserNotificationCenter, parsedResul
     // If we're in verbose mode
     if parsedResult.verbose {
         // Verbose message
-        NSLog("Notifier Log: banner - ncRemove all")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - ncRemove all")
     }
     // Remove all delivered notifications
     ncCenter.removeAllDeliveredNotifications()
@@ -290,7 +301,7 @@ func removeAllPriorNotifications(ncCenter: UNUserNotificationCenter, parsedResul
     // If we're in verbose mode
     if parsedResult.verbose {
         // Progress log
-        NSLog("Notifier Log: banner - ncRemove all - done")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - ncRemove all - done")
     }
     // Exit
     exit(0)
@@ -306,7 +317,10 @@ func requestAuthorisation(parsedResult: ArgParser) {
             // If verbose mode is set
             if parsedResult.verbose {
                 // Progress log
-                NSLog("Notifier Log: banner - ERROR: Authorisation not granted, exiting...")
+                NSLog("""
+                      \(#function.components(separatedBy: "(")[0]) - ERROR: \
+                      Authorisation not granted, exiting...
+                      """)
             }
             // Exit 1
             exit(1)
@@ -322,12 +336,11 @@ func userNotificationCenter(_ center: UNUserNotificationCenter,
     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NewNotification"),
                                     object: nil, userInfo: response.notification.request.content.userInfo)
     // Handle the response
-    handleUNNotification(forResponse: response)
+    handleNotification(forResponse: response)
 }
 
 // Ensure that notification is shown, even if app is active
-func userNotificationCenter(_ center: UNUserNotificationCenter,
-                            willPresent notification: UNNotification,
+func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
                             withCompletionHandler completionHandler: @escaping
                             (UNNotificationPresentationOptions) -> Void) {
     // Raise an error is an issue with completionHandler

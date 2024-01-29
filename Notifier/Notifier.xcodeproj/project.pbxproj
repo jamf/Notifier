@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63B92DE1282AAEB700B44340 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 63B92DE0282AAEB700B44340 /* ArgumentParser */; };
 		63B92DE9282AAEDE00B44340 /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B92DE8282AAEDE00B44340 /* ArgParser.swift */; };
 		7C6D157C2270BA2F0092D34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6D157B2270BA2F0092D34E /* AppDelegate.swift */; };
 		7C6D15812270BA300092D34E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6D157F2270BA300092D34E /* MainMenu.xib */; };
 		7C720952227888E10033B2E2 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C720951227888E10033B2E2 /* Functions.swift */; };
+		840414D92B679C6C0040DFF1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 840414D82B679C6C0040DFF1 /* ArgumentParser */; };
+		840414DB2B679C710040DFF1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 840414DA2B679C710040DFF1 /* ArgumentParser */; };
+		840414DD2B679C750040DFF1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 840414DC2B679C750040DFF1 /* ArgumentParser */; };
 		844D6FAC2B647A040000CCF2 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D6FAB2B647A040000CCF2 /* Structures.swift */; };
 		84524FD52B61BC620046367B /* Notifier - Notifications.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		848FC8972B61BB1F009B4915 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FC8962B61BB1F009B4915 /* AppDelegate.swift */; };
@@ -19,7 +21,6 @@
 		84E1A6BB2B61C00400D7F7C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */; };
 		84E1A6BD2B61C00500D7F7C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */; };
 		84E1A6C02B61C00500D7F7C9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */; };
-		84E1A6C82B61C02100D7F7C9 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 84E1A6C72B61C02100D7F7C9 /* ArgumentParser */; };
 		84E1A6CB2B61C03F00D7F7C9 /* Notifier - Alerts.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84E1A6CD2B61C0B900D7F7C9 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */; };
 		84E1A6CF2B61C0BE00D7F7C9 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */; };
@@ -27,7 +28,6 @@
 		84E333802B61BBB100BE750F /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3337F2B61BBB100BE750F /* ArgParser.swift */; };
 		84E333822B61BBBB00BE750F /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333812B61BBBB00BE750F /* Functions.swift */; };
 		84E333842B61BBC200BE750F /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333832B61BBC200BE750F /* UserNotifications.swift */; };
-		84E333862B61BBE000BE750F /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 84E333852B61BBE000BE750F /* ArgumentParser */; };
 		84FA74982B61C4A6009B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */; };
 		84FA74992B61C4B7009B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -105,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B92DE1282AAEB700B44340 /* ArgumentParser in Frameworks */,
+				840414D92B679C6C0040DFF1 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84E333862B61BBE000BE750F /* ArgumentParser in Frameworks */,
+				840414DB2B679C710040DFF1 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84E1A6C82B61C02100D7F7C9 /* ArgumentParser in Frameworks */,
+				840414DD2B679C750040DFF1 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,8 +132,8 @@
 			isa = PBXGroup;
 			children = (
 				7C6D157A2270BA2F0092D34E /* Notifier */,
-				848FC8952B61BB1F009B4915 /* Notifier - Notifications */,
 				84E1A6B92B61C00400D7F7C9 /* Notifier - Alerts */,
+				848FC8952B61BB1F009B4915 /* Notifier - Notifications */,
 				7C6D15792270BA2F0092D34E /* Products */,
 				7CECAB5C23BE493E00305F10 /* Frameworks */,
 			);
@@ -217,11 +217,10 @@
 			dependencies = (
 				84FA749C2B61C9D9009B4068 /* PBXTargetDependency */,
 				84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */,
-				841F5F3E2B618C2E00473103 /* PBXTargetDependency */,
 			);
 			name = Notifier;
 			packageProductDependencies = (
-				63B92DE0282AAEB700B44340 /* ArgumentParser */,
+				840414D82B679C6C0040DFF1 /* ArgumentParser */,
 			);
 			productName = oioi;
 			productReference = 7C6D15782270BA2F0092D34E /* Notifier.app */;
@@ -242,7 +241,7 @@
 			);
 			name = "Notifier - Notifications";
 			packageProductDependencies = (
-				84E333852B61BBE000BE750F /* ArgumentParser */,
+				840414DA2B679C710040DFF1 /* ArgumentParser */,
 			);
 			productName = "Notifier - Notifications";
 			productReference = 848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */;
@@ -263,7 +262,7 @@
 			);
 			name = "Notifier - Alerts";
 			packageProductDependencies = (
-				84E1A6C72B61C02100D7F7C9 /* ArgumentParser */,
+				840414DC2B679C750040DFF1 /* ArgumentParser */,
 			);
 			productName = "Notifier - Alerts";
 			productReference = 84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */;
@@ -310,8 +309,8 @@
 			);
 			mainGroup = 7C6D156F2270BA2F0092D34E;
 			packageReferences = (
-				63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
-				841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				848037372B67174200FE35ED /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 7C6D15792270BA2F0092D34E /* Products */;
 			projectDirPath = "";
@@ -391,10 +390,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		841F5F3E2B618C2E00473103 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 841F5F3D2B618C2E00473103 /* SwiftLintPlugin */;
-		};
 		84524FD12B61BC280046367B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 84524FD02B61BC280046367B /* SwiftLintPlugin */;
@@ -830,7 +825,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
@@ -846,18 +841,31 @@
 				minimumVersion = 0.54.0;
 			};
 		};
+		848037372B67174200FE35ED /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		63B92DE0282AAEB700B44340 /* ArgumentParser */ = {
+		840414D82B679C6C0040DFF1 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			package = 840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
 		};
-		841F5F3D2B618C2E00473103 /* SwiftLintPlugin */ = {
+		840414DA2B679C710040DFF1 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
+			package = 840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+		840414DC2B679C750040DFF1 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
 		};
 		84524FD02B61BC280046367B /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -868,16 +876,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
-		};
-		84E1A6C72B61C02100D7F7C9 /* ArgumentParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
-		};
-		84E333852B61BBE000BE750F /* ArgumentParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

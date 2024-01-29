@@ -153,7 +153,7 @@ func appendSound(notifierArgsArray: [String], parsedResult: ArgParser) -> [Strin
     // Append to notifierArgsArray
     tempArray.append("--sound")
     // Append to notifierArgsArray
-    tempArray.append(parsedResult.sound)
+    tempArray.append(String(describing: parsedResult.sound))
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
@@ -335,6 +335,11 @@ func isNotificationCenterRunning(parsedResult: ArgParser) {
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
         exit(1)
+    }
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - Notification Center is running...")
     }
 }
 
