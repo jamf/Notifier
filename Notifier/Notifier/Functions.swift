@@ -9,253 +9,6 @@
 import Cocoa
 import SystemConfiguration
 
-// Appends --message to the passed array
-func appendMessage(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - message: \(parsedResult.message)")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--message")
-    // Append to notifierArgsArray
-    tempArray.append(parsedResult.message)
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --messageaction to the passed array
-func appendMessageaction(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - messageaction: \(parsedResult.messageaction)")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--messageaction")
-    // Append to notifierArgsArray
-    tempArray.append(parsedResult.messageaction)
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --messagebutton to the passed array
-func appendMessagebutton(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - messagebutton: \(parsedResult.messagebutton)")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--messagebutton")
-    // Append to notifierArgsArray
-    tempArray.append(parsedResult.messagebutton)
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --messagebuttonaction to the passed array
-func appendMessagebuttonaction(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - messagebuttonaction: \(parsedResult.messagebuttonaction)")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--messagebuttonaction")
-    // Append to notifierArgsArray
-    tempArray.append(parsedResult.messagebuttonaction)
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --remove all to the passed array
-func appendRemoveAll(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - remove all - \(parsedResult.type)")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--remove")
-    // Append to notifierArgsArray
-    tempArray.append("all")
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --remove prior to the passed array
-func appendRemovePrior(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - remove prior")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--remove")
-    // Append to notifierArgsArray
-    tempArray.append("prior")
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --sound to the passed array
-func appendSound(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - sound: \(parsedResult.sound)")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--sound")
-    // Append to notifierArgsArray
-    tempArray.append(String(describing: parsedResult.sound))
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --subtitle to the passed array
-func appendSubtitle(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - subtitle: \(parsedResult.subtitle)")
-    }
-    // Append to notifierArgsArray
-    tempArray.append("--subtitle")
-    // Append to notifierArgsArray
-    tempArray.append(parsedResult.subtitle)
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Appends --title to the passed array
-func appendTitle(notifierArgsArray: [String], parsedResult: ArgParser) -> [String] {
-    // Var declaration
-    var tempArray = notifierArgsArray
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - title: \(parsedResult.title)")
-    }
-    // Append to notifierArgsArray
-        tempArray.append("--title")
-    // Append to notifierArgsArray
-        tempArray.append(parsedResult.title)
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notifierArgsArray: \(tempArray)")
-    }
-    // Return the updated array
-    return tempArray
-}
-
-// Build the taskArgumentsArray
-func buildTaskArguments(loggedInUser: String, notifierArgsArray: [String], notifierPath: String,
-                        parsedResult: ArgParser) -> ([String], String) {
-    // Var declaration
-    var taskArgumentsArray = [String]()
-    var taskPath = String()
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - buildTaskArgumentsArray: \(notifierArgsArray)")
-    }
-    // If the user running the app (NSUserName) isn't the logged in user
-    if NSUserName() != loggedInUser {
-        // Set taskPath to su as we need to use that to run as the user
-        taskPath = "/usr/bin/su"
-        // Create suArgsString var
-        var suArgsString = "'" + notifierPath + "'"
-        // Create taskArgumentsArray
-        taskArgumentsArray = ["-l", loggedInUser, "-c"]
-        // For each parsedArg in the notifierArgsArray
-        for parsedArg in notifierArgsArray {
-            // If the passedArg is prefixed with --
-            if parsedArg.hasPrefix("--") {
-                // Append to string, prepending with a space
-                suArgsString += " " + parsedArg
-            // If not prefixed --
-            } else {
-                // Add to string, with different formatting
-                suArgsString += " '" + (parsedArg) + "'"
-            }
-        }
-        // Append suArgsString
-        taskArgumentsArray.append(suArgsString)
-    // If the person running the app is the logged in user
-    } else {
-        // Set taskPath to the notifying apps path
-        taskPath = notifierPath
-        // Set taskArgumentsArray to notifierArgsArray
-        taskArgumentsArray = notifierArgsArray
-    }
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - taskArgumentsArray: \(taskArgumentsArray)")
-    }
-    // Return the populated array
-    return (taskArgumentsArray, taskPath)
-}
-
 // Changes the notifier apps icons, and if logged in restarts notificatoin center
 func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgParser) {
     // If verbose mode is enabled
@@ -288,6 +41,7 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
             // Exit
             exit(0)
         }
+    // If there is an issue
     } else {
         // Post error to stdout and NSLog if verbose mode is enabled
         postError(errorMessage: "ERROR: Failed to rebrand Notifier...",
@@ -295,6 +49,36 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
         // Exit
         exit(1)
     }
+}
+
+// Create JSON from ParsedArguments
+func createJSON(parsedArguments: ParsedArguments, parsedResult: ArgParser) -> Data {
+    // Var declaration
+    var parsedArgumentsJSON = Data()
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - parsedArguments: \(parsedArguments)")
+    }
+    // Try to convert ParsedArguments to JSON
+    do {
+        // Turn parsedArguments into JSON
+        parsedArgumentsJSON = try JSONEncoder().encode(parsedArguments)
+    // If encoding into JSON fails
+    } catch {
+        // Raise an error
+        postError(errorMessage: error.localizedDescription, functionName: #function.components(separatedBy: "(")[0],
+                  parsedResult: parsedResult)
+    }
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("""
+              \(#function.components(separatedBy: "(")[0]) - parsedArgumentsJSON: \
+              \(String(data: parsedArgumentsJSON, encoding: .utf8)!)
+              """)
+    }
+    // Return the parsedArgumentsJSON
+    return parsedArgumentsJSON
 }
 
 // Gets the modification date and time of the file and return as epoch
@@ -368,14 +152,33 @@ func postError(errorMessage: String, functionName: String, parsedResult: ArgPars
     }
 }
 
-// Post the arguments to the relevant app, exiting afterwards
-func postToApp(loggedInUser: String, notifierArgsArray: [String], notifierPath: String, parsedResult: ArgParser) {
-    // Build the taskArgumentsArray
-    let (taskArgumentsArray, taskPath) = buildTaskArguments(loggedInUser: loggedInUser,
-                                                            notifierArgsArray: notifierArgsArray,
-                                                            notifierPath: notifierPath, parsedResult: parsedResult)
+// Passes parsedArgumentsJSON to the relevant app, exiting afterwards
+func passToApp(loggedInUser: String, notifierPath: String, parsedArgumentsJSON: Data, parsedResult: ArgParser) {
+    // Var declaration
+    var taskArguments = [String]()
+    var taskPath = String()
+    // If the user running the app isn't the logged in user (root for example)
+    if NSUserName() != loggedInUser {
+        // Set taskPath to su as we need to use that to run as the user
+        taskPath = "/usr/bin/su"
+        // Create taskArguments
+        taskArguments = [
+            "-l", "\(loggedInUser)", "-c", "\'\(notifierPath)\' \(parsedArgumentsJSON.base64EncodedString())"
+        ]
+    // If the person running the app is the logged in user
+    } else {
+        // Set taskPath to the notifying apps path
+        taskPath = notifierPath
+        // Set taskArguments to the base64 of parsedArgumentsJSON
+        taskArguments = [parsedArgumentsJSON.base64EncodedString()]
+    }
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - taskPath: \(taskPath), taskArguments: \(taskArguments)")
+    }
     // Launch the wanted notification app as the user
-    _ = runTask(parsedResult: parsedResult, taskPath: taskPath, taskArguments: taskArgumentsArray)
+    (_, _) = runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
     // Exit
     exit(0)
 }
@@ -383,7 +186,7 @@ func postToApp(loggedInUser: String, notifierArgsArray: [String], notifierPath: 
 // Restarts notification center
 func restartNotificationCenter(loggedInUser: String, parsedResult: ArgParser) {
     // Var declaration
-    var taskArgumentsArray = [String]()
+    var taskArguments = [String]()
     var taskPath = String()
     // If verbose mode is enabled
     if parsedResult.verbose {
@@ -397,16 +200,16 @@ func restartNotificationCenter(loggedInUser: String, parsedResult: ArgParser) {
         // Path for the task
         taskPath = "/usr/bin/su"
         // Arguments for the task
-        taskArgumentsArray = ["-l", loggedInUser, "-c", "/usr/bin/killall -u \(loggedInUser) NotificationCenter"]
+        taskArguments = ["-l", loggedInUser, "-c", "/usr/bin/killall -u \(loggedInUser) NotificationCenter"]
     // If the person running the app is the logged in user
     } else {
         // Path for the task
         taskPath = "/usr/bin/killall"
         // Arguments for the task
-        taskArgumentsArray = ["NotificationCenter"]
+        taskArguments = ["NotificationCenter"]
     }
     // Run the task, ignoring returned exit status
-    _ = runTask(parsedResult: parsedResult, taskPath: taskPath, taskArguments: taskArgumentsArray)
+    (_, _) = runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
 }
 
 // Make sure we're running as root, exit if not
@@ -422,7 +225,9 @@ func rootCheck(parsedResult: ArgParser, passedArg: String) {
 }
 
 // Runs the passed task
-func runTask(parsedResult: ArgParser, taskPath: String, taskArguments: [String]) -> Bool {
+func runTask(parsedResult: ArgParser, taskArguments: [String], taskPath: String) -> (String, Bool) {
+    // Var declaration
+    var successfulExit =  false
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
@@ -434,19 +239,31 @@ func runTask(parsedResult: ArgParser, taskPath: String, taskArguments: [String])
     task.executableURL = URL(fileURLWithPath: taskPath)
     // Set task arguments
     task.arguments = taskArguments
+    // Create pipe
+    let outPipe = Pipe()
+    // Set pipe to be used for stdout
+    task.standardOutput = outPipe
+    // Set pipe to be used for stderr
+    task.standardError = outPipe
     // Run the task
     try? task.run()
     // Wait until task exits
     task.waitUntilExit()
+    // Get output
+    let outdata = outPipe.fileHandleForReading.readDataToEndOfFile()
+    // Convert to string
+    let cmdOut = String(data: outdata, encoding: String.Encoding.utf8) ?? ""
     // Return boolean
     if task.terminationStatus == 0 {
-        // Return that the task ran sucessfully
-        return true
+        // Return true
+        successfulExit = true
     // If tasks exits with anything other than 0
     } else {
-        // Return that the task failed
-        return true
+        // Return false
+        successfulExit =  false
     }
+    // Return cmdOut text and if the task exited successfully or not
+    return (cmdOut, successfulExit)
 }
 
 // Attempts to update the app passed to objectPath's icon
@@ -460,9 +277,7 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
             // If verbose mode is enabled
             if parsedResult.verbose {
                 // Progress log
-                NSLog("""
-                  \(#function.components(separatedBy: "(")[0]) - Deleting: \(objectPath + "/" + appRootItem)...
-                  """)
+                NSLog("\(#function.components(separatedBy: "(")[0]) - Deleting: \(objectPath + "/" + appRootItem)...")
             }
             // Delete the file
             try? FileManager.default.removeItem(atPath: objectPath + "/" + appRootItem)
@@ -479,9 +294,9 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
         if parsedResult.verbose {
             // Progress log
             NSLog("""
-              \(#function.components(separatedBy: "(")[0]) - Successfully updated icon for \(objectPath), \
-              with icon: \(brandingImage).
-              """)
+                  \(#function.components(separatedBy: "(")[0]) - Successfully updated icon for \(objectPath), \
+                  with icon: \(brandingImage).
+                  """)
         }
     } else {
         // Post error to stdout and NSLog if verbose mode is enabled

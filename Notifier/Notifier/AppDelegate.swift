@@ -74,20 +74,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         // If --remove all has been passed
         if parsedResult.remove.lowercased() == "all" {
-            /*
-            // Var declaration
-            var notifierArgsArray = [String]()
+            // Initialize a parsedArguments object, with the messageBody.. as have to have that to get this far
+            let parsedArguments = ParsedArguments(removeOption: "all")
+            // Convert parsedArguments into JSON
+            let parsedArgumentsJSON = createJSON(parsedArguments: parsedArguments, parsedResult: parsedResult)
             // If verbose mode is enabled
             if parsedResult.verbose {
-                // Append --verbose
-                notifierArgsArray.append("--verbose")
+                // Progress log
+                NSLog("""
+                      \(#function.components(separatedBy: "(")[0]) - parsedArgumentsJSON: \
+                      \(String(data: parsedArgumentsJSON, encoding: .utf8)!)
+                      """)
             }
-             */
-            var notifierArgsArray = [String]()
-            // Append --remove all
-            notifierArgsArray = appendRemoveAll(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
-            // Post the arguments to the relevant app, exiting afterwards
-            postToApp(loggedInUser: loggedInUser, notifierArgsArray: notifierArgsArray, notifierPath: notifierPath,
+            // Pass parsedArgumentsJSON to the relevant app, exiting afterwards
+            passToApp(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedArgumentsJSON: parsedArgumentsJSON,
                       parsedResult: parsedResult)
         } else {
             // Format the args as needed
@@ -99,58 +99,66 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 // Format the args as needed
 func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgParser) {
-    // Var declaration
-    var notifierArgsArray = [String]()
+    // Initialize a parsedArguments object, with the messageBody.. as have to have that to get this far
+    var parsedArguments = ParsedArguments()
     // If verbose mode is enabled
     if parsedResult.verbose {
-        // Append --verbose
-        notifierArgsArray.append("--verbose")
+        // Set verboseMode
+        parsedArguments.verboseMode = "enabled"
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - verboseMode: \(parsedArguments.verboseMode!)")
     }
-    // If we've been passed a message
-    if parsedResult.message != "" {
-        // Append --message
-        notifierArgsArray = appendMessage(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
-    }
+    // Set the message to the body of the notification as not removing all, we have to have this
+    parsedArguments.messageBody = setNotificationBody(parsedResult: parsedResult)
     // If we've been passed a messageaction
     if parsedResult.messageaction != "" {
-        // Append --messageaction
-        notifierArgsArray = appendMessageaction(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
+        // Set messageAction
+        parsedArguments.messageAction = parseAction(actionString: parsedResult.messageaction,
+                                                    parsedResult: parsedResult)
     }
     // If we've been passed a sound
     if parsedResult.sound != "" {
-        // Append --sound
-        notifierArgsArray = appendSound(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
+        // Set messageSound
+        parsedArguments.messageSound = setNotificationSound(parsedResult: parsedResult)
     }
     // If we've been passed a subtitle
     if parsedResult.subtitle != "" {
-        // Append --subtitle
-        notifierArgsArray = appendSubtitle(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
+        // Set messageSubtitle
+        parsedArguments.messageSubtitle = setNotificationSubtitle(parsedResult: parsedResult)
     }
     // If we've been passed a title
     if parsedResult.title != "" {
-        // Append --title
-        notifierArgsArray = appendTitle(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
+        // Set messageTitle
+        parsedArguments.messageTitle = setNotificationTitle(parsedResult: parsedResult)
     }
     // If we're to remove a prior posted notification
     if parsedResult.remove.lowercased() == "prior" {
-        // Append --remove prior
-        notifierArgsArray = appendRemovePrior(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
+        // Set removeOption
+        parsedArguments.removeOption = "prior"
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - removeOption: \(parsedArguments.removeOption!))")
+        }
     }
     // If we're dealing with an alert, check for additional items
     if parsedResult.type.lowercased() == "alert" {
-        // If we've been passed a messagebutton
-        if parsedResult.messagebutton != "" {
-            // Append --messagebutton
-            notifierArgsArray = appendMessagebutton(notifierArgsArray: notifierArgsArray, parsedResult: parsedResult)
-        }
-        // If we've been passed a messagebuttonaction
-        if parsedResult.messagebuttonaction != "" {
-            // Append --messagebuttonaction
-            notifierArgsArray = appendMessagebuttonaction(notifierArgsArray: notifierArgsArray,
-                                                          parsedResult: parsedResult)
+        // If we've been passed a messagebutton, and messagebuttonaction
+        if parsedResult.messagebutton != ""{
+            // Set messageButton and messagebuttonaction
+            parsedArguments.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
+            // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
+            if parsedResult.messagebuttonaction != "" {
+                // Set messageButtonAction
+                parsedArguments.messageButtonAction = parseAction(actionString:
+                                                                  parsedResult.messagebuttonaction,
+                                                                  parsedResult: parsedResult)
+            }
         }
     }
-    // Post the arguments to the relevant app, exiting afterwards
-    postToApp(loggedInUser: loggedInUser, notifierArgsArray: notifierArgsArray, notifierPath: notifierPath,
+    // Convert parsedArguments into JSON
+    let parsedArgumentsJSON = createJSON(parsedArguments: parsedArguments, parsedResult: parsedResult)
+    // Pass parsedArgumentsJSON to the relevant app, exiting afterwards
+    passToApp(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedArgumentsJSON: parsedArgumentsJSON,
               parsedResult: parsedResult)
 }
