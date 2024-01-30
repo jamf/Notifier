@@ -8,10 +8,52 @@
 // Imports
 import Cocoa
 
+// Decodes base64String from base64, exiting if fails
+func base64Decode(base64String: String) -> String {
+    // Create a data object from the string, and decode to string
+    guard let base64EncodedData = base64String.data(using: .utf8),
+        let encodedData = Data(base64Encoded: base64EncodedData),
+        let decodedString = String(data: encodedData, encoding: .utf8)
+    else {
+        // Post an error to stdout and console
+        postError(errorMessage: "ERROR: Failed to decode: \(base64String) from base64.",
+                  functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+        // Exit with an exit code of 1, to exit the run
+        exit(1)
+    }
+    // Return's a string decoded from base64
+    return decodedString
+}
+
 // Converts pass string into base64
 func base64String(stringContent: String) -> String {
     // Return base64 encoded string
     return stringContent.data(using: String.Encoding.utf8)!.base64EncodedString()
+}
+
+// Decodes the passed base64 JSON string
+func decodeJSON(parsedArgumentsJSON: String) -> ParsedArguments {
+    // Decode from base64, exiting if fails
+    let base64Decoded = base64Decode(base64String: parsedArgumentsJSON)
+    // Try to convert ParsedArguments to ParsedArguments
+    do {
+        // Turn parsedArguments into JSON
+        let parsedArguments = try JSONDecoder().decode(ParsedArguments.self, from: Data(base64Decoded.utf8))
+        // If verbose mode is set
+        if parsedArguments.verboseMode != nil {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - parsedArguments: \(parsedArguments)")
+        }
+        // Return parsedArguments
+        return parsedArguments
+    // If encoding into JSON fails
+    } catch {
+        // Post an error to stdout and console
+        postError(errorMessage: "ERROR: Failed to decode: \(parsedArgumentsJSON) from JSON.",
+                  functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+        // Exit with an exit code of 1, to exit the run
+        exit(1)
+    }
 }
 
 // Logout user, prompting to save
@@ -41,75 +83,37 @@ func gracefulLogout(userInfo: [AnyHashable: Any]) {
             // If verbose mode is set
             if userInfo["verboseMode"] != nil {
                 // Progress log
-                NSLog("""
-                      \(#function.components(separatedBy: "(")[0]) - logout - \
-                      ERROR: \(String(describing: error!))
-                      """)
+                NSLog("\(#function.components(separatedBy: "(")[0]) - logout - ERROR: \(String(describing: error!))")
             }
         }
     }
 }
 
 // Checks that notification center is running, and exit if it's not
-func isNotificationCenterRunning(parsedResult: ArgParser) {
+func isNotificationCenterRunning(verboseMode: String) {
     // Exit if notificaiton center isn't running for the user
     guard !NSRunningApplication.runningApplications(withBundleIdentifier:
                                                         "com.apple.notificationcenterui").isEmpty else {
         // Post error to stdout and NSLog if verbose mode is enabled
         postError(errorMessage: "ERROR: Notification Center is not running...",
-                  functionName: #function.components(separatedBy: "(")[0], verboseMode: parsedResult.verbose)
+                  functionName: #function.components(separatedBy: "(")[0],
+                  verboseMode: verboseMode)
         // Exit
         exit(1)
     }
     // If verbose mode is enabled
-    if parsedResult.verbose {
+    if verboseMode != "" {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - Notification Center is running...")
     }
 }
 
-// Open the item passed, NSWorkspace was used but sometimes threw "app is not open errors"
-func openItem(userInfo: [AnyHashable: Any]) {
-    // If verbose mode is set
-    if userInfo["verboseMode"] != nil {
-        // Progress log
-        NSLog("""
-              \(#function.components(separatedBy: "(")[0]) - opening
-              \(String(describing: userInfo["messageAction"]))
-              """)
-    }
-    // Path for the task
-    let taskPath = "/usr/bin/open"
-    // Arguments for the task
-    let taskArgumentsArray = [(String(describing: userInfo["messageAction"]))]
-    // Run the task, returning boolean
-    let taskStatus = runTask(taskPath: taskPath, taskArguments: taskArgumentsArray, userInfo: userInfo)
-    // If verbose mode is set
-    if userInfo["verboseMode"] != nil {
-        // If task ran successfully
-        if taskStatus {
-            // Progress log
-            NSLog("""
-                  \(#function.components(separatedBy: "(")[0]) - \
-                  opened \(String(describing: userInfo["messageAction"]))
-                  """)
-        // If tasks exits with anything other than 0
-        } else {
-            // Progress log
-            NSLog("""
-                  \(#function.components(separatedBy: "(")[0]) - failed \
-                  to open \(String(describing: userInfo["messageAction"]))
-                  """)
-        }
-    }
-}
-
 // Post error to both NSLog and stdout
-func postError(errorMessage: String, functionName: String, verboseMode: Bool) {
+func postError(errorMessage: String, functionName: String, verboseMode: String) {
     // Print error
     print(errorMessage)
     // If verbose mode is enabled
-    if verboseMode {
+    if verboseMode != "" {
         // Progress log
         NSLog("\(functionName) - \(errorMessage)")
     }

@@ -18,14 +18,13 @@
 		848FC8972B61BB1F009B4915 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FC8962B61BB1F009B4915 /* AppDelegate.swift */; };
 		848FC89C2B61BB20009B4915 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848FC89A2B61BB20009B4915 /* MainMenu.xib */; };
 		849D93A92B693243006410D1 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D93A82B693243006410D1 /* UserNotifications.swift */; };
-		849D93AB2B693C5C006410D1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 849D93AA2B693C5C006410D1 /* ArgumentParser */; };
+		849D93AD2B693D2C006410D1 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D93AC2B693D2C006410D1 /* Structures.swift */; };
 		84E1A6BB2B61C00400D7F7C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */; };
 		84E1A6BD2B61C00500D7F7C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */; };
 		84E1A6C02B61C00500D7F7C9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */; };
 		84E1A6CB2B61C03F00D7F7C9 /* Notifier - Alerts.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84E1A6CD2B61C0B900D7F7C9 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */; };
 		84E1A6CF2B61C0BE00D7F7C9 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */; };
-		84E333802B61BBB100BE750F /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3337F2B61BBB100BE750F /* ArgParser.swift */; };
 		84E333822B61BBBB00BE750F /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333812B61BBBB00BE750F /* Functions.swift */; };
 		84E333842B61BBC200BE750F /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333832B61BBC200BE750F /* UserNotifications.swift */; };
 		84FA74982B61C4A6009B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */; };
@@ -86,6 +85,7 @@
 		848FC89B2B61BB20009B4915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		848FC89D2B61BB20009B4915 /* Notifier___Notifications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier___Notifications.entitlements"; sourceTree = "<group>"; };
 		849D93A82B693243006410D1 /* UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
+		849D93AC2B693D2C006410D1 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 		84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Alerts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -95,7 +95,6 @@
 		84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
 		84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		84E3337F2B61BBB100BE750F /* ArgParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgParser.swift; sourceTree = "<group>"; };
 		84E333812B61BBBB00BE750F /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		84E333832B61BBC200BE750F /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
 		B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifierRelease.entitlements; sourceTree = "<group>"; };
@@ -114,7 +113,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849D93AB2B693C5C006410D1 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,8 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				848FC8962B61BB1F009B4915 /* AppDelegate.swift */,
-				84E3337F2B61BBB100BE750F /* ArgParser.swift */,
 				84E333812B61BBBB00BE750F /* Functions.swift */,
+				849D93AC2B693D2C006410D1 /* Structures.swift */,
 				84E333832B61BBC200BE750F /* UserNotifications.swift */,
 				84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */,
 				848FC89A2B61BB20009B4915 /* MainMenu.xib */,
@@ -243,7 +241,6 @@
 			);
 			name = "Notifier - Notifications";
 			packageProductDependencies = (
-				849D93AA2B693C5C006410D1 /* ArgumentParser */,
 			);
 			productName = "Notifier - Notifications";
 			productReference = 848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */;
@@ -372,9 +369,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				848FC8972B61BB1F009B4915 /* AppDelegate.swift in Sources */,
-				84E333802B61BBB100BE750F /* ArgParser.swift in Sources */,
 				84E333822B61BBBB00BE750F /* Functions.swift in Sources */,
 				84E333842B61BBC200BE750F /* UserNotifications.swift in Sources */,
+				849D93AD2B693D2C006410D1 /* Structures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -875,11 +872,6 @@
 			productName = "plugin:SwiftLintPlugin";
 		};
 		845D68E02B692A5100C5B467 /* ArgumentParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
-		};
-		849D93AA2B693C5C006410D1 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;

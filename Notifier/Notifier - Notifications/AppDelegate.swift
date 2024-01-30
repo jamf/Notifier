@@ -22,97 +22,86 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
             // Handle the notification
             handleNotification(forResponse: response)
-            //
+            // Exit
             exit(0)
         }
-        // The first argument is always the executable, drop it
-        let passedArgs = Array(CommandLine.arguments.dropFirst())
-        // If no args passed, show help
-        if passedArgs.isEmpty {
-            // If no args, show help
-            _ = ArgParser.parseOrExit(["--help"])
-            // If we have args
+        // Get the args passed to the binary
+        let passedCLIArguments = Array(CommandLine.arguments)
+        // If no args passed, exit
+        if passedCLIArguments.count == 1 {
+            // Post an error to stdout and console
+            postError(errorMessage: "ERROR: No arguments passed to binary",
+                      functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+            // Exit
+            exit(0)
         } else {
-            // Get the parsed args
-            let parsedResult = ArgParser.parseOrExit(passedArgs)
             // Exit if notificaiton center isn't running
-            isNotificationCenterRunning(parsedResult: parsedResult)
+            isNotificationCenterRunning(verboseMode: "enabled")
             // Ask permission
-            requestAuthorisation(parsedResult: parsedResult)
+            requestAuthorisation(verboseMode: "enabled")
             // Create a notification center object
-            let ncCenter =  UNUserNotificationCenter.current()
+            let notificationCenter =  UNUserNotificationCenter.current()
             // Set delegate
-            ncCenter.delegate = self
-            // If verbose mode is set
-            if parsedResult.verbose {
-                // Progress log
-                NSLog("\(#function.components(separatedBy: "(")[0]) - verbose enabled")
-            }
+            notificationCenter.delegate = self
             // Process the arguments as needed
-            processArguments(ncCenter: ncCenter, parsedResult: parsedResult)
+            processArguments(notificationCenter: notificationCenter, passedCLIArguments: passedCLIArguments)
         }
     }
 }
 
 // Process the arguments as needed
-func processArguments(ncCenter: UNUserNotificationCenter, parsedResult: ArgParser) {
-    // Var declaration
-    var notificationString = ""
+func processArguments(notificationCenter: UNUserNotificationCenter,
+                      passedCLIArguments: [String]) {
+    // Get the passed base64 string at commandline argument at index 1
+    let parsedArguments = decodeJSON(parsedArgumentsJSON: passedCLIArguments[1])
     // Create a notification content object
-    var ncContent = UNMutableNotificationContent()
+    let notificationContent = UNMutableNotificationContent()
+    // Add category identifier to notificationContent required anyway so setting here
+    notificationContent.categoryIdentifier = "alert"
+    // If verbose mode is set
+    if parsedArguments.verboseMode != "" {
+        // Add verboseMode to userInfo
+        notificationContent.userInfo["verboseMode"] = "enabled"
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - verbose enabled")
+    }
     // If we're to remove all delivered notifications
-    if parsedResult.remove.lowercased() == "all" {
+    if parsedArguments.removeOption == "all" {
         // Remove all notifications
-        removeAllPriorNotifications(ncCenter: ncCenter, parsedResult: parsedResult)
+        removeAllPriorNotifications(notificationCenter: notificationCenter, parsedArguments: parsedArguments)
     // If we're not removing
     } else {
-        // Confirm that we have a message
-        if parsedResult.message != "" {
-            // Create the notifications body
-            (ncContent, notificationString) = addNotificationBody(ncContent: ncContent,
-                                                                  notificationString: notificationString,
-                                                                  parsedResult: parsedResult)
+        // Set the message to the body of the notification as not removing all, we have to have this
+        notificationContent.body = getNotificationBody(parsedArguments: parsedArguments)
+        // If we have a value for messageAction passed
+        if parsedArguments.messageAction != nil {
+            // Add messageAction to userInfo
+            notificationContent.userInfo["messageAction"] = getNotificationBodyAction(parsedArguments: parsedArguments)
         }
-        // If we have a value for messageaction passed
-        if parsedResult.messageaction != "" {
-            // Add the notification message action
-            (ncContent, notificationString) = addNotificationAction(contentKey: "messageAction",
-                                                                                ncContent: ncContent,
-                                                                                notificationString: notificationString,
-                                                                                parsedResult: parsedResult)
+        // If we have a value for messageSound passed
+        if parsedArguments.messageSound != nil {
+            // Set the notifications sound
+            notificationContent.sound = getNotificationSound(parsedArguments: parsedArguments)
         }
-        // If we have a value for sound passed
-        if parsedResult.sound != "" {
-            // Add sound to the notification
-            (ncContent, notificationString) = addNotificationSound(ncContent: ncContent,
-                                                                   notificationString: notificationString,
-                                                                   parsedResult: parsedResult)
+        // If we've been passed a messageSubtitle
+        if parsedArguments.messageSubtitle != nil {
+            // Set the notifications subtitle
+            notificationContent.subtitle = getNotificationSubtitle(parsedArguments: parsedArguments)
         }
-        // If we have a value for subtitle
-        if parsedResult.subtitle != "" {
-            // Add the subtitle to the notification
-            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "subtitle",
-                                                                             ncContent: ncContent,
-                                                                             notificationString: notificationString,
-                                                                             parsedResult: parsedResult)
+        // If we have a value for messageTitle
+        if parsedArguments.messageTitle != nil {
+            // Set the notifications title
+            notificationContent.title = getNotificationTitle(parsedArguments: parsedArguments)
         }
-        // If we have a value for title
-        if parsedResult.title != "" {
-            // Add the title to the notification
-            (ncContent, notificationString) = addNotificationSubtitleOrTitle(contentKey: "title", ncContent: ncContent,
-                                                                             notificationString: notificationString,
-                                                                             parsedResult: parsedResult)
-        }
-        // If we're to remove prior posted notificastions
-        if parsedResult.remove.lowercased() == "prior" {
+        // If we're to remove a prior posted notification
+        if parsedArguments.removeOption == "prior" {
             // Remove a specific prior posted notification
-            removePriorNotification(ncCenter: ncCenter, notificationString: notificationString,
-                                    parsedResult: parsedResult)
-        // If we're not removing
+            removePriorNotification(notificationCenter: notificationCenter, parsedArguments: parsedArguments,
+                                    passedBase64: passedCLIArguments[1])
         } else {
             // Post the notification
-            postNotification(ncCenter: ncCenter, ncContent: ncContent,
-                             notificationString: notificationString, parsedResult: parsedResult)
+            postNotification(notificationCenter: notificationCenter, notificationContent: notificationContent,
+                             parsedArguments: parsedArguments, passedBase64: passedCLIArguments[1])
         }
     }
 }
