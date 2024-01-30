@@ -11,20 +11,20 @@
 		7C6D157C2270BA2F0092D34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6D157B2270BA2F0092D34E /* AppDelegate.swift */; };
 		7C6D15812270BA300092D34E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6D157F2270BA300092D34E /* MainMenu.xib */; };
 		7C720952227888E10033B2E2 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C720951227888E10033B2E2 /* Functions.swift */; };
-		840414D92B679C6C0040DFF1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 840414D82B679C6C0040DFF1 /* ArgumentParser */; };
-		840414DB2B679C710040DFF1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 840414DA2B679C710040DFF1 /* ArgumentParser */; };
-		840414DD2B679C750040DFF1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 840414DC2B679C750040DFF1 /* ArgumentParser */; };
+		8421955B2B67E80A0030A7E4 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8421955A2B67E80A0030A7E4 /* Structures.swift */; };
 		844D6FAC2B647A040000CCF2 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D6FAB2B647A040000CCF2 /* Structures.swift */; };
 		84524FD52B61BC620046367B /* Notifier - Notifications.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		845D68E12B692A5100C5B467 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 845D68E02B692A5100C5B467 /* ArgumentParser */; };
 		848FC8972B61BB1F009B4915 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FC8962B61BB1F009B4915 /* AppDelegate.swift */; };
 		848FC89C2B61BB20009B4915 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848FC89A2B61BB20009B4915 /* MainMenu.xib */; };
+		849D93A92B693243006410D1 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D93A82B693243006410D1 /* UserNotifications.swift */; };
+		849D93AB2B693C5C006410D1 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 849D93AA2B693C5C006410D1 /* ArgumentParser */; };
 		84E1A6BB2B61C00400D7F7C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */; };
 		84E1A6BD2B61C00500D7F7C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */; };
 		84E1A6C02B61C00500D7F7C9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */; };
 		84E1A6CB2B61C03F00D7F7C9 /* Notifier - Alerts.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84E1A6CD2B61C0B900D7F7C9 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */; };
 		84E1A6CF2B61C0BE00D7F7C9 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */; };
-		84E1A6D12B61C0C300D7F7C9 /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6D02B61C0C300D7F7C9 /* ArgParser.swift */; };
 		84E333802B61BBB100BE750F /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3337F2B61BBB100BE750F /* ArgParser.swift */; };
 		84E333822B61BBBB00BE750F /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333812B61BBBB00BE750F /* Functions.swift */; };
 		84E333842B61BBC200BE750F /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333832B61BBC200BE750F /* UserNotifications.swift */; };
@@ -78,12 +78,14 @@
 		7C6D157B2270BA2F0092D34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C6D15802270BA300092D34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		7C720951227888E10033B2E2 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		8421955A2B67E80A0030A7E4 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 		844D6FAA2B6447790000CCF2 /* Notifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notifier.entitlements; sourceTree = "<group>"; };
 		844D6FAB2B647A040000CCF2 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 		848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848FC8962B61BB1F009B4915 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		848FC89B2B61BB20009B4915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		848FC89D2B61BB20009B4915 /* Notifier___Notifications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier___Notifications.entitlements"; sourceTree = "<group>"; };
+		849D93A82B693243006410D1 /* UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
 		84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Alerts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,7 +93,6 @@
 		84E1A6C12B61C00500D7F7C9 /* Notifier___Alerts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier___Alerts.entitlements"; sourceTree = "<group>"; };
 		84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
-		84E1A6D02B61C0C300D7F7C9 /* ArgParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgParser.swift; sourceTree = "<group>"; };
 		84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E3337F2B61BBB100BE750F /* ArgParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgParser.swift; sourceTree = "<group>"; };
@@ -105,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				840414D92B679C6C0040DFF1 /* ArgumentParser in Frameworks */,
+				845D68E12B692A5100C5B467 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				840414DB2B679C710040DFF1 /* ArgumentParser in Frameworks */,
+				849D93AB2B693C5C006410D1 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +122,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				840414DD2B679C750040DFF1 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +157,7 @@
 				63B92DE8282AAEDE00B44340 /* ArgParser.swift */,
 				7C720951227888E10033B2E2 /* Functions.swift */,
 				844D6FAB2B647A040000CCF2 /* Structures.swift */,
+				849D93A82B693243006410D1 /* UserNotifications.swift */,
 				84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */,
 				7C6D157F2270BA300092D34E /* MainMenu.xib */,
 				B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */,
@@ -189,8 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */,
-				84E1A6D02B61C0C300D7F7C9 /* ArgParser.swift */,
 				84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */,
+				8421955A2B67E80A0030A7E4 /* Structures.swift */,
 				84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */,
 				84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */,
 				84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */,
@@ -215,12 +216,13 @@
 			buildRules = (
 			);
 			dependencies = (
+				845D68DE2B692A2900C5B467 /* PBXTargetDependency */,
 				84FA749C2B61C9D9009B4068 /* PBXTargetDependency */,
 				84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */,
 			);
 			name = Notifier;
 			packageProductDependencies = (
-				840414D82B679C6C0040DFF1 /* ArgumentParser */,
+				845D68E02B692A5100C5B467 /* ArgumentParser */,
 			);
 			productName = oioi;
 			productReference = 7C6D15782270BA2F0092D34E /* Notifier.app */;
@@ -241,7 +243,7 @@
 			);
 			name = "Notifier - Notifications";
 			packageProductDependencies = (
-				840414DA2B679C710040DFF1 /* ArgumentParser */,
+				849D93AA2B693C5C006410D1 /* ArgumentParser */,
 			);
 			productName = "Notifier - Notifications";
 			productReference = 848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */;
@@ -262,7 +264,6 @@
 			);
 			name = "Notifier - Alerts";
 			packageProductDependencies = (
-				840414DC2B679C750040DFF1 /* ArgumentParser */,
 			);
 			productName = "Notifier - Alerts";
 			productReference = 84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */;
@@ -309,8 +310,8 @@
 			);
 			mainGroup = 7C6D156F2270BA2F0092D34E;
 			packageReferences = (
-				848037372B67174200FE35ED /* XCRemoteSwiftPackageReference "SwiftLint" */,
-				840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 7C6D15792270BA2F0092D34E /* Products */;
 			projectDirPath = "";
@@ -362,6 +363,7 @@
 				7C720952227888E10033B2E2 /* Functions.swift in Sources */,
 				63B92DE9282AAEDE00B44340 /* ArgParser.swift in Sources */,
 				844D6FAC2B647A040000CCF2 /* Structures.swift in Sources */,
+				849D93A92B693243006410D1 /* UserNotifications.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,9 +383,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				84E1A6BB2B61C00400D7F7C9 /* AppDelegate.swift in Sources */,
-				84E1A6D12B61C0C300D7F7C9 /* ArgParser.swift in Sources */,
 				84E1A6CD2B61C0B900D7F7C9 /* Functions.swift in Sources */,
 				84E1A6CF2B61C0BE00D7F7C9 /* UserNotifications.swift in Sources */,
+				8421955B2B67E80A0030A7E4 /* Structures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +395,10 @@
 		84524FD12B61BC280046367B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 84524FD02B61BC280046367B /* SwiftLintPlugin */;
+		};
+		845D68DE2B692A2900C5B467 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 845D68DD2B692A2900C5B467 /* SwiftLintPlugin */;
 		};
 		84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -498,7 +504,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp";
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
@@ -574,6 +580,7 @@
 		7C6D15872270BA300092D34E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Notifier/Notifier.entitlements;
@@ -594,6 +601,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 3.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -606,6 +614,7 @@
 		7C6D15882270BA300092D34E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Notifier/NotifierRelease.entitlements;
@@ -626,6 +635,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 3.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -663,6 +673,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 3.0;
 				NEW_SETTING = "";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -737,6 +748,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 3.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -825,14 +837,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint.git";
@@ -841,7 +845,7 @@
 				minimumVersion = 0.54.0;
 			};
 		};
-		848037372B67174200FE35ED /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+		845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint.git";
 			requirement = {
@@ -849,28 +853,36 @@
 				minimumVersion = 0.54.0;
 			};
 		};
+		845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		840414D82B679C6C0040DFF1 /* ArgumentParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
-		};
-		840414DA2B679C710040DFF1 /* ArgumentParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
-		};
-		840414DC2B679C750040DFF1 /* ArgumentParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 840414D72B679BF30040DFF1 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
-		};
 		84524FD02B61BC280046367B /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
+		};
+		845D68DD2B692A2900C5B467 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		845D68E02B692A5100C5B467 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+		849D93AA2B693C5C006410D1 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
 		};
 		84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
