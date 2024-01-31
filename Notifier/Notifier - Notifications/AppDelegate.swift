@@ -57,7 +57,7 @@ func processArguments(notificationCenter: UNUserNotificationCenter,
     // Create a notification content object
     let notificationContent = UNMutableNotificationContent()
     // Add category identifier to notificationContent required anyway so setting here
-    notificationContent.categoryIdentifier = "alert"
+    notificationContent.categoryIdentifier = "banner"
     // If verbose mode is set
     if parsedArguments.verboseMode != "" {
         // Add verboseMode to userInfo

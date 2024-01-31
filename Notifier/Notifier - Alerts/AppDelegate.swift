@@ -29,9 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         let passedCLIArguments = Array(CommandLine.arguments)
         // If no args passed, exit
         if passedCLIArguments.count == 1 {
-            // Post an error to stdout and console
-            postError(errorMessage: "ERROR: No arguments passed to binary",
-                      functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+            // Print error
+            print("ERROR: No arguments passed to binary, exiting...")
             // Exit
             exit(0)
         } else {
@@ -53,34 +52,36 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 func processArguments(notificationCenter: UNUserNotificationCenter,
                       passedCLIArguments: [String]) {
     // Get the passed base64 string at commandline argument at index 1
-    let parsedArguments = decodeJSON(parsedArgumentsJSON: passedCLIArguments[1])
+    let (messageContent, passedBase64, rootElements) = decodeJSON(passedJSON: passedCLIArguments[1])
     // Create a notification content object
     let notificationContent = UNMutableNotificationContent()
     // Add category identifier to notificationContent required anyway so setting here
     notificationContent.categoryIdentifier = "alert"
     // If verbose mode is set
-    if parsedArguments.verboseMode != "" {
+    if rootElements.verboseMode != "" {
         // Add verboseMode to userInfo
         notificationContent.userInfo["verboseMode"] = "enabled"
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - verbose enabled")
     }
     // If we're to remove all delivered notifications
-    if parsedArguments.removeOption == "all" {
+    if rootElements.removeOption == "all" {
         // Remove all notifications
-        removeAllPriorNotifications(notificationCenter: notificationCenter, parsedArguments: parsedArguments)
+        removeAllPriorNotifications(notificationCenter: notificationCenter, messageContent: messageContent,
+                                    rootElements: rootElements)
     // If we're not removing
     } else {
         // Set the message to the body of the notification as not removing all, we have to have this
-        notificationContent.body = getNotificationBody(parsedArguments: parsedArguments)
+        notificationContent.body = getNotificationBody(messageContent: messageContent, rootElements: rootElements)
         // If we have a value for messageAction passed
-        if parsedArguments.messageAction != nil {
+        if messageContent.messageAction != nil {
             // Add messageAction to userInfo
-            notificationContent.userInfo["messageAction"] = getNotificationBodyAction(parsedArguments: parsedArguments)
+            notificationContent.userInfo["messageAction"] = getNotificationBodyAction(messageContent: messageContent,
+                                                                                      rootElements: rootElements)
         }
         // messageButton needs defining, even when not called. So processing it here along with messageButtonAction
         let (tempMessageButtonAction, tempCategory) = processMessageButton(notificationCenter: notificationCenter,
-                                                                parsedArguments: parsedArguments)
+                                                            messageContent: messageContent, rootElements: rootElements)
         // Set the notifications category
         notificationCenter.setNotificationCategories([tempCategory])
         // If tempMessageButtonAction has a value
@@ -89,29 +90,30 @@ func processArguments(notificationCenter: UNUserNotificationCenter,
             notificationContent.userInfo["messageButtonAction"] = tempMessageButtonAction
         }
         // If we have a value for messageSound passed
-        if parsedArguments.messageSound != nil {
+        if messageContent.messageSound != nil {
             // Set the notifications sound
-            notificationContent.sound = getNotificationSound(parsedArguments: parsedArguments)
+            notificationContent.sound = getNotificationSound(messageContent: messageContent, rootElements: rootElements)
         }
         // If we've been passed a messageSubtitle
-        if parsedArguments.messageSubtitle != nil {
+        if messageContent.messageSubtitle != nil {
             // Set the notifications subtitle
-            notificationContent.subtitle = getNotificationSubtitle(parsedArguments: parsedArguments)
+            notificationContent.subtitle = getNotificationSubtitle(messageContent: messageContent,
+                                                                   rootElements: rootElements)
         }
         // If we have a value for messageTitle
-        if parsedArguments.messageTitle != nil {
+        if messageContent.messageTitle != nil {
             // Set the notifications title
-            notificationContent.title = getNotificationTitle(parsedArguments: parsedArguments)
+            notificationContent.title = getNotificationTitle(messageContent: messageContent, rootElements: rootElements)
         }
         // If we're to remove a prior posted notification
-        if parsedArguments.removeOption == "prior" {
+        if rootElements.removeOption == "prior" {
             // Remove a specific prior posted notification
-            removePriorNotification(notificationCenter: notificationCenter, parsedArguments: parsedArguments,
-                                    passedBase64: passedCLIArguments[1])
+            removePriorNotification(notificationCenter: notificationCenter, messageContent: messageContent,
+                                    passedBase64: passedBase64, rootElements: rootElements)
         } else {
             // Post the notification
             postNotification(notificationCenter: notificationCenter, notificationContent: notificationContent,
-                             parsedArguments: parsedArguments, passedBase64: passedCLIArguments[1])
+                             messageContent: messageContent, passedBase64: passedBase64, rootElements: rootElements)
         }
     }
 }

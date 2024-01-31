@@ -44,26 +44,55 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
     // If there is an issue
     } else {
         // Post error to stdout and NSLog if verbose mode is enabled
-        postError(errorMessage: "ERROR: Failed to rebrand Notifier...",
+        postError(errorMessage: "Failed to rebrand Notifier...",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
         exit(1)
     }
 }
 
-// Create JSON from ParsedArguments
-func createJSON(parsedArguments: ParsedArguments, parsedResult: ArgParser) -> Data {
+// Create JSON from passed string
+func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootElements: RootElements) -> String {
     // Var declaration
-    var parsedArgumentsJSON = Data()
+    var contentJSON = Data()
+    var fullJSON = Data()
+    var rootContent = rootElements
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - parsedArguments: \(parsedArguments)")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - messageContent: \(messageContent)")
     }
-    // Try to convert ParsedArguments to JSON
+    // Try to convert messageContent to JSON
     do {
-        // Turn parsedArguments into JSON
-        parsedArgumentsJSON = try JSONEncoder().encode(parsedArguments)
+        // Create a JSONEncoder object
+        let jsonEncoder = JSONEncoder()
+        // Set formatting to sortedKeys - to make sure that the base64 is static
+        jsonEncoder.outputFormatting = .sortedKeys
+        // Turn messageContent into JSON
+        contentJSON = try jsonEncoder.encode(messageContent)
+    // If encoding into JSON fails
+    } catch {
+        // Raise an error
+        postError(errorMessage: error.localizedDescription, functionName: #function.components(separatedBy: "(")[0],
+                  parsedResult: parsedResult)
+    }
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("""
+              \(#function.components(separatedBy: "(")[0]) - contentJSON: \(String(data: contentJSON, encoding: .utf8)!)
+             """)
+    }
+    // Add to contentJSON, but base64 encoded
+    rootContent.messageContent = contentJSON.base64EncodedString()
+    // Try to convert jsonContent to JSON
+    do {
+        // Create a JSONEncoder object
+        let jsonEncoder = JSONEncoder()
+        // Set formatting to sortedKeys - to make sure that the base64 is static
+        jsonEncoder.outputFormatting = .sortedKeys
+        // Turn jsonContent into JSON
+        fullJSON = try jsonEncoder.encode(rootContent)
     // If encoding into JSON fails
     } catch {
         // Raise an error
@@ -72,13 +101,10 @@ func createJSON(parsedArguments: ParsedArguments, parsedResult: ArgParser) -> Da
     }
     if parsedResult.verbose {
         // Progress log
-        NSLog("""
-              \(#function.components(separatedBy: "(")[0]) - parsedArgumentsJSON: \
-              \(String(data: parsedArgumentsJSON, encoding: .utf8)!)
-              """)
+        NSLog("\(#function.components(separatedBy: "(")[0]) - rootJSON: \(String(data: fullJSON, encoding: .utf8)!)")
     }
-    // Return the parsedArgumentsJSON
-    return parsedArgumentsJSON
+    // Return fullJSON, base64 encoded
+    return fullJSON.base64EncodedString()
 }
 
 // Gets the modification date and time of the file and return as epoch
@@ -92,7 +118,7 @@ func getImageDetails(brandingImage: String, parsedResult: ArgParser) -> (NSImage
         // If imageData isValid is nil, then brandingImage is not a valid icon
         if (imageData?.isValid) == nil {
             // Post error to stdout and NSLog if verbose mode is enabled
-            postError(errorMessage: "ERROR: \(brandingImage) is not a valid image...",
+            postError(errorMessage: "\(brandingImage) is not a valid image...",
                       functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
             // Exit
             exit(1)
@@ -102,7 +128,7 @@ func getImageDetails(brandingImage: String, parsedResult: ArgParser) -> (NSImage
     // If the file doesn't exist
     } else {
         // Post error to stdout and NSLog if verbose mode is enabled
-        postError(errorMessage: "ERROR: Cannot locate: \(brandingImage)....",
+        postError(errorMessage: "Cannot locate: \(brandingImage)....",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
         exit(1)
@@ -114,11 +140,11 @@ func isNotificationCenterRunning(parsedResult: ArgParser) {
     // Exit if notificaiton center isn't running for the user
     guard !NSRunningApplication.runningApplications(withBundleIdentifier:
                                                         "com.apple.notificationcenterui").isEmpty else {
-        // Post error to stdout and NSLog if verbose mode is enabled
-        postError(errorMessage: "ERROR: Notification Center is not running...",
-                  functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Post warning
+        postWarning(warningMessage: "Notification Center is not running...",
+                    functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
-        exit(1)
+        exit(0)
     }
     // If verbose mode is enabled
     if parsedResult.verbose {
@@ -141,19 +167,95 @@ func loggedInUser() -> String {
     }
 }
 
-// Post error to both NSLog and stdout
-func postError(errorMessage: String, functionName: String, parsedResult: ArgParser) {
-    // Print error
-    print(errorMessage)
+// Parses the action text, splitting it into argv compliant format
+func parseAction(actionString: String, parsedResult: ArgParser) -> [MessageContent.TaskObject] {
+    // Var declaration
+    var regexDict = [String: String]()
+    var taskArguments = [String]()
+    var taskPath = String()
+    var tempActionString = actionString
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(functionName) - \(errorMessage)")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - actionString: \(actionString)")
     }
+    // The regex pattern we're to use
+    let regexPattern = try? NSRegularExpression(pattern: "\'(.*?)\'|\"(.*?)\"")
+    // Apply pattern to actionText, returning matches
+    let regexMatches = regexPattern?.matches(in: actionString, options: [],
+                                            range: NSRange(location: 0, length: actionString.utf16.count))
+    // Iterate over each match
+    for regexMatch in regexMatches! {
+        // Set the range
+        let regexRange = regexMatch.range(at: 1)
+        // Create a Range object
+        if let swiftRange = Range(regexRange, in: actionString) {
+            // Create key in regex dict with the  and %20 escape spaces
+            regexDict[actionString[swiftRange].description] =
+            actionString[swiftRange].description.replacingOccurrences(of: " ", with: "%20")
+        }
+    }
+    // If we have items in regexDict
+    if !regexDict.isEmpty {
+        // For each key value pair we have in regexDict
+        for (matchedKey, matchedValue) in regexDict {
+            // Replace the occurences of matchedKey with matchedValue
+            tempActionString = tempActionString.replacingOccurrences(of: matchedKey, with: matchedValue)
+        }
+        // Set taskArguments to the amended string
+        taskArguments = Array(tempActionString.components(separatedBy: " "))
+        // Iterate over the array elements which contain %20
+        for arrayElement in taskArguments where arrayElement.contains("%20") {
+            // Get the index of the element
+            let arrayIndex = taskArguments.firstIndex(of: arrayElement)
+            // Update the element in the array, removing %20, single and double quotes
+            taskArguments[arrayIndex!] = arrayElement.replacingOccurrences(of: "%20", with: " ")
+                .replacingOccurrences(of: "\'", with: "").replacingOccurrences(of: "\"", with: "")
+        }
+    // If regexDict is empty
+    } else {
+        // Set taskArguments to the passed action
+        taskArguments = Array(tempActionString.components(separatedBy: " "))
+    }
+    // If we only have a single task
+    if taskArguments.count == 1 {
+        // If we've been passed logout
+        if taskArguments[0].lowercased() == "logout" {
+            // Set the tasks path to open, this is to mimic pre-3.0 behaviour
+            taskPath = "logout"
+            // Clear taskArguments
+            taskArguments = []
+        } else {
+            // Set the tasks path to open, this is to mimic pre-3.0 behaviour
+            taskPath = "/usr/bin/open"
+        }
+    // If we have more than one task, the 1st argument starts with /
+    } else if taskArguments[0].hasPrefix("/") {
+        // Set the tasks path to the 1st item within the taskArguments
+        taskPath = taskArguments[0]
+        // Remove the above from the taskArguments
+        taskArguments.remove(at: 0)
+    // If we have more than one task, and the 1st argument does not start with /
+    } else {
+        // Warning message
+        let warningMessage = "\(taskArguments[0]) is not a path to a binary, not adding to notification..."
+        // Post warning
+        postWarning(warningMessage: warningMessage, functionName: #function.components(separatedBy: "(")[0],
+                    parsedResult: parsedResult)
+        // Return an empty TaskObject
+        return [MessageContent.TaskObject(taskPath: "", taskArguments: [])]
+    }
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - taskPath: \(taskPath), taskArguments: \(taskArguments)")
+    }
+    // Return a TaskObject with taskPath and taskArguments set
+    return [MessageContent.TaskObject(taskPath: taskPath, taskArguments: taskArguments)]
 }
 
-// Passes parsedArgumentsJSON to the relevant app, exiting afterwards
-func passToApp(loggedInUser: String, notifierPath: String, parsedArgumentsJSON: Data, parsedResult: ArgParser) {
+// Passes messageContentJSON to the relevant app, exiting afterwards
+func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, parsedResult: ArgParser) {
     // Var declaration
     var taskArguments = [String]()
     var taskPath = String()
@@ -163,14 +265,14 @@ func passToApp(loggedInUser: String, notifierPath: String, parsedArgumentsJSON: 
         taskPath = "/usr/bin/su"
         // Create taskArguments
         taskArguments = [
-            "-l", "\(loggedInUser)", "-c", "\'\(notifierPath)\' \(parsedArgumentsJSON.base64EncodedString())"
+            "-l", "\(loggedInUser)", "-c", "\'\(notifierPath)\' \(commandJSON)"
         ]
     // If the person running the app is the logged in user
     } else {
         // Set taskPath to the notifying apps path
         taskPath = notifierPath
-        // Set taskArguments to the base64 of parsedArgumentsJSON
-        taskArguments = [parsedArgumentsJSON.base64EncodedString()]
+        // Set taskArguments to the base64 of messageContentJSON
+        taskArguments = [commandJSON]
     }
     // If verbose mode is enabled
     if parsedResult.verbose {
@@ -181,6 +283,32 @@ func passToApp(loggedInUser: String, notifierPath: String, parsedArgumentsJSON: 
     (_, _) = runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
     // Exit
     exit(0)
+}
+
+// Post error to both NSLog and stdout
+func postError(errorMessage: String, functionName: String, parsedResult: ArgParser) {
+    // Var declaration
+    let fullMessage = "ERROR: \(functionName) - \(errorMessage)"
+    // Print error
+    print(fullMessage)
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog(fullMessage)
+    }
+}
+
+// Post warning to both NSLog and stdout
+func postWarning(warningMessage: String, functionName: String, parsedResult: ArgParser) {
+    // Var declaration
+    let fullMessage = "WARNING: \(functionName) - \(warningMessage)"
+    // Print error
+    print(fullMessage)
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog(fullMessage)
+    }
 }
 
 // Restarts notification center
@@ -217,7 +345,7 @@ func rootCheck(parsedResult: ArgParser, passedArg: String) {
     // If we're not root
     if NSUserName() != "root" {
         // Post error to stdout and NSLog if verbose mode is enabled
-        postError(errorMessage: "ERROR: The argument: \(passedArg). Requires root privileges, exiting...",
+        postError(errorMessage: "The argument: \(passedArg), requires root privileges, exiting...",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
         exit(1)
@@ -300,7 +428,7 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
         }
     } else {
         // Post error to stdout and NSLog if verbose mode is enabled
-        postError(errorMessage: "ERROR: Failed to update icon for \(objectPath), with icon: \(brandingImage).",
+        postError(errorMessage: "Failed to update icon for \(objectPath), with icon: \(brandingImage).",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
     }
     // Return boolean

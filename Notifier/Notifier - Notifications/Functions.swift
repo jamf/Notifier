@@ -110,12 +110,27 @@ func isNotificationCenterRunning(verboseMode: String) {
 
 // Post error to both NSLog and stdout
 func postError(errorMessage: String, functionName: String, verboseMode: String) {
+    // Var declaration
+    let fullMessage = "ERROR: \(functionName) - \(errorMessage)"
     // Print error
-    print(errorMessage)
+    print(fullMessage)
     // If verbose mode is enabled
     if verboseMode != "" {
         // Progress log
-        NSLog("\(functionName) - \(errorMessage)")
+        NSLog(fullMessage)
+    }
+}
+
+// Post warning to both NSLog and stdout
+func postWarning(warningMessage: String, functionName: String, verboseMode: String) {
+    // Var declaration
+    let fullMessage = "WARNING: \(functionName) - \(warningMessage)"
+    // Print error
+    print(fullMessage)
+    // If verbose mode is enabled
+    if verboseMode != "" {
+        // Progress log
+        NSLog(fullMessage)
     }
 }
 

@@ -37,15 +37,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             changeIcons(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
         // If we're not rebranding and no user is logged in exit
         } else if loggedInUser == "" {
-            // Post error to stdout and NSLog if verbose mode is enabled
-            postError(errorMessage: "ERROR: No user logged in...",
-                      functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+            // Post warning
+            postWarning(warningMessage: "No user logged in...",
+                        functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+            // Exit
+            exit(0)
+        // If we have no value passed to --type
+        } else if parsedResult.type == "" {
+            // Show help
+            _ = ArgParser.parseOrExit(["--help"])
             // Exit
             exit(1)
         }
         // Exit if notificaiton center isn't running for the user
         isNotificationCenterRunning(parsedResult: parsedResult)
-        // If an invalid type OR remove option has been passed AND there is no message and we're not rebranding
+        // If an invalid or no type OR remove option has been passed AND there is no message and we're not rebranding
         if ((parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner") ||
             parsedResult.remove != "" && (parsedResult.remove.lowercased() != "all" &&
                                           parsedResult.remove.lowercased() != "prior")
@@ -60,7 +66,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - type - \(parsedResult.type)")
         }
-
         // Var declaration
         var notifierPath = String()
         // If we're looking for the alert app
@@ -74,20 +79,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         // If --remove all has been passed
         if parsedResult.remove.lowercased() == "all" {
-            // Initialize a parsedArguments object, with the messageBody.. as have to have that to get this far
-            let parsedArguments = ParsedArguments(removeOption: "all")
-            // Convert parsedArguments into JSON
-            let parsedArgumentsJSON = createJSON(parsedArguments: parsedArguments, parsedResult: parsedResult)
+            // Initialize a rootElements object
+            var rootElements = RootElements(removeOption: "all")
+            // Initialize a messageContent object
+            let messageContent = MessageContent()
             // If verbose mode is enabled
             if parsedResult.verbose {
-                // Progress log
-                NSLog("""
-                      \(#function.components(separatedBy: "(")[0]) - parsedArgumentsJSON: \
-                      \(String(data: parsedArgumentsJSON, encoding: .utf8)!)
-                      """)
+                // Set verboseMode
+                rootElements.verboseMode = "enabled"
             }
-            // Pass parsedArgumentsJSON to the relevant app, exiting afterwards
-            passToApp(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedArgumentsJSON: parsedArgumentsJSON,
+            // Create the JSON to pass to the notifying app
+            let commandJSON = createJSON(messageContent: messageContent, parsedResult: parsedResult,
+                                         rootElements: rootElements)
+            // Pass commandJSON to the relevant app, exiting afterwards
+            passToApp(commandJSON: commandJSON, loggedInUser: loggedInUser, notifierPath: notifierPath,
                       parsedResult: parsedResult)
         } else {
             // Format the args as needed
@@ -99,66 +104,67 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 // Format the args as needed
 func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgParser) {
-    // Initialize a parsedArguments object, with the messageBody.. as have to have that to get this far
-    var parsedArguments = ParsedArguments()
+    // Initialize a messageContent object
+    var messageContent = MessageContent()
+    // Initialize a rootElements object
+    var rootElements = RootElements()
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Set verboseMode
-        parsedArguments.verboseMode = "enabled"
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - verboseMode: \(parsedArguments.verboseMode!)")
+        rootElements.verboseMode = "enabled"
     }
     // Set the message to the body of the notification as not removing all, we have to have this
-    parsedArguments.messageBody = setNotificationBody(parsedResult: parsedResult)
+    messageContent.messageBody = setNotificationBody(parsedResult: parsedResult)
     // If we've been passed a messageaction
     if parsedResult.messageaction != "" {
         // Set messageAction
-        parsedArguments.messageAction = parseAction(actionString: parsedResult.messageaction,
+        messageContent.messageAction = parseAction(actionString: parsedResult.messageaction,
                                                     parsedResult: parsedResult)
     }
     // If we've been passed a sound
     if parsedResult.sound != "" {
         // Set messageSound
-        parsedArguments.messageSound = setNotificationSound(parsedResult: parsedResult)
+        messageContent.messageSound = setNotificationSound(parsedResult: parsedResult)
     }
     // If we've been passed a subtitle
     if parsedResult.subtitle != "" {
         // Set messageSubtitle
-        parsedArguments.messageSubtitle = setNotificationSubtitle(parsedResult: parsedResult)
+        messageContent.messageSubtitle = setNotificationSubtitle(parsedResult: parsedResult)
     }
     // If we've been passed a title
     if parsedResult.title != "" {
         // Set messageTitle
-        parsedArguments.messageTitle = setNotificationTitle(parsedResult: parsedResult)
+        messageContent.messageTitle = setNotificationTitle(parsedResult: parsedResult)
     }
     // If we're to remove a prior posted notification
     if parsedResult.remove.lowercased() == "prior" {
         // Set removeOption
-        parsedArguments.removeOption = "prior"
+        rootElements.removeOption = "prior"
         // If verbose mode is enabled
         if parsedResult.verbose {
             // Progress log
-            NSLog("\(#function.components(separatedBy: "(")[0]) - removeOption: \(parsedArguments.removeOption!))")
+            NSLog("\(#function.components(separatedBy: "(")[0]) - removeOption: \(rootElements.removeOption!))")
         }
     }
     // If we're dealing with an alert, check for additional items
     if parsedResult.type.lowercased() == "alert" {
         // If we've been passed a messagebutton, and messagebuttonaction
-        if parsedResult.messagebutton != ""{
+        if parsedResult.messagebutton != "" {
             // Set messageButton and messagebuttonaction
-            parsedArguments.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
+            messageContent.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
             // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
             if parsedResult.messagebuttonaction != "" {
                 // Set messageButtonAction
-                parsedArguments.messageButtonAction = parseAction(actionString:
+                messageContent.messageButtonAction = parseAction(actionString:
                                                                   parsedResult.messagebuttonaction,
                                                                   parsedResult: parsedResult)
             }
         }
     }
-    // Convert parsedArguments into JSON
-    let parsedArgumentsJSON = createJSON(parsedArguments: parsedArguments, parsedResult: parsedResult)
-    // Pass parsedArgumentsJSON to the relevant app, exiting afterwards
-    passToApp(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedArgumentsJSON: parsedArgumentsJSON,
+    // Create the JSON to pass to the notifying app
+    let commandJSON = createJSON(messageContent: messageContent, parsedResult: parsedResult,
+                                 rootElements: rootElements)
+    // Pass commandJSON to the relevant app, exiting afterwards
+    passToApp(commandJSON: commandJSON, loggedInUser: loggedInUser, notifierPath: notifierPath,
               parsedResult: parsedResult)
 }

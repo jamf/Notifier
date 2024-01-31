@@ -18,8 +18,8 @@ struct GlobalVariables {
     static let bannerAppPath = mainAppPath + "/Contents/Helpers/Notifier - Notifications.app"
 }
 
-// Structure of ParsedArguments JSON
-struct ParsedArguments: Codable {
+// Structure of MessageContent
+struct MessageContent: Codable {
     // Optional - action to perform when the message is clicked
     var messageAction: [TaskObject]?
     // The notifications message (required)
@@ -34,10 +34,6 @@ struct ParsedArguments: Codable {
     var messageSubtitle: String?
     // Optional - the notifications title
     var messageTitle: String?
-    // Optional - removes a specific notification or all notifications delivered
-    var removeOption: String?
-    // Optional - enables verbose logging
-    var verboseMode: String?
     // Arguments for the task object
     struct TaskObject: Codable {
         // The tasks executable
@@ -45,10 +41,10 @@ struct ParsedArguments: Codable {
         // Arguments to pass to the task executable
         var taskArguments: [String]?
     }
-    // Initialize ParsedArguments
+    // Initialize MessageContent
     init(messageAction: [TaskObject]? = nil, messageBody: String? = nil, messageButton: String? = nil,
          messageButtonAction: [TaskObject]? = nil, messageSound: String? = nil, messageSubtitle: String? = nil,
-         messageTitle: String? = nil, removeOption: String? = nil, verboseMode: String? = nil) {
+         messageTitle: String? = nil) {
         self.messageAction = messageAction
         self.messageBody = messageBody
         self.messageButton = messageButton
@@ -56,6 +52,20 @@ struct ParsedArguments: Codable {
         self.messageSound = messageSound
         self.messageSubtitle = messageSubtitle
         self.messageTitle = messageTitle
+    }
+}
+
+// Structure of RootElements
+struct RootElements: Codable {
+    // Optional - the messages content
+    var messageContent: String?
+    // Optional - removes a specific notification or all notifications delivered
+    var removeOption: String?
+    // Optional - enables verbose logging
+    var verboseMode: String?
+    // Initialize MessageContent
+    init(messageContent: String? = nil, removeOption: String? = nil, verboseMode: String? = nil) {
+        self.messageContent = messageContent
         self.removeOption = removeOption
         self.verboseMode = verboseMode
     }
