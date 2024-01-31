@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 ##########################################################################################
 #
@@ -15,20 +14,23 @@ set -e
 #
 ##########################################################################################
 #
-
-# This script creates Notifier-<version>.okg within this repos package dir.
+# This script creates Notifier-<version>.pkg within this repos package dir.
 #
 # Needs to be ran as root/sudo, and requires the following arguments to be passed to it:
 #
-#   1 - Name of a "Developer ID Installer" identity within the running users keychain:
-#       https://developer.apple.com/help/account/create-certificates/create-developer-id-certificates/
-#   2 - Name of an App-specific password within the running users keychain, to be used for notarization
-#       https://support.apple.com/en-us/102654
-#   3 - pkg receipt identifier
+#   $1 - The team id of a "Developer ID Installer" identity within the running users keychain:
+#        https://developer.apple.com/help/account/create-certificates/create-developer-id-certificates/
+#   $2 - Name of an App-specific password within the running users keychain, to be used for notarization
+#        https://support.apple.com/en-us/102654
+#   $3 - pkg receipt identifier
+#        uk.dataJAR.Notifier
 #
 ##########################################################################################
 ################################### Global Variables #####################################
 ##########################################################################################
+
+# Exit if any commands error
+set -e
 
 # Extension of the script (.py, .sh etc)..
 scriptExtension=${0##*.}
@@ -46,7 +48,7 @@ scriptDir="$(/usr/bin/dirname "$0")"
 notifierPath="${scriptDir}/ROOT/Applications/Utilities/Notifier.app"
 
 # Developer ID Installer identity
-developerIDInstaller="${1}"
+teamID="${1}"
 
 # App specific password for notarization
 appPassword="${2}"
@@ -64,30 +66,32 @@ setup()
     if [ "$(id -u)" != "0" ]
     then
         /bin/echo "ERROR: This script must be run as root"
-        exit 1
+        return 1
     fi
 
     # Make sure that there is a Notifier.app in the package folder
     if [ ! -e "${notifierPath}" ]
     then
         /bin/echo "ERROR: Notifier.app not found at: ${notifierPath}, exiting..."
-        exit 1
+        return 1
     fi
 
     # Get the value of $1, error if doesn't exist
-    if [ -z "${developerIDInstaller}" ]
+    if [ -z "${teamID}" ]
     then
-        /bin/echo "ERROR: no argument passed to script..."
+        /bin/echo "ERROR: teamID argument passed to script..."
         /bin/echo
-        exit 1
+        return 1
     # If we have been passed an value to $1
     else
-        # Make sure that we have a "Developer ID Installer: ${developerIDInstaller}" identity in the users keychain
-        if [ -z "$(/usr/bin/security find-identity -v 'login.keychain' -s -p basic -s "Developer ID Installer: ${developerIDInstaller}" 2>&1 | /usr/bin/awk '/Developer ID Installer: ${developerIDInstaller}/{ print $0 }')" ]
+        # Make sure that we have a "Developer ID Installer: ${teamdID}" identity in the users keychain
+        developerIDInstaller=$(/usr/bin/security find-identity -v 'login.keychain' -s -p basic | /usr/bin/awk -F "\"" '/Developer ID Installer:.*?'"${teamID}"'/ {print $2}')
+        # If we haven't found the required Developer ID Installer
+        if [ -z "${developerIDInstaller}" ]
         then
-            # Error if we cannot find Developer ID Installer: ${developerIDInstaller} in the keychain
-            /bin/echo "ERROR: no \"Developer ID Installer: Data JAR Ltd\" identity found in login.keychain, exiting..."
-            exit 1
+            # Error if we cannot find Developer ID Installer: ${teamdID} in the keychain
+            /bin/echo "ERROR: no \"${teamID}\" Developer ID Installer certificate found in login.keychain, exiting..."
+            return 1
         fi
     fi
 
@@ -96,15 +100,15 @@ setup()
     then
         /bin/echo "ERROR: missing argument $2..."
         /bin/echo
-        exit 1
+        return 1
     # If we have been passed an value to $2
     else
         # Make sure that $appPassword exists in the user keychain
         if [ -z "$(/usr/bin/security find-generic-password login.keychain -D "application password" -G "${appPassword}")" ]
         then
             # Error if we cannot find appPassword in the keychain
-            /bin/echo "ERROR: password: ${appPassword} not found in login.keychain, exiting..."
-            exit 1
+            /bin/echo "ERROR: password: \"${appPassword}\" not found in login.keychain, exiting..."
+            return 1
         fi
     fi
 
@@ -113,7 +117,7 @@ setup()
     then
         /bin/echo "ERROR: missing argument $3..."
         /bin/echo
-        exit 1
+        return 1
     fi
 }
 
@@ -127,21 +131,32 @@ start()
 
 finish()
 {
-
     # Logging finish
     /bin/echo "Finished: $(/bin/date)"
-
 }
 
+usage()
+{
+     /bin/echo "
+ABOUT: This script creates Notifier-<version>.pkg within this repos package dir.
+
+USAGE: Ths script needs to be ran as root/sudo, and requires the following arguments to be passed to it:
+
+    \$1 - The team id of a "Developer ID Installer" identity within the running users keychain:
+         https://developer.apple.com/help/account/create-certificates/create-developer-id-certificates/
+    \$2 - Name of an App-specific password within the running users keychain, to be used for notarization:
+         https://support.apple.com/en-us/102654
+    \$3 - pkg receipt identifier
+         uk.dataJAR.Notifier
+"
+}
 
 getNotifierVersion()
 {
-
     # Queries Notifier.app for version
     /bin/echo "Getting notifier version from ${notifierPath}/Contents/Info.plist..."
-    notifierVersion=$(/usr/bin/defaults "${notifierPath}"/Contents/Info.plist CFBundleShortVersionString)
+    notifierVersion=$(/usr/bin/defaults read "${notifierPath}"/Contents/Info.plist CFBundleShortVersionString)
     /bin/echo "notifier version: ${notifierVersion}..."
-
 }
 
 
@@ -149,39 +164,68 @@ getMinOSVersion()
 {
     # Queries Notifier.app for min os version
     /bin/echo "Getting min os version from ${notifierPath}/Contents/Info.plist..."
-    minOS=$(/usr/bin/defaults "${notifierPath}"/Contents/Info.plist LSMinimumSystemVersion)
+    minOS=$(/usr/bin/defaults read "${notifierPath}"/Contents/Info.plist LSMinimumSystemVersion)
     /bin/echo "minOS: ${minOS}..."
-
 }
 
+setPermissions()
+{
+    # Sets user:group ownership
+    /bin/echo "Setting root:wheel for: ${scriptDir}/ROOT/..."
+    /usr/sbin/chown -R root:wheel "${scriptDir}/ROOT/"
+
+    # Set perms
+    /bin/echo "Setting 755 permissions for: ${scriptDir}/ROOT/..."
+    /bin/chmod -R 755 "${scriptDir}/ROOT/"
+
+    # Mark Notifier.app as executable
+    /bin/echo "Marking: ${notifierPath} as executable..."
+    /usr/bin/sudo /bin/chmod -R +x "${notifierPath}"
+}
 
 createPKG()
 {
-    # Creates notifier.pkg in ${scriptDir}
+    # Creates a component plist
+    /bin/echo "Creating ${scriptDir}/notifier-app.plist"...
+    /usr/bin/pkgbuild --analyze --root "${scriptDir}"/ROOT/ "${scriptDir}"/notifier-app.plist
+
+    # Set BundleIsRelocatable to NO in component plist
+    /bin/echo "Setting \"BundleIsRelocatable\" to NO in ${scriptDir}/notifier-app.plist..."
+    /usr/bin/plutil -replace BundleIsRelocatable -bool NO "${scriptDir}"/notifier-app.plist
+
+    # Creates notifier.pkg in ${scriptDir}/
     /bin/echo "Creating ${scriptDir}/notifier-${notifierVersion}.pkg"
-    /usr/bin/pkgbuild --identifier "${pkgIdentifier}" --root "${scriptDir}"/ROOT/ --scripts "${scriptDir}"/scripts/ --sign "Developer ID Installer: ${developerIDInstaller}" --install-location '/' --version "${notifierVersion}" --min-os-version "${minOS}" "${scriptDir}"/gen-pkg-datajar-notifier-"${notifierVersion}".pkg
-
+    /usr/bin/pkgbuild --identifier "${pkgIdentifier}" --root "${scriptDir}"/ROOT/ --sign "${developerIDInstaller}" --install-location '/' --version "${notifierVersion}" --min-os-version "${minOS}" "${scriptDir}"/Notifier-"${notifierVersion}".pkg
 }
-
 
 notarizePKG()
 {
-
     # Notarizes the PKG created within the createPKG function
-    /bin/echo "Notarizing ${scriptDir}/gen-pkg-datajar-notifier-${notifierVersion}.pkg..."
-    /usr/bin/xcrun notarytool submit "${scriptDir}"/gen-pkg-datajar-notifier-"${notifierVersion}".pkg --keychain-profile "${appPassword}" --wait
+    /bin/echo "Notarizing ${scriptDir}/Notifier-${notifierVersion}.pkg..."
+    /usr/bin/xcrun notarytool submit "${scriptDir}"/Notifier-"${notifierVersion}".pkg --keychain-profile "${appPassword}" --wait
+}
 
+clearPermissions()
+{
+    # Sets perms on ROOT dir recursively after building a pkg
+    /bin/echo "Clearing permissions on: ${scriptDir}/ROOT/..."
+    /bin/chmod -R 777 "${scriptDir}/ROOT/"
 }
 
 ##########################################################################################
 #################################### End functions #######################################
 ##########################################################################################
 
-setup "$@"
-start
-getNotifierVersion
-getMinOSVersion
-setPermissions
-createPKG
-notarizePKG
-finish
+if ! setup "$@"
+then
+    usage
+else
+    start
+    getNotifierVersion
+    getMinOSVersion
+    setPermissions
+    createPKG
+    notarizePKG
+    clearPermissions
+    finish
+fi
