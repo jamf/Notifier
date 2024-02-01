@@ -115,7 +115,7 @@ Other verbs apply to the main message area, the red box.
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message" --title "Notification ;)"`
 ##
 **Example 4** This example shows removal of a prior notification, (sleep used for the example gif, not needed in use but below for completeness sake).
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/017567ed-e83d-41f1-a472-774e6a3031ce">
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/874dad84-0a1c-4145-8f93-df2ce4923762">
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!'`
 
