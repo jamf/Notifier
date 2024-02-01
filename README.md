@@ -5,11 +5,11 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 # Notifier
-<p align="center"><img src="/../assets/images/Notifier.png" width="256" height="256"></p>
+<p align="center"><img width="256" alt="Alert" src="https://github.com/dataJAR/Notifier/assets/2464974/d8d2cca1-250c-4601-a1d5-1fea2330ba14">
 
 Notifier is a Swift app which can post alert or banner notifications on macOS 10.15+ clients.
 
-Notifications are delived via the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications)
+Notifications are delivered via the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications)
 
 This project was originally intended for use with [jamJAR](https://github.com/dataJAR/jamJAR)
 
@@ -92,11 +92,11 @@ OPTIONS:
 When looking at the above, --messagebutton & --messagebuttonaction refer to the button for Alert notifications as shown in the green box.
 
 Other verbs apply to the main message area, the red box.
-<p align="center"><img src="/../readme-assets/images/Alert.png" height="200"></p>
+<p align="center"><img width="370" alt="Alert" src="https://github.com/dataJAR/Notifier/assets/2464974/cd9525be-358d-4eb7-b60b-3c22c6cf9d14">
 
 ## Example Usage
 **Example 1** This example shows a basic banner notification.
-<p align="center"><img src="/../assets/images/Example2.gif"></p>
+<p align="center"><src="https://github.com/dataJAR/Notifier/assets/2464974/ac6b777c-ee47-4bc2-b7a5-7953e75fced7">
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"`
 ##
