@@ -195,7 +195,7 @@ createPKG()
 
     # Creates notifier.pkg in ${scriptDir}/
     /bin/echo "Creating ${scriptDir}/notifier-${notifierVersion}.pkg"
-    /usr/bin/pkgbuild --identifier "${pkgIdentifier}" --root "${scriptDir}"/ROOT/ --sign "${developerIDInstaller}" --install-location '/' --version "${notifierVersion}" --min-os-version "${minOS}" "${scriptDir}"/Notifier-"${notifierVersion}".pkg
+    /usr/bin/pkgbuild --identifier "${pkgIdentifier}" --root "${scriptDir}"/ROOT/ --sign "${developerIDInstaller}" --install-location '/' --version "${notifierVersion}" --min-os-version "${minOS}" --component-plist "${scriptDir}"/notifier-app.plist "${scriptDir}"/Notifier-"${notifierVersion}".pkg
 }
 
 notarizePKG()
