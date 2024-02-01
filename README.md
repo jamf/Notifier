@@ -13,6 +13,8 @@ Notifications are delivered via the [UserNotifications Framework](https://develo
 
 This project was originally intended for use with [jamJAR](https://github.com/dataJAR/jamJAR)
 
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/bb6cf9c6-2dbd-4751-99a1-1a6a64c1fca1">
+
 # Usage
 ## Basic Usage
 ```
@@ -88,11 +90,6 @@ OPTIONS:
 
   --help                  Show help information.
 ```
-
-When looking at the above, --messagebutton & --messagebuttonaction refer to the button for Alert notifications as shown in the green box.
-
-Other verbs apply to the main message area, the red box.
-<p align="center"><img width="370" alt="Alert" src="https://github.com/dataJAR/Notifier/assets/2464974/cd9525be-358d-4eb7-b60b-3c22c6cf9d14">
 
 ## Example Usage
 **Example 1** This example shows a basic banner notification.
