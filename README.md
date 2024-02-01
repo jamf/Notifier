@@ -1,4 +1,4 @@
-Copyright 2023 DATA JAR LTD
+Copyright 2024 DATA JAR LTD
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -7,47 +7,92 @@ Unless required by applicable law or agreed to in writing, software distributed 
 # Notifier
 <p align="center"><img src="/../assets/images/Notifier.png" width="256" height="256"></p>
 
-Notifier is a Swift app which can post macOS alert or banner notifications on 10.10+ clients.
+Notifier is a Swift app which can post alert or banner notifications on macOS 10.15+ clients.
 
-On macOS 10.10-10.14 the deprecated [NSUserNotifications API](https://developer.apple.com/documentation/foundation/nsusernotification) is used, for 10.15+ the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications) are used.
+Notifications are delived via the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications)
 
 This project was originally intended for use with [jamJAR](https://github.com/dataJAR/jamJAR)
 
 # Usage
 ## Basic Usage
 ```
-./Notifier.app/Contents/MacOS/Notifier 
-OVERVIEW: Notifier: Sends banner or alert notifications.
+./Notifier.app/Contents/MacOS/Notifier
+OVERVIEW: Notifier 3.0: Posts alert or banner notifications.
 
-USAGE: notifier --type <alert/banner> --message <some message> <options>
+USAGE: --type <alert/banner> --message <some message> <options>
+       --type <alert/banner> --remove prior <some message> <options>
+       --type <alert/banner> --remove all
+       --rebrand <path to image>
 
 OPTIONS:
-  --message               message text - REQUIRED if not passing --remove all
-  --messageaction         The action to be performed when the message is clicked. Either pass 'logout' or path to 
-                          item to open on click. Can be a .app, file, URL etc. With non-.app items being opened in 
-                          their default handler
-  --messagebutton         alert type only. Sets the message buttons text
-  --messagebuttonaction   alert type only. The action to be performed when the message button is clicked. Either 
-                          pass 'logout' or path to item to open on click. Can be a .app, file, URL etc. With non-.app 
-                          items being opened in their default handler. Requires '--messagebutton' to be passed
-  --remove                "prior" or "all". If passing "prior", the full message will be required too. Including all 
-                          passed flags
-  --sound                 sound to play. Pass "default" for the default macOS sound, else the name of a sound in 
-                          /Library/Sounds or /System/Library/Sounds. If the sound cannot be found, macOS will use the 
-                          "default" sound
-  --subtitle              message subtitle
-  --title                 message title
-  --type                  alert or banner - REQUIRED
-  --verbose               Enables logging of actions. Check console for  'Notifier Log:' messages
-  --help                  Display available options
+  --type <type>           alert or banner - REQUIRED.
 
-SEE ALSO: https://github.com/dataJAR/Notifier
+  --message <message>     The notifications message.
+
+  --messageaction <messageaction>
+                          The action to be performed under the users account
+                          when the message is clicked.
+
+                          • Passing 'logout' will prompt the user to logout.
+                          • If passed a single item, this will be launched via:
+                          /usr/bin/open
+                          • More complex commands can be passed, but the 1st
+                          argument needs to be a binaries path.
+
+                          For example: "/usr/bin/open" will work, "open" will
+                          not.
+
+  --sound <sound>         sound to play when notification is delivered. Pass
+                          "default" for the default macOS sound, else the name
+                          of a sound in /Library/Sounds or
+                          /System/Library/Sounds.
+
+                          If the sound cannot be found, macOS will use the
+                          "default" sound.
+
+  --subtitle <subtitle>   The notifications subtitle.
+
+  --title <title>         The notifications title.
+
+  --messagebutton <messagebutton>
+                          alert type only.
+
+                          Adds a button to the message, with the label being
+                          what is passed.
+
+  --messagebuttonaction <messagebuttonaction>
+                          alert type only.
+
+                          The action to be performed under the users account
+                          when the optional message button is clicked.
+
+                          • Passing 'logout' will prompt the user to logout.
+                          • If passed a single item, this will be launched via:
+                          /usr/bin/open
+                          • More complex commands can be passed, but the 1st
+                          argument needs to be a binaries path.
+
+                          For example: "/usr/bin/open" will work, "open" will
+                          not.
+
+  --rebrand <rebrand>     Requires root privileges.
+
+                          Rebrands Notifier using the image passed.
+
+  --remove <remove>       "prior" or "all". If passing "prior", the full
+                          message will be required too. Including all passed
+                          flags.
+
+  --verbose               Enables logging of actions. Check console for 
+                          'Notifier' messages.
+
+  --help                  Show help information.
 ```
 
 When looking at the above, --messagebutton & --messagebuttonaction refer to the button for Alert notifications as shown in the green box.
 
 Other verbs apply to the main message area, the red box.
-<p align="center"><img src="/../assets/images/Areas.png" height="200"></p>
+<p align="center"><img src="/../readme-assets/images/Alert.png" height="200"></p>
 
 ## Example Usage
 **Example 1** This example shows a basic banner notification.
