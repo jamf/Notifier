@@ -127,16 +127,22 @@ OPTIONS:
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!' --remove prior
 ```
 ##
-**Example 5**
+**Example 5** This example shows Notifier 3.0+'s `--rebrand` argument in use, this allows for rebranding of Notifier without having to venture into Xcode etc.
 <p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/bb6cf9c6-2dbd-4751-99a1-1a6a64c1fca1">
 
 ```
-/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout";
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message";
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message";
 /bin/sleep 2;
-/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message2" --messagebutton "Logout";
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --rebrand /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ErasingIcon.icns;
 /bin/sleep 2;
-/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message3" --messagebutton "Logout"; 
-/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --remove all
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message";
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --rebrand /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/AppIcon.icns;
+/bin/sleep 2;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message";
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --rebrand /Applications/Utilities/Notifier.app/Contents/Resources/AppIcon.icns;
+/bin/sleep 2;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"
 ```
 
 # Deployment
