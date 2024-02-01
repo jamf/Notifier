@@ -98,18 +98,15 @@ Other verbs apply to the main message area, the red box.
 **Example 1** This example shows a basic banner notification.
 <p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/722ce659-c762-415a-8c33-8cc234ecc996">
 
-
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"`
 ##
 **Example 2** This example shows a basic alert notification.
 <p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/2343c69f-a7f0-43a1-be6f-b655909004cc">
 
-
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout" --messagebuttonaction "Logout"`
 ##
 **Example 3** This example shows both alert & banner notifications, (sleep used for the example gif, not needed in use but below for completeness sake).
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/5b7ada4b-df72-41a9-847b-1b8d17ac9538">
-
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/06b522b8-7ed8-4ee7-bc04-4676cc715bf0">
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "Please Logout" --messagebutton "Logout"  --title "Logout"`
 
@@ -118,9 +115,7 @@ Other verbs apply to the main message area, the red box.
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message" --title "Notification ;)"`
 ##
 **Example 4** This example shows removal of a prior notification, (sleep used for the example gif, not needed in use but below for completeness sake).
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/99415e2a-faf1-4467-8fbe-e7c915880cf8">
-
-<p align="center"><img src="/../assets/images/Example5.gif"></p>
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/017567ed-e83d-41f1-a472-774e6a3031ce">
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!'`
 
