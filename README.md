@@ -96,18 +96,19 @@ Other verbs apply to the main message area, the red box.
 
 ## Example Usage
 **Example 1** This example shows a basic banner notification.
-<p align="center"><src="https://github.com/dataJAR/Notifier/assets/2464974/ac6b777c-ee47-4bc2-b7a5-7953e75fced7">
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/722ce659-c762-415a-8c33-8cc234ecc996">
+
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"`
 ##
 **Example 2** This example shows a basic alert notification.
-<p align="center"><img src="/../assets/images/Example3.gif"></p>
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/2343c69f-a7f0-43a1-be6f-b655909004cc">
 
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout" --messagebuttonaction "Logout"`
 ##
 **Example 3** This example shows both alert & banner notifications, (sleep used for the example gif, not needed in use but below for completeness sake).
-<p align="center"><img src="/../assets/images/Example6.gif"></p>
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/5b7ada4b-df72-41a9-847b-1b8d17ac9538">
 
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "Please Logout" --messagebutton "Logout"  --title "Logout"`
@@ -117,6 +118,7 @@ Other verbs apply to the main message area, the red box.
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message" --title "Notification ;)"`
 ##
 **Example 4** This example shows removal of a prior notification, (sleep used for the example gif, not needed in use but below for completeness sake).
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/99415e2a-faf1-4467-8fbe-e7c915880cf8">
 
 <p align="center"><img src="/../assets/images/Example5.gif"></p>
 
@@ -129,7 +131,7 @@ Other verbs apply to the main message area, the red box.
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!' --remove prior`
 ##
 **Example 5** This example shows removal of all alert notifications, for banner alerts this will remove from Notification Center. Sleep used for the example gif, not needed in use but below for completeness sake.
-<p align="center"><img src="/../assets/images/Example7.gif"></p>
+<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/bb6cf9c6-2dbd-4751-99a1-1a6a64c1fca1">
 
 `/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout"`
 
