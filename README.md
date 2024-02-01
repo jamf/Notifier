@@ -13,10 +13,6 @@ Notifier is a Swift app which can post alert or banner notifications on macOS 10
 
 Notifications are delivered via the [UserNotifications Framework](https://developer.apple.com/documentation/usernotifications)
 
-This project was originally intended for use with [jamJAR](https://github.com/dataJAR/jamJAR)
-
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/bb6cf9c6-2dbd-4751-99a1-1a6a64c1fca1">
-
 # Usage
 ## Basic Usage
 ```
