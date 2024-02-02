@@ -149,7 +149,7 @@ func processMessageButton(notificationCenter: UNUserNotificationCenter, messageC
         // Create an action object
         let notificationAction = UNNotificationAction(identifier: "messagebutton",
                                                       title: messageContent.messageButton ?? "",
-                                                      options: .init(rawValue: 0))
+                                                      options: [])
         // Amend tempCategory
         tempCategory = UNNotificationCategory(identifier: "alert", actions: [notificationAction],
                                               intentIdentifiers: [],
