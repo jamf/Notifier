@@ -38,6 +38,7 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
         if loggedInUser != "" {
             // If we're logged in, look to restart apps for branding changes
             restartNotificationCenter(loggedInUser: loggedInUser, parsedResult: parsedResult)
+            sleep(5)
             // Exit
             exit(0)
         }
@@ -435,9 +436,8 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
         postError(errorMessage: "Failed to update icon for \(objectPath), with icon: \(brandingImage).",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
     }
-    _ = try? FileManager.default.contentsOfDirectory(atPath: objectPath)
     // Sleep for 2 seconds
-    sleep(3)
+    sleep(2)
     // Return boolean
     return rebrandStatus
 }
