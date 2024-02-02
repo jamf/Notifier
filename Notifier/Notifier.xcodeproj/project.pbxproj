@@ -69,16 +69,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8498F6CB2B6A883500642A20 /* Embed XPC Services */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			name = "Embed XPC Services";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -220,7 +210,6 @@
 				7C6D15762270BA2F0092D34E /* Resources */,
 				7CF89A4023BF9F6000723A3B /* CopyFiles */,
 				7CAB609623DF4C8B0029E310 /* CopyFiles */,
-				8498F6CB2B6A883500642A20 /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
