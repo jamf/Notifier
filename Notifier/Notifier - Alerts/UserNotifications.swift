@@ -234,7 +234,7 @@ func processNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any
                           """)
                 // If task failed to run
                 } else {
-                    // Post error to stdout and NSLog if verbose mode is enabled
+                        // Post error
                         postError(errorMessage: """
                                                 Running: \(messageActionDict["taskPath"] ?? "")
                                                 \(messageActionDict["taskArguments"] ?? []) failed with \(taskOutput).
@@ -317,10 +317,11 @@ func removeAllPriorNotifications(notificationCenter: UNUserNotificationCenter, m
 
 // Request authorisation
 func requestAuthorisation(verboseMode: String) {
+        // Check authorization status with the UNUserNotificationCenter object
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, _) in
         // If we're not been granted authorization to post notifications
         if !granted {
-            // Post error to stdout and NSLog if verbose mode is enabled
+            // Post error
             postError(errorMessage: "Authorisation not granted to post notifications, exiting...",
                       functionName: #function.components(separatedBy: "(")[0],
                       verboseMode: verboseMode)
