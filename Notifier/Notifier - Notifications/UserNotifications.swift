@@ -203,11 +203,9 @@ func postNotification(notificationCenter: UNUserNotificationCenter, notification
               request - notificationContent - \(notificationContent).
               """)
     }
-    // Set the notification to be posted in 1 second
-    let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
     // Create the request object
     let notificationRequest = UNNotificationRequest(identifier: passedBase64, content: notificationContent,
-                                                    trigger: notificationTrigger)
+                                                    trigger: nil)
     // Post the notification
     notificationCenter.add(notificationRequest)
     // Sleep for a second
