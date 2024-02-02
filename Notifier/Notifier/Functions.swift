@@ -44,7 +44,7 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
         }
     // If there is an issue
     } else {
-        // Post error to stdout and NSLog if verbose mode is enabled
+        // Post error
         postError(errorMessage: "Failed to rebrand Notifier...",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
@@ -118,7 +118,7 @@ func getImageDetails(brandingImage: String, parsedResult: ArgParser) -> (NSImage
         imageData = NSImage(contentsOfFile: brandingImage)
         // If imageData isValid is nil, then brandingImage is not a valid icon
         if (imageData?.isValid) == nil {
-            // Post error to stdout and NSLog if verbose mode is enabled
+            // Post error
             postError(errorMessage: "\(brandingImage) is not a valid image...",
                       functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
             // Exit
@@ -128,7 +128,7 @@ func getImageDetails(brandingImage: String, parsedResult: ArgParser) -> (NSImage
         return imageData
     // If the file doesn't exist
     } else {
-        // Post error to stdout and NSLog if verbose mode is enabled
+        // Post error
         postError(errorMessage: "Cannot locate: \(brandingImage)....",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
@@ -349,7 +349,7 @@ func restartNotificationCenter(loggedInUser: String, parsedResult: ArgParser) {
 func rootCheck(parsedResult: ArgParser, passedArg: String) {
     // If we're not root
     if NSUserName() != "root" {
-        // Post error to stdout and NSLog if verbose mode is enabled
+        // Post error
         postError(errorMessage: "The argument: \(passedArg), requires root privileges, exiting...",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
@@ -420,7 +420,8 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
     }
     // Set the icon, returns bool
     let rebrandStatus = NSWorkspace.shared.setIcon(imageData, forFile: objectPath,
-                                                   options: NSWorkspace.IconCreationOptions([]))
+                                                   options: NSWorkspace.IconCreationOptions
+        .excludeQuickDrawElementsIconCreationOption)
     // If we have succesfully branded the item at objectPath
     if rebrandStatus {
         // If verbose mode is enabled
@@ -432,7 +433,7 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
                   """)
         }
     } else {
-        // Post error to stdout and NSLog if verbose mode is enabled
+        // Post error
         postError(errorMessage: "Failed to update icon for \(objectPath), with icon: \(brandingImage).",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
     }
