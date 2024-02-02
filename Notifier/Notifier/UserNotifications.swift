@@ -13,7 +13,7 @@ func setNotificationBody(parsedResult: ArgParser) -> String {
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(parsedResult.message)")
+        NSLog("\(#function.components(separatedBy: "(")[0]): \(parsedResult.message)")
     }
     // Returns the value passed to --message
     return parsedResult.message
@@ -24,7 +24,7 @@ func setNotificationMessageButton(parsedResult: ArgParser) -> String {
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(parsedResult.messagebutton)")
+        NSLog("\(#function.components(separatedBy: "(")[0]): \(parsedResult.messagebutton)")
     }
     // Returns the value passed to --messagebutton
     return parsedResult.messagebutton
@@ -35,7 +35,7 @@ func setNotificationSound(parsedResult: ArgParser) -> String {
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(parsedResult.sound)")
+        NSLog("\(#function.components(separatedBy: "(")[0]): \(parsedResult.sound)")
     }
     // Returns the value passed to --sound
     return parsedResult.sound
@@ -46,7 +46,7 @@ func setNotificationSubtitle(parsedResult: ArgParser) -> String {
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(parsedResult.subtitle)")
+        NSLog("\(#function.components(separatedBy: "(")[0]): \(parsedResult.subtitle)")
     }
     // Returns the value passed to --subtitle
     return parsedResult.subtitle
@@ -57,7 +57,7 @@ func setNotificationTitle(parsedResult: ArgParser) -> String {
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(parsedResult.title)")
+        NSLog("\(#function.components(separatedBy: "(")[0]): \(parsedResult.title)")
     }
     // Returns the value passed to --title
     return parsedResult.title
