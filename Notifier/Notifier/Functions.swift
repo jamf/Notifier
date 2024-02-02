@@ -81,7 +81,7 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
         // Progress log
         NSLog("""
               \(#function.components(separatedBy: "(")[0]) - contentJSON: \(String(data: contentJSON, encoding: .utf8)!)
-             """)
+              """)
     }
     // Add to contentJSON, but base64 encoded
     rootContent.messageContent = contentJSON.base64EncodedString()
@@ -289,12 +289,14 @@ func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, 
 func postError(errorMessage: String, functionName: String, parsedResult: ArgParser) {
     // Var declaration
     let fullMessage = "ERROR: \(functionName) - \(errorMessage)"
-    // Print error
-    print(fullMessage)
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
         NSLog(fullMessage)
+    // verbose mode isn't enabled
+    } else {
+        // Print to stdout
+        print(fullMessage)
     }
 }
 
@@ -302,12 +304,14 @@ func postError(errorMessage: String, functionName: String, parsedResult: ArgPars
 func postWarning(warningMessage: String, functionName: String, parsedResult: ArgParser) {
     // Var declaration
     let fullMessage = "WARNING: \(functionName) - \(warningMessage)"
-    // Print error
-    print(fullMessage)
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
         NSLog(fullMessage)
+    // verbose mode isn't enabled
+    } else {
+        // Print to stdout
+        print(fullMessage)
     }
 }
 
@@ -409,13 +413,13 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
             }
             // Delete the file
             try? FileManager.default.removeItem(atPath: objectPath + "/" + appRootItem)
-            // Sleep for 1 second
-            sleep(1)
+            // Sleep for 2 seconds
+            sleep(2)
         }
     }
     // Set the icon, returns bool
     let rebrandStatus = NSWorkspace.shared.setIcon(imageData, forFile: objectPath,
-                                                   options: NSWorkspace.IconCreationOptions(rawValue: 0))
+                                                   options: NSWorkspace.IconCreationOptions([]))
     // If we have succesfully branded the item at objectPath
     if rebrandStatus {
         // If verbose mode is enabled
@@ -431,6 +435,9 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
         postError(errorMessage: "Failed to update icon for \(objectPath), with icon: \(brandingImage).",
                   functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
     }
+    _ = try? FileManager.default.contentsOfDirectory(atPath: objectPath)
+    // Sleep for 2 seconds
+    sleep(3)
     // Return boolean
     return rebrandStatus
 }
