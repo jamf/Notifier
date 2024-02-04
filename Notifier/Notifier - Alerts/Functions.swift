@@ -15,9 +15,9 @@ func base64Decode(base64String: String) -> String {
         let encodedData = Data(base64Encoded: base64EncodedData),
         let decodedString = String(data: encodedData, encoding: .utf8)
     else {
-        // Post an error to stdout and console
-        postError(errorMessage: "Failed to decode: \(base64String) from base64.",
-                  functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+        // Post error
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "Failed to decode: \(base64String) from base64...",
+                             functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
         // Exit
         exit(1)
     }
@@ -42,11 +42,11 @@ func decodeJSON(passedJSON: String) -> (MessageContent, String, RootElements) {
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - \(rootElements)")
         }
-        // If encoding into JSON fails
+    // If encoding into JSON fails
     } catch {
-        // Post an error to stdout and console
-        postError(errorMessage: "Failed to decode: \(rootElements) from JSON.",
-                  functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+        // Post error
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "Failed to decode: \(rootElements) from JSON...",
+                             functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
         // Exit
         exit(1)
     }
@@ -65,11 +65,11 @@ func decodeJSON(passedJSON: String) -> (MessageContent, String, RootElements) {
                 // Progress log
                 NSLog("\(#function.components(separatedBy: "(")[0]) - \(messageContent)")
             }
-            // If encoding into JSON fails
+        // If encoding into JSON fails
         } catch {
-            // Post an error to stdout and console
-            postError(errorMessage: "Failed to decode: \(messageContent) from JSON.",
-                      functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+            // Post error
+            postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "Failed to decode: \(messageContent) from JSON...",
+                                 functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
             // Exit
             exit(1)
         }
@@ -100,9 +100,9 @@ func gracefulLogout(userInfo: [AnyHashable: Any]) {
             }
             // If we have an error from the prior command
         } else if error != nil {
-            // Post an error to stdout and console
-            postError(errorMessage: "\(error!)", functionName: #function.components(separatedBy: "(")[0],
-                      verboseMode: "enabled")
+            // Post error
+            postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "\(error!)",
+                                 functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
             // Exit
             exit(1)
         }
@@ -115,8 +115,8 @@ func isNotificationCenterRunning(verboseMode: String) {
     guard !NSRunningApplication.runningApplications(withBundleIdentifier:
                                                         "com.apple.notificationcenterui").isEmpty else {
         // Post warning
-        postWarning(warningMessage: "Notification Center is not running...",
-                    functionName: #function.components(separatedBy: "(")[0], verboseMode: verboseMode)
+        postToNSLogAndStdOut(logLevel: "WARNING", logMessage: "Notification Center is not running...",
+                             functionName: #function.components(separatedBy: "(")[0], verboseMode: verboseMode)
         // Exit
         exit(0)
     }
@@ -127,29 +127,18 @@ func isNotificationCenterRunning(verboseMode: String) {
     }
 }
 
-// Post error to both NSLog and stdout
-func postError(errorMessage: String, functionName: String, verboseMode: String) {
+// Post to both NSLog and stdout
+func postToNSLogAndStdOut(logLevel: String, logMessage: String, functionName: String, verboseMode: String) {
     // Var declaration
-    let fullMessage = "ERROR: \(functionName) - \(errorMessage)"
-    // Print error
-    print(fullMessage)
+    let fullMessage = "\(logLevel): \(functionName) - \(logMessage)"
     // If verbose mode is enabled
     if verboseMode != "" {
         // Progress log
         NSLog(fullMessage)
-    }
-}
-
-// Post warning to both NSLog and stdout
-func postWarning(warningMessage: String, functionName: String, verboseMode: String) {
-    // Var declaration
-    let fullMessage = "WARNING: \(functionName) - \(warningMessage)"
-    // Print error
-    print(fullMessage)
-    // If verbose mode is enabled
-    if verboseMode != "" {
-        // Progress log
-        NSLog(fullMessage)
+    // verbose mode isn't enabled
+    } else {
+        // Print to stdout
+        print(fullMessage)
     }
 }
 
