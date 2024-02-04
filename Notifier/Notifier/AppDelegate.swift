@@ -31,15 +31,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         // If rebrand has been passed
         if parsedResult.rebrand != "" {
-            // Confirm we're root before proceeding
-            rootCheck(parsedResult: parsedResult, passedArg: "--rebrand")
             // Rebrand Notifier apps
-            changeIcons(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
+            changeIcons(brandingImage: parsedResult.rebrand, parsedResult: parsedResult)
+            // Exit
+            exit(0)
+        // If we're to register the notifying applications
+        } else if parsedResult.register {
+            // Register applications
+            registerApplications(parsedResult: parsedResult)
+            // Exit
+            exit(0)
         // If we're not rebranding and no user is logged in exit
         } else if loggedInUser == "" {
             // Post warning
-            postWarning(warningMessage: "No user logged in...",
-                        functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+            postToNSLogAndStdOut(logLevel: "WARNING", logMessage: "No user logged in, exiting...",
+                                 functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
             // Exit
             exit(0)
         // If we have no value passed to --type
