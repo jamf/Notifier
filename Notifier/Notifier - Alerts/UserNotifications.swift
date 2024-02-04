@@ -125,8 +125,6 @@ func handleNotification(forResponse response: UNNotificationResponse) {
     // Remove the delivered notification
     UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers:
                                                                         [response.notification.request.identifier])
-    // Sleep for a second
-    sleep(1)
     // If verbose mode is set
     if userInfo["verboseMode"] != nil {
         // Progress log
@@ -190,6 +188,33 @@ func processMessageButton(notificationCenter: UNUserNotificationCenter, messageC
     return ([:], tempCategory)
 }
 
+// Post the notification
+func postNotification(notificationCenter: UNUserNotificationCenter, notificationContent: UNMutableNotificationContent,
+                      messageContent: MessageContent, passedBase64: String, rootElements: RootElements) {
+    // If we're in verbose mode
+    if rootElements.verboseMode != nil {
+        // Progress log
+        NSLog("""
+              \(#function.components(separatedBy: "(")[0]) - notification \
+              request - notificationContent - \(notificationContent).
+              """)
+    }
+    // Create the request object
+    let notificationRequest = UNNotificationRequest(identifier: passedBase64, content: notificationContent,
+                                                    trigger: nil)
+    // Post the notification
+    notificationCenter.add(notificationRequest)
+    // If we're in verbose mode
+    if rootElements.verboseMode != nil {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - notification delivered")
+    }
+    // Sleep, so we don't exit before the notification has been delivered
+    sleep(1)
+    // Exit
+    exit(0)
+}
+
 // Process actions when interacted
 func processNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any]) {
     // Var declaration
@@ -235,42 +260,16 @@ func processNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any
                 // If task failed to run
                 } else {
                         // Post error
-                        postError(errorMessage: """
-                                                Running: \(messageActionDict["taskPath"] ?? "")
-                                                \(messageActionDict["taskArguments"] ?? []) failed with \(taskOutput).
-                                                """,
-                                  functionName: #function.components(separatedBy: "(")[0], verboseMode: "enabled")
+                        postToNSLogAndStdOut(logLevel: "ERROR", logMessage:
+                                             """
+                                             Running: \(messageActionDict["taskPath"] ?? "")
+                                             \(messageActionDict["taskArguments"] ?? []) failed with \(taskOutput).
+                                             """, functionName: #function.components(separatedBy: "(")[0],
+                                             verboseMode: "enabled")
                 }
             }
         }
     }
-}
-
-// Post the notification
-func postNotification(notificationCenter: UNUserNotificationCenter, notificationContent: UNMutableNotificationContent,
-                      messageContent: MessageContent, passedBase64: String, rootElements: RootElements) {
-    // If we're in verbose mode
-    if rootElements.verboseMode != nil {
-        // Progress log
-        NSLog("""
-              \(#function.components(separatedBy: "(")[0]) - notification \
-              request - notificationContent - \(notificationContent).
-              """)
-    }
-    // Create the request object
-    let notificationRequest = UNNotificationRequest(identifier: passedBase64, content: notificationContent,
-                                                    trigger: nil)
-    // Post the notification
-    notificationCenter.add(notificationRequest)
-    // Sleep for a second
-    sleep(1)
-    // If we're in verbose mode
-    if rootElements.verboseMode != nil {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notification delivered")
-    }
-    // Exit
-    exit(0)
 }
 
 // If we're to remove a specific prior posted notification
@@ -283,13 +282,13 @@ func removePriorNotification(notificationCenter: UNUserNotificationCenter, messa
     }
     // Remove any prior notifications with the same identifier as ncContentbase64
     notificationCenter.removeDeliveredNotifications(withIdentifiers: [passedBase64])
-    // Sleep for a second
-    sleep(1)
     // If we're in verbose mode
     if rootElements.verboseMode != nil {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - remove prior - done")
     }
+    // Sleep, so we don't exit before notification(s) have been removed
+    sleep(1)
     // Exit
     exit(0)
 }
@@ -304,13 +303,13 @@ func removeAllPriorNotifications(notificationCenter: UNUserNotificationCenter, m
     }
     // Remove all delivered notifications
     notificationCenter.removeAllDeliveredNotifications()
-    // Sleep for a second
-    sleep(1)
     // If we're in verbose mode
     if rootElements.verboseMode != nil {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - remove all - done")
     }
+    // Sleep, so we don't exit before notification(s) have been removed
+    sleep(1)
     // Exit
     exit(0)
 }
@@ -322,9 +321,10 @@ func requestAuthorisation(verboseMode: String) {
         // If we're not been granted authorization to post notifications
         if !granted {
             // Post error
-            postError(errorMessage: "Authorisation not granted to post notifications, exiting...",
-                      functionName: #function.components(separatedBy: "(")[0],
-                      verboseMode: verboseMode)
+            postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
+                                 Authorisation not granted to post notifications, exiting...
+                                 """, functionName: #function.components(separatedBy: "(")[0],
+                                 verboseMode: "verboseMode")
             // Exit
             exit(1)
         }
