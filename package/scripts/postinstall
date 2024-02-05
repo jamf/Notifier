@@ -1,0 +1,98 @@
+#!/bin/bash
+
+##########################################################################################
+#
+# In accessing and using this Product, you confirm that you accept the terms of our
+# Product Licence in full and agree to comply with the terms of such Licence.
+#
+# https://datajar.co.uk/product-licence/
+#
+##########################################################################################
+#
+# DESCRIPTION
+#
+# Notifier pkg postinstall
+#
+##########################################################################################
+#
+# CHANGE LOG
+# 1.0 - Created
+#
+##########################################################################################
+
+##########################################################################################
+################################### Global Variables #####################################
+##########################################################################################
+
+# Extension of the script (.py, .sh etc)..
+scriptExtension=${0##*.}
+
+# Get the pkg name
+swTitle="$(/usr/bin/basename "$0" ."$scriptExtension")"
+
+# Script Version
+ver="1.0"
+
+# Path to Notifier.app binary
+notifierPath="/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier"
+
+##########################################################################################
+#################################### Start functions #####################################
+##########################################################################################
+
+# Exit if any commands error
+set -e
+
+setup()
+{
+    # Make sure we're root
+    if [ "$(id -u)" != "0" ]
+    then
+        # Error if we're not root
+        /bin/echo "ERROR: This script must be run as root"
+        # Exit
+        exit 1
+    fi
+}
+
+
+start()
+{
+    # Logging start/
+    /bin/echo "Running ${swTitle} ${ver}..."
+}
+
+
+finish()
+{
+    # Logging finish
+    /bin/echo "Finished: $(/bin/date)"
+}
+
+
+registerNotifier()
+{
+    # If we can find the Notifier.app
+    if [ -e "${notifierPath}" ]
+    then
+        # Register Notifier with Notification Center
+        "${notifierPath}" --register
+    # If we cannot find Notifier.app
+    else
+        # Log the error
+        /bin/echo "ERROR: Cannot find: ${notifierPath}, exiting..."
+        # Exit
+        exit 1
+    fi
+}
+
+
+##########################################################################################
+#################################### End functions #######################################
+##########################################################################################
+
+
+setup
+start
+registerNotifier
+finish
