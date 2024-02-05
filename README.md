@@ -170,9 +170,9 @@ The notifying apps (/Applications/Utilities/Notifier.app/Contents/Helpers/Notifi
 ## Resetting Notifications Center
 The below _should_ reset Notifications Center, but please test & submit a PR with a better method as applicable.
 
-1. `rm -rf $(getconf DARWIN_USER_DIR)/com.apple.notificationcenter/*`
+1. `/bin/rm -rf $(getconf DARWIN_USER_DIR)/com.apple.notificationcenter/*`
 2. Logout & then log back in, or:
-* For macOS 10.16+: `killall "NotificationCenter"`
+* For macOS 10.15+: `/usr/bin/killall "NotificationCenter"`
 3. Test the Notifier once more
 
 # FAQs
