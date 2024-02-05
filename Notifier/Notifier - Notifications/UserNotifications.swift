@@ -11,7 +11,7 @@ import UserNotifications
 // Returns the notifications body
 func getNotificationBody(messageContent: MessageContent, rootElements: RootElements) -> String {
     // If verbose mode is enabled
-    if rootElements.verboseMode != "" {
+    if rootElements.verboseMode != nil {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - messageBody: \(messageContent.messageBody!)")
     }
@@ -28,7 +28,7 @@ func getNotificationBodyAction(messageContent: MessageContent, rootElements: Roo
     // Add taskArguments from messageAction
     messageAction["taskArguments"] = messageContent.messageAction?[0].taskArguments
     // If verbose mode is enabled
-    if rootElements.verboseMode != "" {
+    if rootElements.verboseMode != nil {
         // Progress log
         NSLog("""
               \(#function.components(separatedBy: "(")[0]) - messageAction - taskPath: \
@@ -49,7 +49,7 @@ func getNotificationSound(messageContent: MessageContent, rootElements: RootElem
         tempSound = UNNotificationSound(named: UNNotificationSoundName(rawValue: messageContent.messageSound ?? ""))
     }
     // If verbose mode is enabled
-    if rootElements.verboseMode != "" {
+    if rootElements.verboseMode != nil {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - messageSound - set to: \(tempSound)")
     }
@@ -60,7 +60,7 @@ func getNotificationSound(messageContent: MessageContent, rootElements: RootElem
 // Returns the notifications subtitle
 func getNotificationSubtitle(messageContent: MessageContent, rootElements: RootElements) -> String {
     // If verbose mode is enabled
-    if rootElements.verboseMode != "" {
+    if rootElements.verboseMode != nil {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - messageBody: \(messageContent.messageSubtitle ?? "")")
     }
@@ -71,7 +71,7 @@ func getNotificationSubtitle(messageContent: MessageContent, rootElements: RootE
 // Returns the notifications title
 func getNotificationTitle(messageContent: MessageContent, rootElements: RootElements) -> String {
     // If verbose mode is enabled
-    if rootElements.verboseMode != "" {
+    if rootElements.verboseMode != nil {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - messageBody: \(messageContent.messageTitle ?? "")")
     }
