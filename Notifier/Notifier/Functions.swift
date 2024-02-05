@@ -36,7 +36,7 @@ func changeIcons(brandingImage: String, parsedResult: ArgParser) {
             NSLog("\(#function.components(separatedBy: "(")[0]) - Successfully rebranded Notifier")
         }
         // Restart Notification Center to update notifications icon
-        restartNotificationCenter(parsedResult: parsedResult)
+        runTask(parsedResult: parsedResult, taskArguments: ["NotificationCenter"], taskPath: "/usr/bin/killall")
         // Exit
         exit(0)
     // If there is an issue
@@ -347,40 +347,6 @@ func registerApplications(parsedResult: ArgParser) {
         // Restart Notification Center
         runTask(parsedResult: parsedResult, taskArguments: ["NotificationCenter"], taskPath: "/usr/bin/killall")
     }
-}
-
-// Restarts notification center
-func restartNotificationCenter(parsedResult: ArgParser) {
-    // Var declaration
-    var taskArguments = [String]()
-    var taskPath = String()
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(taskPath)")
-    }
-    // Get the username of the logged in user
-    let loggedInUser = loggedInUser()
-    // If the user running the app (NSUserName) isn't the logged in user
-    if NSUserName() != loggedInUser {
-        // Path for the task
-        taskPath = "/usr/bin/su"
-        // Arguments for the task
-        taskArguments = ["-l", loggedInUser, "-c", "/usr/bin/killall -u \(loggedInUser) NotificationCenter"]
-    // If the person running the app is the logged in user
-    } else {
-        // Path for the task
-        taskPath = "/usr/bin/killall"
-        // Arguments for the task
-        taskArguments = ["NotificationCenter"]
-    }
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(taskPath), taskArguments: \(taskArguments)")
-    }
-    // Run the task, ignoring returned exit status
-    runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
 }
 
 // Make sure we're running as root, exit if not
