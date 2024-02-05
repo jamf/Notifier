@@ -111,7 +111,7 @@ func gracefulLogout(userInfo: [AnyHashable: Any]) {
 
 // Checks that notification center is running, and exit if it's not
 func isNotificationCenterRunning(verboseMode: String) {
-    // Exit if notificaiton center isn't running for the user
+    // Exit if Notification Center isn't running for the user
     guard !NSRunningApplication.runningApplications(withBundleIdentifier:
                                                         "com.apple.notificationcenterui").isEmpty else {
         // Post warning
