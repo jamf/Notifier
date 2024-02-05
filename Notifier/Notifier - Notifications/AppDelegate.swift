@@ -34,31 +34,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             // Exit
             exit(0)
         } else {
-            // Exit if notificaiton center isn't running
-            isNotificationCenterRunning(verboseMode: "enabled")
+            // Get the passed base64 string at commandline argument at index 1
+            let (messageContent, passedBase64, rootElements) = decodeJSON(passedJSON: passedCLIArguments[1])
+            // Exit if Notification Center isn't running
+            isNotificationCenterRunning(verboseMode: rootElements.verboseMode ?? "")
             // Ask permission
-            requestAuthorisation(verboseMode: "enabled")
+            requestAuthorisation(verboseMode: rootElements.verboseMode ?? "")
             // Create a notification center object
             let notificationCenter =  UNUserNotificationCenter.current()
             // Set delegate
             notificationCenter.delegate = self
             // Process the arguments as needed
-            processArguments(notificationCenter: notificationCenter, passedCLIArguments: passedCLIArguments)
+            processArguments(messageContent: messageContent, notificationCenter: notificationCenter,
+                             passedBase64: passedBase64, passedCLIArguments: passedCLIArguments,
+                             rootElements: rootElements)
         }
     }
 }
 
 // Process the arguments as needed
-func processArguments(notificationCenter: UNUserNotificationCenter,
-                      passedCLIArguments: [String]) {
-    // Get the passed base64 string at commandline argument at index 1
-    let (messageContent, passedBase64, rootElements) = decodeJSON(passedJSON: passedCLIArguments[1])
+func processArguments(messageContent: MessageContent, notificationCenter: UNUserNotificationCenter,
+                      passedBase64: String, passedCLIArguments: [String], rootElements: RootElements) {
     // Create a notification content object
     let notificationContent = UNMutableNotificationContent()
     // Add category identifier to notificationContent required anyway so setting here
     notificationContent.categoryIdentifier = "banner"
     // If verbose mode is set
-    if rootElements.verboseMode != "" {
+    if rootElements.verboseMode != nil {
         // Add verboseMode to userInfo
         notificationContent.userInfo["verboseMode"] = "enabled"
         // Progress log
