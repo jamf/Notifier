@@ -47,6 +47,9 @@ scriptDir="$(/usr/bin/dirname "$0")"
 # Path to Notifier.app
 notifierPath="${scriptDir}/ROOT/Applications/Utilities/Notifier.app"
 
+# Path to scripts dir the packages dir
+pkgScriptsDir="${scriptDir}/scripts/"
+
 # Developer ID Installer identity
 teamID="${1}"
 
@@ -195,7 +198,7 @@ createPKG()
 
     # Creates notifier.pkg in ${scriptDir}/
     /bin/echo "Creating ${scriptDir}/notifier-${notifierVersion}.pkg"
-    /usr/bin/pkgbuild --identifier "${pkgIdentifier}" --root "${scriptDir}"/ROOT/ --sign "${developerIDInstaller}" --install-location '/' --version "${notifierVersion}" --min-os-version "${minOS}" --component-plist "${scriptDir}"/notifier-app.plist "${scriptDir}"/Notifier-"${notifierVersion}".pkg
+    /usr/bin/pkgbuild --identifier "${pkgIdentifier}" --root "${scriptDir}"/ROOT/ --scripts "${pkgScriptsDir}" --sign "${developerIDInstaller}" --install-location '/' --version "${notifierVersion}" --min-os-version "${minOS}" --component-plist "${scriptDir}"/notifier-app.plist "${scriptDir}"/Notifier-"${notifierVersion}".pkg
 }
 
 notarizePKG()
