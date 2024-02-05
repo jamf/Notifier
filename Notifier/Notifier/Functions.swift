@@ -35,8 +35,8 @@ func changeIcons(brandingImage: String, parsedResult: ArgParser) {
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - Successfully rebranded Notifier")
         }
-        // Restart Notification Center to update notifications icon
-        runTask(parsedResult: parsedResult, taskArguments: ["NotificationCenter"], taskPath: "/usr/bin/killall")
+        // Register the applications with Notification Center
+        registerApplications(parsedResult: parsedResult)
         // Exit
         exit(0)
     // If there is an issue
@@ -135,7 +135,7 @@ func getImageDetails(brandingImage: String, parsedResult: ArgParser) -> (NSImage
 
 // Checks that notification center is running, and exit if it's not
 func isNotificationCenterRunning(parsedResult: ArgParser) {
-    // Exit if notificaiton center isn't running for the user
+    // Exit if Notification Center isn't running for the user
     guard !NSRunningApplication.runningApplications(withBundleIdentifier:
                                                         "com.apple.notificationcenterui").isEmpty else {
         // Post warning
@@ -278,8 +278,8 @@ func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, 
     }
     // Launch the wanted notification app as the user
     runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
-    // If we're registering
-    if !parsedResult.register {
+    // If we're not rebranding
+    if parsedResult.rebrand == "" {
         // Exit
         exit(0)
     }
@@ -302,8 +302,6 @@ func postToNSLogAndStdOut(logLevel: String, logMessage: String, functionName: St
 
 // Registers the notifying applications in Notificaton Center
 func registerApplications(parsedResult: ArgParser) {
-    // Confirm we're root before proceeding
-    rootCheck(parsedResult: parsedResult, passedArg: "--register")
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
@@ -335,18 +333,44 @@ func registerApplications(parsedResult: ArgParser) {
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - parsedResult: \(parsedResult)")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - restarting Notification Center")
     }
-    // If we were triggered via the --register flag
-    if parsedResult.register {
-        // If verbose mode is enabled
-        if parsedResult.verbose {
-            // Progress log
-            NSLog("\(#function.components(separatedBy: "(")[0]) - restarting Notification Center")
-        }
-        // Restart Notification Center
-        runTask(parsedResult: parsedResult, taskArguments: ["NotificationCenter"], taskPath: "/usr/bin/killall")
+    // Restart Notification Center
+    restartNotificationCenter(parsedResult: parsedResult)
+}
+
+// Restarts notification center
+func restartNotificationCenter(parsedResult: ArgParser) {
+    // Var declaration
+    var taskArguments = [String]()
+    var taskPath = String()
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) \(taskPath)")
     }
+    // Get the username of the logged in user
+    let loggedInUser = loggedInUser()
+    // If the user running the app (NSUserName) isn't the logged in user
+    if NSUserName() != loggedInUser {
+        // Path for the task
+        taskPath = "/usr/bin/su"
+        // Arguments for the task
+        taskArguments = ["-l", loggedInUser, "-c", "/usr/bin/killall -u \(loggedInUser) NotificationCenter"]
+    // If the person running the app is the logged in user
+    } else {
+        // Path for the task
+        taskPath = "/usr/bin/killall"
+        // Arguments for the task
+        taskArguments = ["NotificationCenter"]
+    }
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) \(taskPath), taskArguments: \(taskArguments)")
+    }
+    // Run the task, ignoring returned exit status
+    runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
 }
 
 // Make sure we're running as root, exit if not
@@ -383,6 +407,8 @@ func runTask(parsedResult: ArgParser, taskArguments: [String], taskPath: String)
 
 // Attempts to update the app passed to objectPath's icon
 func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, parsedResult: ArgParser) -> Bool {
+    // Revert the icon, always returns false and this helps the OS realise that ther has been an icon change
+    NSWorkspace.shared.setIcon(nil, forFile: objectPath, options: NSWorkspace.IconCreationOptions([]))
     // Set the icon, returns bool
     let rebrandStatus = NSWorkspace.shared.setIcon(imageData, forFile: objectPath, options:
                                                    NSWorkspace.IconCreationOptions([]))
