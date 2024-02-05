@@ -110,18 +110,6 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var remove: String = ""
-    // Registers the notifying applications with Notiication Center
-    @Flag(help: """
-                  Requires root privileges.
-
-                  Registers the notifying applications with Notiication Center.
-
-                  This is triggered post-installation and when rebranding.
-
-                  Restarts Notification Center.
-
-                  """)
-    var register = false
     // Enables verbose logging
     @Flag(help: """
                 Enables logging of actions. Check console for  'Notifier' messages.
