@@ -33,15 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if parsedResult.rebrand != "" {
             // Rebrand Notifier apps
             changeIcons(brandingImage: parsedResult.rebrand, parsedResult: parsedResult)
-            // Exit
-            exit(0)
-        // If we're to register the notifying applications
-        } else if parsedResult.register {
-            // Register applications
-            registerApplications(parsedResult: parsedResult)
-            // Exit
-            exit(0)
-        // If we're not rebranding and no user is logged in exit
+        // If we're not rebranding and no user is logged in, exit
         } else if loggedInUser == "" {
             // Post warning
             postToNSLogAndStdOut(logLevel: "WARNING", logMessage: "No user logged in, exiting...",
@@ -55,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Exit
             exit(1)
         }
-        // Exit if notificaiton center isn't running for the user
+        // Exit if Notification Center isn't running for the user
         isNotificationCenterRunning(parsedResult: parsedResult)
         // If an invalid or no type OR remove option has been passed AND there is no message and we're not rebranding
         if ((parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner") ||
@@ -78,7 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if parsedResult.type == "alert" {
             // Get the alert apps path
             notifierPath = GlobalVariables.alertAppPath + "/Contents/MacOS/Notifier - Alerts"
-        // If we're looking for the banner app
+        // If we're looking for the notifications app
         } else {
             // Get the alert apps path
             notifierPath = GlobalVariables.bannerAppPath + "/Contents/MacOS/Notifier - Notifications"
