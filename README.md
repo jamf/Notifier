@@ -1,10 +1,8 @@
-```
-Copyright 2024 DATA JAR LTD
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-```
+> Copyright 2024 DATA JAR LTD
+>
+>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+>
+>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 # Notifier
 <p align="center"><img width="256" alt="Alert" src="https://github.com/dataJAR/Notifier/assets/2464974/d8d2cca1-250c-4601-a1d5-1fea2330ba14">
@@ -170,9 +168,9 @@ The notifying apps (/Applications/Utilities/Notifier.app/Contents/Helpers/Notifi
 ## Resetting Notifications Center
 The below _should_ reset Notifications Center, but please test & submit a PR with a better method as applicable.
 
-1. `rm -rf $(getconf DARWIN_USER_DIR)/com.apple.notificationcenter/*`
+1. `/bin/rm -rf $(getconf DARWIN_USER_DIR)/com.apple.notificationcenter/*`
 2. Logout & then log back in, or:
-* For macOS 10.16+: `killall "NotificationCenter"`
+* For macOS 10.15+: `/usr/bin/killall "NotificationCenter"`
 3. Test the Notifier once more
 
 # FAQs
