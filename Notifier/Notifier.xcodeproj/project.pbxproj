@@ -83,21 +83,20 @@
 		848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848FC8962B61BB1F009B4915 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		848FC89B2B61BB20009B4915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		848FC89D2B61BB20009B4915 /* Notifier___Notifications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier___Notifications.entitlements"; sourceTree = "<group>"; };
 		849D93A82B693243006410D1 /* UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
 		849D93AC2B693D2C006410D1 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
+		84D841A42B7142C6005AD541 /* Notifier - Alerts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier - Alerts.entitlements"; sourceTree = "<group>"; };
 		84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Alerts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E1A6BF2B61C00500D7F7C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		84E1A6C12B61C00500D7F7C9 /* Notifier___Alerts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier___Alerts.entitlements"; sourceTree = "<group>"; };
 		84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
 		84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E333812B61BBBB00BE750F /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		84E333832B61BBC200BE750F /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
-		B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifierRelease.entitlements; sourceTree = "<group>"; };
+		84E8D6EE2B714CF100EFEF9C /* Notifier - Notifications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier - Notifications.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +149,6 @@
 		7C6D157A2270BA2F0092D34E /* Notifier */ = {
 			isa = PBXGroup;
 			children = (
-				844D6FAA2B6447790000CCF2 /* Notifier.entitlements */,
 				7C6D157B2270BA2F0092D34E /* AppDelegate.swift */,
 				63B92DE8282AAEDE00B44340 /* ArgParser.swift */,
 				7C720951227888E10033B2E2 /* Functions.swift */,
@@ -158,7 +156,7 @@
 				849D93A82B693243006410D1 /* UserNotifications.swift */,
 				84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */,
 				7C6D157F2270BA300092D34E /* MainMenu.xib */,
-				B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */,
+				844D6FAA2B6447790000CCF2 /* Notifier.entitlements */,
 			);
 			path = Notifier;
 			sourceTree = "<group>";
@@ -179,7 +177,7 @@
 				84E333832B61BBC200BE750F /* UserNotifications.swift */,
 				84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */,
 				848FC89A2B61BB20009B4915 /* MainMenu.xib */,
-				848FC89D2B61BB20009B4915 /* Notifier___Notifications.entitlements */,
+				84E8D6EE2B714CF100EFEF9C /* Notifier - Notifications.entitlements */,
 			);
 			path = "Notifier - Notifications";
 			sourceTree = "<group>";
@@ -193,7 +191,7 @@
 				84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */,
 				84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */,
 				84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */,
-				84E1A6C12B61C00500D7F7C9 /* Notifier___Alerts.entitlements */,
+				84D841A42B7142C6005AD541 /* Notifier - Alerts.entitlements */,
 			);
 			path = "Notifier - Alerts";
 			sourceTree = "<group>";
@@ -620,7 +618,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_ENTITLEMENTS = Notifier/NotifierRelease.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Notifier/Notifier.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
@@ -653,7 +651,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = "Notifier - Notifications/Notifier___Notifications.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Notifications/Notifier - Notifications.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
@@ -692,7 +690,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = "Notifier - Notifications/Notifier___Notifications.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Notifications/Notifier - Notifications.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
@@ -729,7 +727,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Alerts/Notifier - Alerts.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
@@ -765,7 +763,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Alerts/Notifier - Alerts.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
