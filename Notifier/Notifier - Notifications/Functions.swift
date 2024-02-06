@@ -87,10 +87,8 @@ func gracefulLogout(userInfo: [AnyHashable: Any]) {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - logout prompting")
     }
-    // AppleScript command
-    let appleScriptCommand = "tell application \"loginwindow\" to «event aevtlogo»"
-    // Create an NSAppleScript object from the prior command
-    if let scriptObject = NSAppleScript(source: appleScriptCommand) {
+    // Create an NSAppleScript object, with the logout command
+    if let scriptObject = NSAppleScript(source: "tell application \"loginwindow\" to «event aevtlogo»") {
         // If we receive output from the prior command
         if let outputString = scriptObject.executeAndReturnError(&error).stringValue {
             // If verbose mode is set
@@ -98,7 +96,7 @@ func gracefulLogout(userInfo: [AnyHashable: Any]) {
                 // Progress log
                 NSLog("\(#function.components(separatedBy: "(")[0]) - logout - \(outputString)")
             }
-            // If we have an error from the prior command
+        // If we have an error from the prior command
         } else if error != nil {
             // Post error
             postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "\(error!)",
