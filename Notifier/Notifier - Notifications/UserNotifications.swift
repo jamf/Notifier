@@ -171,9 +171,9 @@ func processNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any
         if userInfo["verboseMode"] != nil {
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - \(userInfoKey) - \(userInfo[userInfoKey] ?? [])")
-            // Convert userInfo[userInfoKey] to a dict
-            messageActionDict = userInfo[userInfoKey] as? [String: Any] ?? [:]
         }
+        // Convert userInfo[userInfoKey] to a dict
+        messageActionDict = userInfo[userInfoKey] as? [String: Any] ?? [:]
         // If we have logout as taskPath
         if messageActionDict["taskPath"] as? String == "logout" {
             // If verbose mode is set
@@ -183,7 +183,7 @@ func processNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any
             }
             // Prompt to logout
             gracefulLogout(userInfo: userInfo)
-            // If we have an action thaty's not logout
+        // If we have an action thaty's not logout
         } else {
             // If verbose mode is set
             if userInfo["verboseMode"] != nil {
@@ -264,11 +264,12 @@ func removeAllPriorNotifications(notificationCenter: UNUserNotificationCenter, m
 func requestAuthorisation(verboseMode: String) {
         // Check authorization status with the UNUserNotificationCenter object
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, _) in
-        // If we're not been granted authorization to post notifications
         if !granted {
             // Post error
             postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
-                                 Authorisation not granted to post notifications, exiting...
+                                 Authorisation not granted to post notifications, either manually approve \
+                                 notifications for this application or deploy a Notification PPPCP to this Mac, and \
+                                 try posting the message again...
                                  """, functionName: #function.components(separatedBy: "(")[0],
                                  verboseMode: "verboseMode")
             // Exit
