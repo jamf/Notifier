@@ -95,11 +95,12 @@ struct ArgParser: ParsableCommand {
     var messagebuttonaction: String = ""
     // Triggers rebrand function
     @Option(help: """
-                  Requires root privileges.
+                  Requires root privileges and that the calling process has either Full Disk Access (10.15+) or at a \
+                  minimum App Management (macOS 13+) permissions, as well as the notifying applications being given \
+                  permission to post to Notification Center. Any of these permissions can be granted manually, but \
+                  ideally via PPPCP's delivered via an MDM.
 
-                  Rebrands Notifier using the image passed.
-
-                  Restarts Notification Center.
+                  If successful and someone is logged in, Notification Center is restarted.
 
                   """)
     var rebrand: String = ""
@@ -112,7 +113,7 @@ struct ArgParser: ParsableCommand {
     var remove: String = ""
     // Enables verbose logging
     @Flag(help: """
-                Enables logging of actions. Check console for  'Notifier' messages.
+                Enables logging of actions. Check console for 'Notifier' messages.
 
                 """)
     var verbose = false
