@@ -106,7 +106,7 @@ Also, the artefacts shown across the macOS 14.3 gifs seem to be due to the app I
 
 **Example 1** This example shows a basic banner notification.
 
-macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
 ![example1-10 15](https://github.com/dataJAR/Notifier/assets/2464974/0bf397dd-2282-447a-9fa3-a323dc1bb167)  |  ![Example1-14 3](https://github.com/dataJAR/Notifier/assets/2464974/dd706d95-9fa9-48c3-ab9b-66320dd7aab7)
 
@@ -115,7 +115,7 @@ macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
 ```
 ##
 **Example 2** This example shows a basic alert notification.
-macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
 ![example2-10 15](https://github.com/dataJAR/Notifier/assets/2464974/d020d995-2de2-4a8b-ab4c-751f15f8dcf1)  |  ![Example2-14 3](https://github.com/dataJAR/Notifier/assets/2464974/cc68e8b5-81a1-449e-94c8-6dd6856d06fa)
 
@@ -125,7 +125,7 @@ macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
 ```
 ##
 **Example 3** This example shows both alert & banner notifications, (sleep used for the example gif, not needed in use but below for completeness sake).
-macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
 ![example3-10 15](https://github.com/dataJAR/Notifier/assets/2464974/a6c03919-b5c2-4014-a28e-294ae8e7cb60)  |  ![Example3-14 3](https://github.com/dataJAR/Notifier/assets/2464974/baf5c78b-9df5-4dae-a2ad-6acca463c9fb)
 
@@ -137,9 +137,9 @@ macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
 ```
 ##
 **Example 4** This example shows selective remove of a delivered notificaition via `--remove prior`. Where applicable this would also remove notifications from within Notification Center itself.
-macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-![example4-10 15](https://github.com/dataJAR/Notifier/assets/2464974/9cf99c7f-c6ae-4af2-8b8d-347e14bab858)  |  ![Example4-14 3](https://github.com/dataJAR/Notifier/assets/2464974/a97187e1-5d8e-4128-8a7e-b3574be13846)
+![example4-10 15](https://github.com/dataJAR/Notifier/assets/2464974/aeff23ab-7640-405d-bd00-39a65195082f)  |  ![Example4-14 3](https://github.com/dataJAR/Notifier/assets/2464974/a97187e1-5d8e-4128-8a7e-b3574be13846)
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!';
@@ -150,7 +150,7 @@ macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
 ##
 **Example 5** This example shows removal of all alert notifications and also the differences of delivery of alert notifications across macOS versions, additionally this removes any prior delivered notificaions from Notification Center. Sleep used for the example gif, not needed in use but below for completeness sake.
 
-macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
 ![example5-10 15](https://github.com/dataJAR/Notifier/assets/2464974/e92890f0-eaa8-4c67-a4cd-c3816ab20898)  |  ![Example5-14 3](https://github.com/dataJAR/Notifier/assets/2464974/6a03af55-6403-4388-af6c-5d644b1a9fbb)
 
@@ -166,10 +166,9 @@ macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
 ```
 ##
 **Example 6** This example shows Notifier 3.0+'s `--rebrand` argument in use, this allows for rebranding of Notifier without having to venture into Xcode etc.
-macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
 ![example6-10 15](https://github.com/dataJAR/Notifier/assets/2464974/839d5ee1-bda5-4855-bf0f-1575ad1a7a10)  |  ![Example6-14 3](https://github.com/dataJAR/Notifier/assets/2464974/afc8b79e-3dbc-49ec-be30-da55c69bd57d)
-
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message";
