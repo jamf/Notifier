@@ -87,7 +87,7 @@ func gracefulLogout(userInfo: [AnyHashable: Any]) {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - logout prompting")
     }
-    // Create an NSAppleScript object, with the logout command
+    // Create an NSAppleScript object wiht the logout command
     if let scriptObject = NSAppleScript(source: "tell application \"loginwindow\" to «event aevtlogo»") {
         // If we receive output from the prior command
         if let outputString = scriptObject.executeAndReturnError(&error).stringValue {
