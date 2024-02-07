@@ -1,8 +1,11 @@
-> Copyright 2024 DATA JAR LTD
->
->Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
->
->Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+<details>
+<summary>Licensed under the Apache License, Version 2.0 </summary>
+Copyright 2024 DATA JAR LTD
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+</details>
 
 # Notifier
 <p align="center"><img width="256" alt="Alert" src="https://github.com/dataJAR/Notifier/assets/2464974/d8d2cca1-250c-4601-a1d5-1fea2330ba14">
@@ -14,7 +17,6 @@ Notifications are delivered via the [UserNotifications Framework](https://develo
 # Usage
 ## Basic Usage
 ```
-./Notifier.app/Contents/MacOS/Notifier
 OVERVIEW: Notifier 3.0: Posts alert or banner notifications.
 
 USAGE: --type <alert/banner> --message <some message> <options>
@@ -40,9 +42,9 @@ OPTIONS:
                           For example: "/usr/bin/open" will work, "open" will
                           not.
 
-  --sound <sound>         sound to play when notification is delivered. Pass
-                          "default" for the default macOS sound, else the name
-                          of a sound in /Library/Sounds or
+  --sound <sound>         The sound to play when notification is delivered.
+                          Pass "default" for the default macOS sound, else the
+                          name of a sound in /Library/Sounds or
                           /System/Library/Sounds.
 
                           If the sound cannot be found, macOS will use the
@@ -73,46 +75,71 @@ OPTIONS:
                           For example: "/usr/bin/open" will work, "open" will
                           not.
 
-  --rebrand <rebrand>     Requires root privileges.
+  --rebrand <rebrand>     Requires root privileges and that the calling process
+                          needs either Full Disk Access (10.15+) or at a
+                          minimum App Management (macOS 13+) permissions, as
+                          well as the notifying applications being given
+                          permission to post to Notification Center. Any of
+                          these permissions can be granted manually, but
+                          ideally via PPPCP's delivered via an MDM.
 
-                          Rebrands Notifier using the image passed.
+                          If successful and someone is logged in, Notification
+                          Center is restarted.
 
   --remove <remove>       "prior" or "all". If passing "prior", the full
                           message will be required too. Including all passed
                           flags.
 
-  --verbose               Enables logging of actions. Check console for 
+  --verbose               Enables logging of actions. Check console for
                           'Notifier' messages.
 
   --help                  Show help information.
+
 ```
 
-## Example Usage
+## Examples
+The below aim to give you an idea of what so the various notification options look like, across macOS versions as well as Light and Dark mode.
+
+As you can see, the delivery and stacking is OS dependent.
+
+Also, the artefacts shown across the macOS 14.3 gifs seem to be due to the app I used to create the gifs and an issue on macOS 14.
+
 **Example 1** This example shows a basic banner notification.
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/722ce659-c762-415a-8c33-8cc234ecc996">
+
+macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+:-------------------------:|:-------------------------:
+![example1-10 15](https://github.com/dataJAR/Notifier/assets/2464974/0bf397dd-2282-447a-9fa3-a323dc1bb167)  |  ![Example1-14 3](https://github.com/dataJAR/Notifier/assets/2464974/dd706d95-9fa9-48c3-ab9b-66320dd7aab7)
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"
 ```
 ##
 **Example 2** This example shows a basic alert notification.
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/2343c69f-a7f0-43a1-be6f-b655909004cc">
+macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+:-------------------------:|:-------------------------:
+![example2-10 15](https://github.com/dataJAR/Notifier/assets/2464974/d020d995-2de2-4a8b-ab4c-751f15f8dcf1)  |  ![Example2-14 3](https://github.com/dataJAR/Notifier/assets/2464974/cc68e8b5-81a1-449e-94c8-6dd6856d06fa)
+
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout" --messagebuttonaction "Logout"
 ```
 ##
 **Example 3** This example shows both alert & banner notifications, (sleep used for the example gif, not needed in use but below for completeness sake).
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/06b522b8-7ed8-4ee7-bc04-4676cc715bf0">
+macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+:-------------------------:|:-------------------------:
+![example3-10 15](https://github.com/dataJAR/Notifier/assets/2464974/a6c03919-b5c2-4014-a28e-294ae8e7cb60)  |  ![Example3-14 3](https://github.com/dataJAR/Notifier/assets/2464974/baf5c78b-9df5-4dae-a2ad-6acca463c9fb)
+
 
 ```
-/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "Please Logout" --messagebutton "Logout"  --title "Logout";
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "Please Logout" --messagebutton "Logout"  --messagebuttonaction "logout" --title "Logout";
 /bin/sleep 2;
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "👋" --title "Notification"
 ```
 ##
-**Example 4** This example shows removal of all alert notifications, for banner alerts this will remove from Notification Center. Sleep used for the example gif, not needed in use but below for completeness sake.
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/874dad84-0a1c-4145-8f93-df2ce4923762">
+**Example 4** This example shows selective remove of a delivered notificaition via `--remove prior`. Where applicable this would also remove notifications from within Notification Center itself.
+macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+:-------------------------:|:-------------------------:
+![example4-10 15](https://github.com/dataJAR/Notifier/assets/2464974/9cf99c7f-c6ae-4af2-8b8d-347e14bab858)  |  ![Example4-14 3](https://github.com/dataJAR/Notifier/assets/2464974/a97187e1-5d8e-4128-8a7e-b3574be13846)
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!';
@@ -121,8 +148,28 @@ OPTIONS:
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!' --remove prior
 ```
 ##
-**Example 5** This example shows Notifier 3.0+'s `--rebrand` argument in use, this allows for rebranding of Notifier without having to venture into Xcode etc.
-<p align="center"><img width="370" alt="Alert" src=https://github.com/dataJAR/Notifier/assets/2464974/bb6cf9c6-2dbd-4751-99a1-1a6a64c1fca1">
+**Example 5** This example shows removal of all alert notifications and also the differences of delivery of alert notifications across macOS versions, additionally this removes any prior delivered notificaions from Notification Center. Sleep used for the example gif, not needed in use but below for completeness sake.
+
+macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+:-------------------------:|:-------------------------:
+![example5-10 15](https://github.com/dataJAR/Notifier/assets/2464974/e92890f0-eaa8-4c67-a4cd-c3816ab20898)  |  ![Example5-14 3](https://github.com/dataJAR/Notifier/assets/2464974/6a03af55-6403-4388-af6c-5d644b1a9fbb)
+
+```
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message1;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message2;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message3;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message4;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message5;
+/bin/sleep 5;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --remove all
+```
+##
+**Example 6** This example shows Notifier 3.0+'s `--rebrand` argument in use, this allows for rebranding of Notifier without having to venture into Xcode etc.
+macOS 10.15.7 - Light Mode           |  macOS 14.3 - Dark mode
+:-------------------------:|:-------------------------:
+![example6-10 15](https://github.com/dataJAR/Notifier/assets/2464974/839d5ee1-bda5-4855-bf0f-1575ad1a7a10)  |  ![Example6-14 3](https://github.com/dataJAR/Notifier/assets/2464974/afc8b79e-3dbc-49ec-be30-da55c69bd57d)
+
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message";
@@ -147,9 +194,13 @@ It's recommended that the below profile is recommended to be deployed before Not
 
 This will allow Notifier to post Notifications without prompting the user to allow.
 
+Additionally, if you're looking to make use of the `--rebrand` flag the calling process needs either Full Disk Access (10.15+) or at a
+minimum App Management (macOS 13+) permissions, as well as the notifying applications being given permission to post to Notification Center.
+
+Any of these permissions can be granted manually, but ideally via PPPCP's delivered via an MDM.
+
 ## PKG
 PKG's will be supplied for every release, & can be found in the [releases](https://github.com/dataJAR/Notifier/releases) section
-
 
 # How it works
 The main Notifier.app parses arguments passed to it (via [Argument Parser](https://apple.github.io/swift-argument-parser/documentation/argumentparser/), and then posts the parsed argument to the two notifying applications included with the the /Contents/Helpers folder of Notifier.app:
