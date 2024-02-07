@@ -16,6 +16,26 @@ import UserNotifications
 class AppDelegate: NSObject, NSApplicationDelegate {
     // IBOutlet declaration
     @IBOutlet weak var window: NSWindow!
+    // If we're about to load, make sure we're logged in, exit otherwise
+    func applicationWillFinishLaunching(_ aNotification: Notification) {
+        // Get the username of the logged in user
+        let loggedInUser = loggedInUser()
+        // The first argument is always the executable, drop it
+        let passedArgs = Array(CommandLine.arguments.dropFirst())
+        // Get the parsed args
+        let parsedResult = ArgParser.parseOrExit(passedArgs)
+        // If rebrand has been passed
+        if parsedResult.rebrand != "" {
+            // Rebrand Notifier apps
+            changeIcons(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
+        // If we're not rebranding and no user is logged in, exit
+        } else if loggedInUser == "" {
+            // Post message
+            print("INFO: No user logged in, and we're not rebranding... exiting...")
+            // Exit
+            exit(0)
+        }
+    }
     // Check arguments passed to app, then OS if a valid argument is passed else print usage
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // The first argument is always the executable, drop it
@@ -32,11 +52,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // If rebrand has been passed
         if parsedResult.rebrand != "" {
             // Rebrand Notifier apps
-            changeIcons(brandingImage: parsedResult.rebrand, parsedResult: parsedResult)
+            changeIcons(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
         // If we're not rebranding and no user is logged in, exit
         } else if loggedInUser == "" {
-            // Post warning
-            postToNSLogAndStdOut(logLevel: "WARNING", logMessage: "No user logged in, exiting...",
+            // Post message
+            postToNSLogAndStdOut(logLevel: "INFO", logMessage: "No user logged in, exiting...",
                                  functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
             // Exit
             exit(0)
