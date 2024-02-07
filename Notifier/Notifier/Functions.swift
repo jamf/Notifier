@@ -10,7 +10,7 @@ import Cocoa
 import SystemConfiguration
 
 // Changes the .app's icons restarting Notification Center if rebranding was successful
-func changeIcons(brandingImage: String, parsedResult: ArgParser) {
+func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgParser) {
     // Confirm we're root before proceeding
     rootCheck(parsedResult: parsedResult, passedArg: "--rebrand")
     // If verbose mode is enabled
@@ -20,33 +20,31 @@ func changeIcons(brandingImage: String, parsedResult: ArgParser) {
     }
     // Get the details of the file at brandingImage
     let imageData = getImageDetails(brandingImage: brandingImage, parsedResult: parsedResult)
-    // Create an array to log progress for icon changes
-    var brandingStatus = [Bool]()
     // For each application in brandingArray
     for notifierApp in [GlobalVariables.mainAppPath, GlobalVariables.alertAppPath, GlobalVariables.bannerAppPath] {
-        // Returns bool for ther  the branding status for each app
-        brandingStatus.append(updateIcon(brandingImage: brandingImage, imageData: imageData!,
-                                         objectPath: notifierApp, parsedResult: parsedResult))
+        // Rebrand each app starting ewith the Notifier.app, this way if this fails the rest are skipped
+        updateIcon(brandingImage: brandingImage, imageData: imageData!, objectPath: notifierApp,
+                   parsedResult: parsedResult)
     }
-    // If brandingStatus just contains true
-    if !brandingStatus.contains(false) {
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - Successfully rebranded Notifier")
+    }
+    // If someone is logged in
+    if loggedInUser != "" {
+        // If we're logged in and/or Notification Center is runnning register the applications with Notification Center
+        registerApplications(parsedResult: parsedResult)
+    // If no-one is logged in
+    } else {
         // If verbose mode is enabled
         if parsedResult.verbose {
             // Progress log
-            NSLog("\(#function.components(separatedBy: "(")[0]) - Successfully rebranded Notifier")
+            NSLog("\(#function.components(separatedBy: "(")[0]) - Skipping registration as not logged in")
         }
-        // Register the applications with Notification Center
-        registerApplications(parsedResult: parsedResult)
-        // Exit
-        exit(0)
-    // If there is an issue
-    } else {
-        // Post error
-        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "Failed to rebrand Notifier...", functionName:
-                             #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
-        // Exit
-        exit(1)
     }
+    // Exit
+    exit(0)
 }
 
 // Create JSON from passed string
@@ -97,6 +95,7 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: error.localizedDescription, functionName:
                              #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
     }
+    // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - rootJSON: \(String(data: fullJSON, encoding: .utf8)!)")
@@ -142,12 +141,12 @@ func isNotificationCenterRunning(parsedResult: ArgParser) {
         postToNSLogAndStdOut(logLevel: "WARNING", logMessage: "Notification Center is not running...",
                              functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
         // Exit
-        exit(0)
+        exit(1)
     }
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - Notification Center is running...")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - Notification Center is running")
     }
 }
 
@@ -223,6 +222,7 @@ func parseAction(actionString: String, parsedResult: ArgParser) -> [MessageConte
             taskPath = "logout"
             // Clear taskArguments
             taskArguments = []
+        // If one item and not passed logout
         } else {
             // Set the tasks path to open, this is to mimic pre-3.0 behaviour
             taskPath = "/usr/bin/open"
@@ -264,7 +264,7 @@ func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, 
         taskArguments = [
             "-l", "\(loggedInUser)", "-c", "\'\(notifierPath)\' \(commandJSON)"
         ]
-        // If the person running the app is the logged in user
+    // If the person running the app is the logged in user
     } else {
         // Set taskPath to the notifying apps path
         taskPath = notifierPath
@@ -302,6 +302,9 @@ func postToNSLogAndStdOut(logLevel: String, logMessage: String, functionName: St
 
 // Registers the notifying applications in Notificaton Center
 func registerApplications(parsedResult: ArgParser) {
+    // Var declaration
+    var taskArguments = [String]()
+    var taskPath = String()
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
@@ -325,7 +328,7 @@ func registerApplications(parsedResult: ArgParser) {
         if parsedResult.verbose {
             // Progress log
             NSLog("""
-                  \(#function.components(separatedBy: "(")[0]) - commandJSON: \(commandJSON),  notifierPath:
+                  \(#function.components(separatedBy: "(")[0]) - commandJSON: \(commandJSON), notifierPath: \
                   \(notifierPath)
                   """)
         }
@@ -335,42 +338,29 @@ func registerApplications(parsedResult: ArgParser) {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - restarting Notification Center")
     }
-    // Restart Notification Center
-    restartNotificationCenter(parsedResult: parsedResult)
-}
-
-// Restarts notification center
-func restartNotificationCenter(parsedResult: ArgParser) {
-    // Var declaration
-    var taskArguments = [String]()
-    var taskPath = String()
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(taskPath)")
-    }
-    // Get the username of the logged in user
-    let loggedInUser = loggedInUser()
-    // If the user running the app (NSUserName) isn't the logged in user
-    if NSUserName() != loggedInUser {
+    // If we're logged in
+    if loggedInUser != "" {
         // Path for the task
         taskPath = "/usr/bin/su"
         // Arguments for the task
         taskArguments = ["-l", loggedInUser, "-c", "/usr/bin/killall -u \(loggedInUser) NotificationCenter"]
-    // If the person running the app is the logged in user
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("""
+                  \(#function.components(separatedBy: "(")[0]) - taskPath: \(taskPath), taskArguments: \(taskArguments)
+                  """)
+        }
+        // Run the task, ignoring returned exit status
+        runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
+    // If we're not logged in
     } else {
-        // Path for the task
-        taskPath = "/usr/bin/killall"
-        // Arguments for the task
-        taskArguments = ["NotificationCenter"]
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - not logged in, skipping Notification Center restart")
+        }
     }
-    // If verbose mode is enabled
-    if parsedResult.verbose {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) \(taskPath), taskArguments: \(taskArguments)")
-    }
-    // Run the task, ignoring returned exit status
-    runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
 }
 
 // Make sure we're running as root, exit if not
@@ -406,7 +396,7 @@ func runTask(parsedResult: ArgParser, taskArguments: [String], taskPath: String)
 }
 
 // Attempts to update the app passed to objectPath's icon
-func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, parsedResult: ArgParser) -> Bool {
+func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, parsedResult: ArgParser) {
     // Revert the icon, always returns false and this helps the OS realise that ther has been an icon change
     NSWorkspace.shared.setIcon(nil, forFile: objectPath, options: NSWorkspace.IconCreationOptions([]))
     // Set the icon, returns bool
@@ -422,12 +412,14 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
                   with icon: \(brandingImage)
                   """)
         }
+    // If we encountered and issue when rebranding...
     } else {
         // Post error
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
-            Failed to update icon for \(objectPath), with icon: \(brandingImage)".
+            Failed to update icon for \(objectPath), with icon: \(brandingImage). Please make sure that the calling \
+            process has the needed App Management or Full Disk Access PPPCP deployed, and try again.
             """, functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Exit
+        exit(1)
     }
-    // Return boolean
-    return rebrandStatus
 }
