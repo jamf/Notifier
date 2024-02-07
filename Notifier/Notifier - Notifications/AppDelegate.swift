@@ -33,6 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             print("ERROR: No arguments passed to binary, exiting...")
             // Exit
             exit(0)
+        // If we have args passed
         } else {
             // Get the passed base64 string at commandline argument at index 1
             let (messageContent, passedBase64, rootElements) = decodeJSON(passedJSON: passedCLIArguments[1])
