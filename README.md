@@ -176,7 +176,7 @@ macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --rebrand /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ErasingIcon.icns;
 /bin/sleep 2;
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message";
-/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --rebrand /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/AppIcon.icns;
+/Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --rebrand /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFileServerIcon.icns;
 /bin/sleep 2;
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message";
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --rebrand /Applications/Utilities/Notifier.app/Contents/Resources/AppIcon.icns;
