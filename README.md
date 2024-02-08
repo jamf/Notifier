@@ -150,7 +150,7 @@ macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 
 macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-<img src="https://github.com/dataJAR/Notifier/assets/2464974/8f4abba7-7866-4e80-8aad-1bc77dcda50c" width="475" height="530">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/11902803-3e4e-4ac8-8dda-5c4f0994896e" width="475" height="530">
+<img src="https://github.com/dataJAR/Notifier/assets/2464974/8f4abba7-7866-4e80-8aad-1bc77dcda50c" width="475" height="560">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/11902803-3e4e-4ac8-8dda-5c4f0994896e" width="475" height="560">
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message;
