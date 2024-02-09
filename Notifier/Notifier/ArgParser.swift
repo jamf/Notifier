@@ -52,7 +52,7 @@ struct ArgParser: ParsableCommand {
     var messageaction: String = ""
     // Optional sound to play when notification is delivered
     @Option(help: """
-                  sound to play when notification is delivered. Pass \"default\" for the default \
+                  The sound to play when notification is delivered. Pass \"default\" for the default \
                   macOS sound, else the name of a sound in /Library/Sounds or /System/Library/Sounds.
 
                   If the sound cannot be found, macOS will use the \"default\" sound.
@@ -95,8 +95,8 @@ struct ArgParser: ParsableCommand {
     var messagebuttonaction: String = ""
     // Triggers rebrand function
     @Option(help: """
-                  Requires root privileges and that the calling process has either Full Disk Access (10.15+) or at a \
-                  minimum App Management (macOS 13+) permissions, as well as the notifying applications being given \
+                  Requires root privileges and that the calling process needs either Full Disk Access (10.15+) or at \
+                  a minimum App Management (macOS 13+) permissions, as well as the notifying applications being given \
                   permission to post to Notification Center. Any of these permissions can be granted manually, but \
                   ideally via PPPCP's delivered via an MDM.
 
