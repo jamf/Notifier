@@ -69,16 +69,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         // Exit if Notification Center isn't running for the user
         isNotificationCenterRunning(parsedResult: parsedResult)
-        // If an invalid or no type OR remove option has been passed AND there is no message and we're not rebranding
-        if ((parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner") ||
-            parsedResult.remove != "" && (parsedResult.remove.lowercased() != "all" &&
-                                          parsedResult.remove.lowercased() != "prior")
-            ) && (parsedResult.message == "" && parsedResult.rebrand == "") {
-            // Show help
-            _ = ArgParser.parseOrExit(["--help"])
-            // Exit
-            exit(1)
-        }
+        // Check that we have all the needed arguments and that they are valid options, exiting if not
+        checkArgs(parsedResult: parsedResult)
         // If verbose mode is enabled
         if parsedResult.verbose {
             // Progress log
@@ -117,7 +109,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             formatArgs(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedResult: parsedResult)
         }
     }
+}
 
+// Check that we have all the needed arguments and that they are valid options, exiting if not
+func checkArgs(parsedResult: ArgParser) {
+    // If an invalid value for --type has been passed
+    if parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner" {
+        // Post message
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "incorrect argument passed to --type, exiting...\n",
+                             functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Show help
+        _ = ArgParser.parseOrExit(["--help"])
+        // Exit
+        exit(1)
+    }
+    // If an invalid value for --remove has been passed
+    if parsedResult.remove != "" && parsedResult.remove.lowercased() != "all" && parsedResult.remove.lowercased()
+          != "prior" {
+        // Post message
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "incorrect argument passed to --remove, exiting...\n",
+                              functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Show help
+        _ = ArgParser.parseOrExit(["--help"])
+        // Exit
+        exit(1)
+    }
+    // If we've got here and no --message has been passed and we're not removing
+    if parsedResult.remove == "" && parsedResult.message == "" {
+        // Post message
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
+                        missing value for --message and we're neither rebranding nor removing, exiting...\n
+                        """, functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Show help
+        _ = ArgParser.parseOrExit(["--help"])
+        // Exit
+        exit(1)
+    }
 }
 
 // Format the args as needed
