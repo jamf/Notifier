@@ -287,16 +287,14 @@ func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, 
 
 // Post to both NSLog and stdout
 func postToNSLogAndStdOut(logLevel: String, logMessage: String, functionName: String, parsedResult: ArgParser) {
-    // Var declaration
-    let fullMessage = "\(logLevel): \(functionName) - \(logMessage)"
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog(fullMessage)
+        NSLog("\(logLevel): \(functionName) - \(logMessage)")
     // verbose mode isn't enabled
     } else {
         // Print to stdout
-        print(fullMessage)
+        print("\(logLevel): \(logMessage)")
     }
 }
 
