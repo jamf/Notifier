@@ -3,48 +3,48 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		63B92DE1282AAEB700B44340 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 63B92DE0282AAEB700B44340 /* ArgumentParser */; };
 		63B92DE9282AAEDE00B44340 /* ArgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B92DE8282AAEDE00B44340 /* ArgParser.swift */; };
 		7C6D157C2270BA2F0092D34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6D157B2270BA2F0092D34E /* AppDelegate.swift */; };
 		7C6D15812270BA300092D34E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6D157F2270BA300092D34E /* MainMenu.xib */; };
 		7C720952227888E10033B2E2 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C720951227888E10033B2E2 /* Functions.swift */; };
-		7C8F69EE2278A6EF002D317B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CBF17F62278A2DF0043E853 /* Assets.xcassets */; };
-		B5B4977224B3837000CF9409 /* Notifier - Alerts.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5B4976E24B3835E00CF9409 /* Notifier - Alerts.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B5B4977324B3837700CF9409 /* Notifier - Notifications.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5B4977124B3835E00CF9409 /* Notifier - Notifications.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8421955B2B67E80A0030A7E4 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8421955A2B67E80A0030A7E4 /* Structures.swift */; };
+		844D6FAC2B647A040000CCF2 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D6FAB2B647A040000CCF2 /* Structures.swift */; };
+		84524FD52B61BC620046367B /* Notifier - Notifications.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		845D68E12B692A5100C5B467 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 845D68E02B692A5100C5B467 /* ArgumentParser */; };
+		848FC8972B61BB1F009B4915 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FC8962B61BB1F009B4915 /* AppDelegate.swift */; };
+		848FC89C2B61BB20009B4915 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848FC89A2B61BB20009B4915 /* MainMenu.xib */; };
+		849D93A92B693243006410D1 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D93A82B693243006410D1 /* UserNotifications.swift */; };
+		849D93AD2B693D2C006410D1 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D93AC2B693D2C006410D1 /* Structures.swift */; };
+		84E1A6BB2B61C00400D7F7C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */; };
+		84E1A6BD2B61C00500D7F7C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */; };
+		84E1A6C02B61C00500D7F7C9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */; };
+		84E1A6CB2B61C03F00D7F7C9 /* Notifier - Alerts.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84E1A6CD2B61C0B900D7F7C9 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */; };
+		84E1A6CF2B61C0BE00D7F7C9 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */; };
+		84E333822B61BBBB00BE750F /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333812B61BBBB00BE750F /* Functions.swift */; };
+		84E333842B61BBC200BE750F /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E333832B61BBC200BE750F /* UserNotifications.swift */; };
+		84FA74982B61C4A6009B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */; };
+		84FA74992B61C4B7009B4068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B5B4976D24B3835E00CF9409 /* PBXContainerItemProxy */ = {
+		84E1A6C92B61C02C00D7F7C9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7CD4280223BFA4D500F9D5B9 /* Notifier - Alerts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7C8AB5DC22724FD6008E3160;
+			containerPortal = 7C6D15702270BA2F0092D34E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84E1A6B72B61C00400D7F7C9;
 			remoteInfo = "Notifier - Alerts";
 		};
-		B5B4977024B3835E00CF9409 /* PBXContainerItemProxy */ = {
+		84FA749B2B61C9D9009B4068 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7C9C700A23C14A9600A1A363 /* Notifier - Notifications.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7C8AB5DC22724FD6008E3160;
-			remoteInfo = "Notifier - Notifications";
-		};
-		B5FC207324B4ABF900CD078A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C9C700A23C14A9600A1A363 /* Notifier - Notifications.xcodeproj */;
+			containerPortal = 7C6D15702270BA2F0092D34E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7C8AB5DB22724FD6008E3160;
+			remoteGlobalIDString = 848FC8932B61BB1F009B4915;
 			remoteInfo = "Notifier - Notifications";
-		};
-		B5FC207524B4ABF900CD078A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7CD4280223BFA4D500F9D5B9 /* Notifier - Alerts.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C8AB5DB22724FD6008E3160;
-			remoteInfo = "Notifier - Alerts";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -52,20 +52,20 @@
 		7CAB609623DF4C8B0029E310 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = banner;
-			dstSubfolderSpec = 7;
+			dstPath = Contents/Helpers;
+			dstSubfolderSpec = 1;
 			files = (
-				B5B4977324B3837700CF9409 /* Notifier - Notifications.app in CopyFiles */,
+				84524FD52B61BC620046367B /* Notifier - Notifications.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7CF89A4023BF9F6000723A3B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = alert;
-			dstSubfolderSpec = 7;
+			dstPath = Contents/Helpers;
+			dstSubfolderSpec = 1;
 			files = (
-				B5B4977224B3837000CF9409 /* Notifier - Alerts.app in CopyFiles */,
+				84E1A6CB2B61C03F00D7F7C9 /* Notifier - Alerts.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,14 +76,27 @@
 		7C6D15782270BA2F0092D34E /* Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C6D157B2270BA2F0092D34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C6D15802270BA300092D34E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		7C6D15822270BA300092D34E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C720951227888E10033B2E2 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
-		7C9C700A23C14A9600A1A363 /* Notifier - Notifications.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Notifier - Notifications.xcodeproj"; sourceTree = "<group>"; };
-		7CBF17F62278A2DF0043E853 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = notifier/Assets.xcassets; sourceTree = SOURCE_ROOT; };
-		7CD4280223BFA4D500F9D5B9 /* Notifier - Alerts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Notifier - Alerts.xcodeproj"; sourceTree = "<group>"; };
-		B506001C24B3833300427FA1 /* Notifier - Alerts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = "Notifier - Alerts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B506001D24B3833300427FA1 /* Notifier - Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = "Notifier - Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotifierRelease.entitlements; sourceTree = "<group>"; };
+		8421955A2B67E80A0030A7E4 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
+		844D6FAA2B6447790000CCF2 /* Notifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notifier.entitlements; sourceTree = "<group>"; };
+		844D6FAB2B647A040000CCF2 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
+		848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		848FC8962B61BB1F009B4915 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		848FC89B2B61BB20009B4915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		849D93A82B693243006410D1 /* UserNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
+		849D93AC2B693D2C006410D1 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
+		84D841A42B7142C6005AD541 /* Notifier - Alerts.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier - Alerts.entitlements"; sourceTree = "<group>"; };
+		84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notifier - Alerts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84E1A6BF2B61C00500D7F7C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
+		84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84E333812B61BBBB00BE750F /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		84E333832B61BBC200BE750F /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
+		84E8D6EE2B714CF100EFEF9C /* Notifier - Notifications.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Notifier - Notifications.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +104,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B92DE1282AAEB700B44340 /* ArgumentParser in Frameworks */,
+				845D68E12B692A5100C5B467 /* ArgumentParser in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		848FC8912B61BB1F009B4915 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84E1A6B52B61C00400D7F7C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,8 +128,9 @@
 		7C6D156F2270BA2F0092D34E = {
 			isa = PBXGroup;
 			children = (
-				7CD427F223BFA47300F9D5B9 /* apps */,
 				7C6D157A2270BA2F0092D34E /* Notifier */,
+				84E1A6B92B61C00400D7F7C9 /* Notifier - Alerts */,
+				848FC8952B61BB1F009B4915 /* Notifier - Notifications */,
 				7C6D15792270BA2F0092D34E /* Products */,
 				7CECAB5C23BE493E00305F10 /* Frameworks */,
 			);
@@ -112,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				7C6D15782270BA2F0092D34E /* Notifier.app */,
+				848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */,
+				84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,50 +149,51 @@
 		7C6D157A2270BA2F0092D34E /* Notifier */ = {
 			isa = PBXGroup;
 			children = (
-				B5735E3E24B39FC100813D66 /* NotifierRelease.entitlements */,
 				7C6D157B2270BA2F0092D34E /* AppDelegate.swift */,
-				7CBF17F62278A2DF0043E853 /* Assets.xcassets */,
-				7C720951227888E10033B2E2 /* Functions.swift */,
-				7C6D15822270BA300092D34E /* Info.plist */,
-				7C6D157F2270BA300092D34E /* MainMenu.xib */,
 				63B92DE8282AAEDE00B44340 /* ArgParser.swift */,
+				7C720951227888E10033B2E2 /* Functions.swift */,
+				844D6FAB2B647A040000CCF2 /* Structures.swift */,
+				849D93A82B693243006410D1 /* UserNotifications.swift */,
+				84E1A6D32B61C1BC00D7F7C9 /* Assets.xcassets */,
+				7C6D157F2270BA300092D34E /* MainMenu.xib */,
+				844D6FAA2B6447790000CCF2 /* Notifier.entitlements */,
 			);
 			path = Notifier;
-			sourceTree = "<group>";
-		};
-		7CD427F223BFA47300F9D5B9 /* apps */ = {
-			isa = PBXGroup;
-			children = (
-				7C9C700A23C14A9600A1A363 /* Notifier - Notifications.xcodeproj */,
-				7CD4280223BFA4D500F9D5B9 /* Notifier - Alerts.xcodeproj */,
-			);
-			name = apps;
-			path = ../apps;
 			sourceTree = "<group>";
 		};
 		7CECAB5C23BE493E00305F10 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B506001C24B3833300427FA1 /* Notifier - Alerts.app */,
-				B506001D24B3833300427FA1 /* Notifier - Notifications.app */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B5B4976824B3835B00CF9409 /* Products */ = {
+		848FC8952B61BB1F009B4915 /* Notifier - Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				B5B4977124B3835E00CF9409 /* Notifier - Notifications.app */,
+				848FC8962B61BB1F009B4915 /* AppDelegate.swift */,
+				84E333812B61BBBB00BE750F /* Functions.swift */,
+				849D93AC2B693D2C006410D1 /* Structures.swift */,
+				84E333832B61BBC200BE750F /* UserNotifications.swift */,
+				84E1A6D22B61C1B500D7F7C9 /* Assets.xcassets */,
+				848FC89A2B61BB20009B4915 /* MainMenu.xib */,
+				84E8D6EE2B714CF100EFEF9C /* Notifier - Notifications.entitlements */,
 			);
-			name = Products;
+			path = "Notifier - Notifications";
 			sourceTree = "<group>";
 		};
-		B5B4976A24B3835B00CF9409 /* Products */ = {
+		84E1A6B92B61C00400D7F7C9 /* Notifier - Alerts */ = {
 			isa = PBXGroup;
 			children = (
-				B5B4976E24B3835E00CF9409 /* Notifier - Alerts.app */,
+				84E1A6BA2B61C00400D7F7C9 /* AppDelegate.swift */,
+				84E1A6CC2B61C0B900D7F7C9 /* Functions.swift */,
+				8421955A2B67E80A0030A7E4 /* Structures.swift */,
+				84E1A6CE2B61C0BE00D7F7C9 /* UserNotifications.swift */,
+				84E1A6BC2B61C00500D7F7C9 /* Assets.xcassets */,
+				84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */,
+				84D841A42B7142C6005AD541 /* Notifier - Alerts.entitlements */,
 			);
-			name = Products;
+			path = "Notifier - Alerts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,20 +208,60 @@
 				7C6D15762270BA2F0092D34E /* Resources */,
 				7CF89A4023BF9F6000723A3B /* CopyFiles */,
 				7CAB609623DF4C8B0029E310 /* CopyFiles */,
-				7CE4ADBC239E9DA8004544D0 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B5FC207424B4ABF900CD078A /* PBXTargetDependency */,
-				B5FC207624B4ABF900CD078A /* PBXTargetDependency */,
+				845D68DE2B692A2900C5B467 /* PBXTargetDependency */,
+				84FA749C2B61C9D9009B4068 /* PBXTargetDependency */,
+				84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */,
 			);
 			name = Notifier;
 			packageProductDependencies = (
-				63B92DE0282AAEB700B44340 /* ArgumentParser */,
+				845D68E02B692A5100C5B467 /* ArgumentParser */,
 			);
 			productName = oioi;
 			productReference = 7C6D15782270BA2F0092D34E /* Notifier.app */;
+			productType = "com.apple.product-type.application";
+		};
+		848FC8932B61BB1F009B4915 /* Notifier - Notifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 848FC89E2B61BB20009B4915 /* Build configuration list for PBXNativeTarget "Notifier - Notifications" */;
+			buildPhases = (
+				848FC8902B61BB1F009B4915 /* Sources */,
+				848FC8912B61BB1F009B4915 /* Frameworks */,
+				848FC8922B61BB1F009B4915 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84524FD12B61BC280046367B /* PBXTargetDependency */,
+			);
+			name = "Notifier - Notifications";
+			packageProductDependencies = (
+			);
+			productName = "Notifier - Notifications";
+			productReference = 848FC8942B61BB1F009B4915 /* Notifier - Notifications.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84E1A6B72B61C00400D7F7C9 /* Notifier - Alerts */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84E1A6C22B61C00500D7F7C9 /* Build configuration list for PBXNativeTarget "Notifier - Alerts" */;
+			buildPhases = (
+				84E1A6B42B61C00400D7F7C9 /* Sources */,
+				84E1A6B52B61C00400D7F7C9 /* Frameworks */,
+				84E1A6B62B61C00400D7F7C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */,
+			);
+			name = "Notifier - Alerts";
+			packageProductDependencies = (
+			);
+			productName = "Notifier - Alerts";
+			productReference = 84E1A6B82B61C00400D7F7C9 /* Notifier - Alerts.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -199,8 +270,9 @@
 		7C6D15702270BA2F0092D34E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1400;
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = "dataJAR Ltd";
 				TargetAttributes = {
 					7C6D15772270BA2F0092D34E = {
@@ -215,10 +287,16 @@
 							};
 						};
 					};
+					848FC8932B61BB1F009B4915 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					84E1A6B72B61C00400D7F7C9 = {
+						CreatedOnToolsVersion = 15.2;
+					};
 				};
 			};
 			buildConfigurationList = 7C6D15732270BA2F0092D34E /* Build configuration list for PBXProject "Notifier" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -227,75 +305,49 @@
 			);
 			mainGroup = 7C6D156F2270BA2F0092D34E;
 			packageReferences = (
-				63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 7C6D15792270BA2F0092D34E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = B5B4976A24B3835B00CF9409 /* Products */;
-					ProjectRef = 7CD4280223BFA4D500F9D5B9 /* Notifier - Alerts.xcodeproj */;
-				},
-				{
-					ProductGroup = B5B4976824B3835B00CF9409 /* Products */;
-					ProjectRef = 7C9C700A23C14A9600A1A363 /* Notifier - Notifications.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				7C6D15772270BA2F0092D34E /* Notifier */,
+				848FC8932B61BB1F009B4915 /* Notifier - Notifications */,
+				84E1A6B72B61C00400D7F7C9 /* Notifier - Alerts */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		B5B4976E24B3835E00CF9409 /* Notifier - Alerts.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Notifier - Alerts.app";
-			remoteRef = B5B4976D24B3835E00CF9409 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B5B4977124B3835E00CF9409 /* Notifier - Notifications.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Notifier - Notifications.app";
-			remoteRef = B5B4977024B3835E00CF9409 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7C6D15762270BA2F0092D34E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C8F69EE2278A6EF002D317B /* Assets.xcassets in Resources */,
+				84FA74992B61C4B7009B4068 /* Assets.xcassets in Resources */,
 				7C6D15812270BA300092D34E /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		7CE4ADBC239E9DA8004544D0 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
+		848FC8922B61BB1F009B4915 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
+				84FA74982B61C4A6009B4068 /* Assets.xcassets in Resources */,
+				848FC89C2B61BB20009B4915 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n#\n# Based on: https://crunchybagel.com/auto-incrementing-build-numbers-in-xcode/\n# \n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\n\nif [ -z $buildNumber ]\nthen\n    buildNumber=0\nfi\n\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
-/* End PBXShellScriptBuildPhase section */
+		84E1A6B62B61C00400D7F7C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84E1A6BD2B61C00500D7F7C9 /* Assets.xcassets in Resources */,
+				84E1A6C02B61C00500D7F7C9 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7C6D15742270BA2F0092D34E /* Sources */ = {
@@ -305,21 +357,57 @@
 				7C6D157C2270BA2F0092D34E /* AppDelegate.swift in Sources */,
 				7C720952227888E10033B2E2 /* Functions.swift in Sources */,
 				63B92DE9282AAEDE00B44340 /* ArgParser.swift in Sources */,
+				844D6FAC2B647A040000CCF2 /* Structures.swift in Sources */,
+				849D93A92B693243006410D1 /* UserNotifications.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		848FC8902B61BB1F009B4915 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				848FC8972B61BB1F009B4915 /* AppDelegate.swift in Sources */,
+				84E333822B61BBBB00BE750F /* Functions.swift in Sources */,
+				84E333842B61BBC200BE750F /* UserNotifications.swift in Sources */,
+				849D93AD2B693D2C006410D1 /* Structures.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84E1A6B42B61C00400D7F7C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84E1A6BB2B61C00400D7F7C9 /* AppDelegate.swift in Sources */,
+				84E1A6CD2B61C0B900D7F7C9 /* Functions.swift in Sources */,
+				84E1A6CF2B61C0BE00D7F7C9 /* UserNotifications.swift in Sources */,
+				8421955B2B67E80A0030A7E4 /* Structures.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B5FC207424B4ABF900CD078A /* PBXTargetDependency */ = {
+		84524FD12B61BC280046367B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "Notifier - Notifications";
-			targetProxy = B5FC207324B4ABF900CD078A /* PBXContainerItemProxy */;
+			productRef = 84524FD02B61BC280046367B /* SwiftLintPlugin */;
 		};
-		B5FC207624B4ABF900CD078A /* PBXTargetDependency */ = {
+		845D68DE2B692A2900C5B467 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "Notifier - Alerts";
-			targetProxy = B5FC207524B4ABF900CD078A /* PBXContainerItemProxy */;
+			productRef = 845D68DD2B692A2900C5B467 /* SwiftLintPlugin */;
+		};
+		84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */;
+		};
+		84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84E1A6B72B61C00400D7F7C9 /* Notifier - Alerts */;
+			targetProxy = 84E1A6C92B61C02C00D7F7C9 /* PBXContainerItemProxy */;
+		};
+		84FA749C2B61C9D9009B4068 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 848FC8932B61BB1F009B4915 /* Notifier - Notifications */;
+			targetProxy = 84FA749B2B61C9D9009B4068 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -332,6 +420,22 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
+		848FC89A2B61BB20009B4915 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				848FC89B2B61BB20009B4915 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		84E1A6BE2B61C00500D7F7C9 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84E1A6BF2B61C00500D7F7C9 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -339,6 +443,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -368,12 +473,15 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				"DEVELOPMENT_TEAM[sdk=*]" = 82K2XFN8L6;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -388,13 +496,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp";
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -402,6 +515,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -431,12 +545,15 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 82K2XFN8L6;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -445,12 +562,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp";
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -458,22 +580,32 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Notifier/Notifier.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 82K2XFN8L6;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Notifier/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 2.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -483,25 +615,179 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Notifier/NotifierRelease.entitlements;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Notifier/Notifier.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 82K2XFN8L6;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Notifier/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 2.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
 				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		848FC89F2B61BB20009B4915 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Notifications/Notifier - Notifications.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
+				NEW_SETTING = "";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		848FC8A02B61BB20009B4915 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Notifications/Notifier - Notifications.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
+				NEW_SETTING = "";
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		84E1A6C32B61C00500D7F7C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Alerts/Notifier - Alerts.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		84E1A6C42B61C00500D7F7C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "Notifier - Alerts/Notifier - Alerts.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 dataJAR Ltd. All rights reserved.";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -527,24 +813,73 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		848FC89E2B61BB20009B4915 /* Build configuration list for PBXNativeTarget "Notifier - Notifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				848FC89F2B61BB20009B4915 /* Debug */,
+				848FC8A02B61BB20009B4915 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84E1A6C22B61C00500D7F7C9 /* Build configuration list for PBXNativeTarget "Notifier - Alerts" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84E1A6C32B61C00500D7F7C9 /* Debug */,
+				84E1A6C42B61C00500D7F7C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+		841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.0;
+			};
+		};
+		845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.54.0;
+			};
+		};
+		845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.2.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		63B92DE0282AAEB700B44340 /* ArgumentParser */ = {
+		84524FD02B61BC280046367B /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 63B92DDF282AAEB700B44340 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		845D68DD2B692A2900C5B467 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		845D68E02B692A5100C5B467 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
+		};
+		84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

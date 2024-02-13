@@ -2,289 +2,214 @@
 //  AppDelegate.swift
 //  Notifier
 //
-//  Copyright © 2023 dataJAR Ltd. All rights reserved.
+//  Copyright © 2024 dataJAR Ltd. All rights reserved.
 //
 
+// Imports
 import Cocoa
 import CoreFoundation
+import UserNotifications
 
-
+// Declaration
 @NSApplicationMain
+// The apps class
 class AppDelegate: NSObject, NSApplicationDelegate {
-
+    // IBOutlet declaration
     @IBOutlet weak var window: NSWindow!
-
-    // Check to see if at the login window, and quit if we are
+    // If we're about to load, make sure we're logged in, exit otherwise
     func applicationWillFinishLaunching(_ aNotification: Notification) {
-        _ = atLoginWindow()
+        // Get the username of the logged in user
+        let loggedInUser = loggedInUser()
+        // The first argument is always the executable, drop it
+        let passedArgs = Array(CommandLine.arguments.dropFirst())
+        // Get the parsed args
+        let parsedResult = ArgParser.parseOrExit(passedArgs)
+        // If rebrand has been passed
+        if parsedResult.rebrand != "" {
+            // Rebrand Notifier apps
+            changeIcons(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
+        // If we're not rebranding and no user is logged in, exit
+        } else if loggedInUser == "" {
+            // Post message
+            print("INFO: No user logged in, and we're not rebranding... exiting...")
+            // Exit
+            exit(0)
+        }
     }
-
     // Check arguments passed to app, then OS if a valid argument is passed else print usage
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        let loggedInUser = atLoginWindow()
-        var notifierArgsArray = [String]()
-        var notifierPath = ""
-        var parsedType = ""
-        var verboseMode = false
-
-        // Exit if notificaiton center isn't running for the user
-        guard !NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.notificationcenterui").isEmpty else {
-            print("ERROR: Notification Center is not running...")
+        // The first argument is always the executable, drop it
+        let passedArgs = Array(CommandLine.arguments.dropFirst())
+        // Get the parsed args
+        let parsedResult = ArgParser.parseOrExit(passedArgs)
+        // Get the username of the logged in user
+        let loggedInUser = loggedInUser()
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - verbose enabled - arguments: \(parsedResult)")
+        }
+        // If rebrand has been passed
+        if parsedResult.rebrand != "" {
+            // Rebrand Notifier apps
+            changeIcons(brandingImage: parsedResult.rebrand, loggedInUser: loggedInUser, parsedResult: parsedResult)
+        // If we're not rebranding and no user is logged in, exit
+        } else if loggedInUser == "" {
+            // Post message
+            postToNSLogAndStdOut(logLevel: "INFO", logMessage: "No user logged in, exiting...",
+                                 functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+            // Exit
+            exit(0)
+        // If we have no value passed to --type
+        } else if parsedResult.type == "" {
+            // Show help
+            _ = ArgParser.parseOrExit(["--help"])
+            // Exit
             exit(1)
         }
-
-        // Define args to be parsed
-        do {
-
-            // The first argument is always the executable, drop it
-            let passedArgs = Array(CommandLine.arguments.dropFirst())
-
-            // If no args passed
-            if passedArgs.count == 0 {
-                try _ = argParser.parse(["--help"])
-            }
-            
-            // Get the parsed args
-            let parsedResult = try argParser.parse(passedArgs)
-                        
-            // If verbose mode is enabled
-            verboseMode = parsedResult.verbose
-            if verboseMode {
-                NSLog("Notifier Log: notifier - verbose enabled")
-                notifierArgsArray.append("--verbose")
-            }
-
-            // Check parsed args to make sure at least base args are found, if not show help
-            if parsedResult.type != nil {
-                if ((parsedResult.message == "") || (parsedResult.message == nil )) && ((parsedResult.remove == "") || (parsedResult.remove == nil)){
-                    try _ = argParser.parse(["--help"])
-                } else {
-                    if let type = parsedResult.type {
-                        if type != "alert" && type != "banner" {
-                            try _ = argParser.parse(["--help"])
-                        } else {
-                            parsedType = type.lowercased()
-                        }
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
-                }
-            } else {
-                try _ = argParser.parse(["--help"])
-            }
-
-
-           // If --remove all passed
-           if (parsedResult.remove == "all") {
-                if verboseMode {
-                     NSLog("Notifier Log: notifier - remove all")
-                }
-                notifierArgsArray.append("--remove")
-                notifierArgsArray.append("all")
-
-            // If not parse other args
-            } else {
-
-                if (parsedResult.remove == "prior") {
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - remove prior")
-                    }
-                    notifierArgsArray.append("--remove")
-                    notifierArgsArray.append("prior")
-                }
-
-                if (parsedResult.message != nil) {
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - message")
-                    }
-                    notifierArgsArray.append("--message")
-                    if (parsedResult.message == "") {
-                        notifierArgsArray.append(" ")
-                    } else {
-                        if let message = parsedResult.message {
-                            notifierArgsArray.append(message)
-                        } else {
-                            try _ = argParser.parse(["--help"])
-                        }
-                    }
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
-                    }
-                }
-
-                if (parsedResult.messageaction != nil) {
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - messageaction")
-                    }
-                    notifierArgsArray.append("--messageaction")
-                    if let messageaction = parsedResult.messageaction {
-                        notifierArgsArray.append(messageaction)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
-                    }
-                }
-
-                if (parsedResult.sound != nil) {
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - sound")
-                    }
-                    notifierArgsArray.append("--sound")
-                    if let sound = parsedResult.sound {
-                        notifierArgsArray.append(sound)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
-                    }
-                }
-
-                if (parsedResult.subtitle != nil) {
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - subtitle")
-                    }
-                    notifierArgsArray.append("--subtitle")
-                    if let subtitle = parsedResult.subtitle {
-                        notifierArgsArray.append(subtitle)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
-                    }
-                }
-
-                if (parsedResult.title != nil) {
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - title")
-                    }
-                    notifierArgsArray.append("--title")
-                    if let title = parsedResult.title {
-                        notifierArgsArray.append(title)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
-                    }
-                }
-
-                if parsedType == "alert" && (parsedResult.messagebutton != nil) {
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - messagebutton")
-                    }
-                    notifierArgsArray.append("--messagebutton")
-                    if let messagebutton = parsedResult.messagebutton {
-                        notifierArgsArray.append(messagebutton)
-                    } else {
-                        try _ = argParser.parse(["--help"])
-                    }
-                    if (parsedResult.messagebuttonaction != nil){
-                        if verboseMode {
-                             NSLog("Notifier Log: notifier - messagebuttonaction")
-                        }
-                        notifierArgsArray.append("--messagebuttonaction")
-                        if let messagebuttonaction = parsedResult.messagebuttonaction {
-                            notifierArgsArray.append(messagebuttonaction)
-                        } else {
-                            try _ = argParser.parse(["--help"])
-                        }
-                    }
-                    if verboseMode {
-                         NSLog("Notifier Log: notifier - notifierArgsArray - %@", notifierArgsArray)
-                    }
-                }
-            }
-
-        // Other errors
-        } catch {
-            let message = argParser.message(for: error)
-            print(message)
-            if verboseMode {
-                 NSLog("Notifier Log: notifier - \(message).")
-            }
-            exit(1)
+        // Exit if Notification Center isn't running for the user
+        isNotificationCenterRunning(parsedResult: parsedResult)
+        // Check that we have all the needed arguments and that they are valid options, exiting if not
+        checkArgs(parsedResult: parsedResult)
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - type - \(parsedResult.type)")
         }
-
-        // Parse the --type arg to select a .app bundle in /Contents/MacOS/<< type agr value >>/ error if missing
-        if parsedType != "" {
-            if verboseMode {
-                 NSLog("Notifier Log: notifier - type - %@", parsedType)
-            }
-            notifierPath = Bundle.main.path(forResource: nil, ofType: "app", inDirectory: parsedType)!
-            notifierPath += "/Contents/MacOS/"
-            do {
-                let appBundle = try FileManager.default.contentsOfDirectory(atPath: notifierPath)
-                notifierPath += appBundle.first!
-                if verboseMode {
-                     NSLog("Notifier Log: notifier - path - %@", notifierPath)
-                }
-            } catch {
-                print("ERROR: Cannot find an app bundle at: \(notifierPath)...")
-                if verboseMode {
-                     NSLog("ERROR: Cannot find an app bundle at: \(notifierPath)...")
-                }
-                exit(1)
-            }
-        }
-
-        // Launchg the wanted notification app as the user
-        let task = Process()
-        if loggedInUser != "" {
-            if verboseMode {
-                NSLog("Notifier Log: notifier - loggedInUser - %@", loggedInUser)
-            }
-            var suArgsString = "'" + notifierPath + "'"
-            var suArgsArray = [String]()
-            for parsedArg in notifierArgsArray {
-                if parsedArg.hasPrefix("--"){
-                    suArgsString += " " + parsedArg
-                } else {
-                    suArgsString += " '" + (parsedArg) + "'"
-                }
-            }
-            suArgsArray = [suArgsString]
-            task.launchPath = "/usr/bin/su"
-            suArgsArray.insert("-c", at: 0)
-            suArgsArray.insert(loggedInUser, at: 0)
-            suArgsArray.insert("-l", at: 0)
-            task.arguments = suArgsArray
-            if verboseMode {
-                NSLog("Notifier Log: notifier - suArgsArray - %@", suArgsArray)
-            }
+        // Var declaration
+        var notifierPath = String()
+        // If we're looking for the alert app
+        if parsedResult.type == "alert" {
+            // Get the alert apps path
+            notifierPath = GlobalVariables.alertAppPath + "/Contents/MacOS/Notifier - Alerts"
+        // If we're looking for the notifications app
         } else {
-            if verboseMode {
-                NSLog("Notifier Log: notifier - running as user")
-            }
-            task.launchPath = notifierPath
-            if verboseMode {
-                NSLog("Notifier Log: notifier - task.launchPath - %@", String(describing: task.launchPath))
-            }
-            task.arguments = notifierArgsArray
-            if verboseMode {
-                NSLog("Notifier Log: notifier - task.arguments - %@", String(describing: task.arguments))
-            }
+            // Get the alert apps path
+            notifierPath = GlobalVariables.bannerAppPath + "/Contents/MacOS/Notifier - Notifications"
         }
-        let outputPipe = Pipe()
-        let errorPipe = Pipe()
-        task.standardOutput = outputPipe
-        task.standardError = errorPipe
-        if verboseMode {
-            NSLog("Notifier Log: notifier - launch")
+        // If --remove all has been passed
+        if parsedResult.remove.lowercased() == "all" {
+            // Initialize a rootElements object
+            var rootElements = RootElements(removeOption: "all")
+            // Initialize a messageContent object
+            let messageContent = MessageContent()
+            // If verbose mode is enabled
+            if parsedResult.verbose {
+                // Set verboseMode
+                rootElements.verboseMode = "enabled"
+            }
+            // Create the JSON to pass to the notifying app
+            let commandJSON = createJSON(messageContent: messageContent, parsedResult: parsedResult,
+                                         rootElements: rootElements)
+            // Pass commandJSON to the relevant app, exiting afterwards
+            passToApp(commandJSON: commandJSON, loggedInUser: loggedInUser, notifierPath: notifierPath,
+                      parsedResult: parsedResult)
+        } else {
+            // Format the args as needed
+            formatArgs(loggedInUser: loggedInUser, notifierPath: notifierPath, parsedResult: parsedResult)
         }
-        task.launch()
-        task.waitUntilExit()
-        if verboseMode {
-            NSLog("Notifier Log: notifier - complete")
-        }
-        exit(0)
     }
+}
 
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+// Check that we have all the needed arguments and that they are valid options, exiting if not
+func checkArgs(parsedResult: ArgParser) {
+    // If an invalid value for --type has been passed
+    if parsedResult.type.lowercased() != "alert" && parsedResult.type.lowercased() != "banner" {
+        // Post message
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "incorrect argument passed to --type, exiting...\n",
+                             functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Show help
+        _ = ArgParser.parseOrExit(["--help"])
+        // Exit
+        exit(1)
     }
+    // If an invalid value for --remove has been passed
+    if parsedResult.remove != "" && parsedResult.remove.lowercased() != "all" && parsedResult.remove.lowercased()
+          != "prior" {
+        // Post message
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "incorrect argument passed to --remove, exiting...\n",
+                              functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Show help
+        _ = ArgParser.parseOrExit(["--help"])
+        // Exit
+        exit(1)
+    }
+    // If we've got here and no --message has been passed and we're not removing
+    if parsedResult.remove == "" && parsedResult.message == "" {
+        // Post message
+        postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
+                        missing value for --message and we're neither rebranding nor removing, exiting...\n
+                        """, functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
+        // Show help
+        _ = ArgParser.parseOrExit(["--help"])
+        // Exit
+        exit(1)
+    }
+}
 
+// Format the args as needed
+func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgParser) {
+    // Initialize a messageContent object
+    var messageContent = MessageContent()
+    // Initialize a rootElements object
+    var rootElements = RootElements()
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Set verboseMode
+        rootElements.verboseMode = "enabled"
+    }
+    // Set the message to the body of the notification as not removing all, we have to have this
+    messageContent.messageBody = setNotificationBody(parsedResult: parsedResult)
+    // If we've been passed a messageaction
+    if parsedResult.messageaction != "" {
+        // Set messageAction
+        messageContent.messageAction = parseAction(actionString: parsedResult.messageaction,
+                                                    parsedResult: parsedResult)
+    }
+    // If we've been passed a sound
+    if parsedResult.sound != "" {
+        // Set messageSound
+        messageContent.messageSound = setNotificationSound(parsedResult: parsedResult)
+    }
+    // If we've been passed a subtitle
+    if parsedResult.subtitle != "" {
+        // Set messageSubtitle
+        messageContent.messageSubtitle = setNotificationSubtitle(parsedResult: parsedResult)
+    }
+    // If we've been passed a title
+    if parsedResult.title != "" {
+        // Set messageTitle
+        messageContent.messageTitle = setNotificationTitle(parsedResult: parsedResult)
+    }
+    // If we're to remove a prior posted notification
+    if parsedResult.remove.lowercased() == "prior" {
+        // Set removeOption
+        rootElements.removeOption = "prior"
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - removeOption: \(rootElements.removeOption!))")
+        }
+    }
+    // If we're dealing with an alert, check for additional items
+    if parsedResult.type.lowercased() == "alert" {
+        // If we've been passed a messagebutton, and messagebuttonaction
+        if parsedResult.messagebutton != "" {
+            // Set messageButton and messagebuttonaction
+            messageContent.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
+            // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
+            if parsedResult.messagebuttonaction != "" {
+                // Set messageButtonAction
+                messageContent.messageButtonAction = parseAction(actionString:
+                                                                  parsedResult.messagebuttonaction,
+                                                                  parsedResult: parsedResult)
+            }
+        }
+    }
+    // Create the JSON to pass to the notifying app
+    let commandJSON = createJSON(messageContent: messageContent, parsedResult: parsedResult,
+                                 rootElements: rootElements)
+    // Pass commandJSON to the relevant app, exiting afterwards
+    passToApp(commandJSON: commandJSON, loggedInUser: loggedInUser, notifierPath: notifierPath,
+              parsedResult: parsedResult)
 }

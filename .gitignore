@@ -88,6 +88,8 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
-**/.DS_Store
+.DS_Store
+*.xcuserstate
 *.pkg
-packages/Notifier.app
+package/ROOT/Applications/Utilities/*
+package/notifier-app.plist
