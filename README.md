@@ -106,7 +106,7 @@ As you can see, some of the behaviour and appearence is OS dependent.
 
 macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-<img src="https://github.com/dataJAR/Notifier/assets/2464974/20af5bb9-1e6e-4158-bbc4-67dbd003d7f8" width="475" height="150">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/bf8a477c-3ebc-4c54-b4ef-eaa6df8dc052" width="475" height="150">
+<img src="https://github.com/dataJAR/Notifier/assets/2464974/20af5bb9-1e6e-4158-bbc4-67dbd003d7f8" width="317" height="100">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/bf8a477c-3ebc-4c54-b4ef-eaa6df8dc052" width="317" height="100">
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type banner --message "message"
@@ -115,7 +115,7 @@ macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 **Example 2** This example shows a basic alert notification.
 macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-<img src="https://github.com/dataJAR/Notifier/assets/2464974/1bca78ef-8865-4762-902b-081ac39b9c80" width="475" height="150">  |   <img src="https://github.com/dataJAR/Notifier/assets/2464974/e3f6e325-d7d0-49e8-8bfc-34c19025d472" width="475" height="150">
+<img src="https://github.com/dataJAR/Notifier/assets/2464974/1bca78ef-8865-4762-902b-081ac39b9c80" width="317" height="100">  |   <img src="https://github.com/dataJAR/Notifier/assets/2464974/e3f6e325-d7d0-49e8-8bfc-34c19025d472" width="317" height="100">
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message" --messagebutton "Logout" --messagebuttonaction "Logout"
@@ -124,7 +124,7 @@ macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 **Example 3** This example shows both alert & banner notifications, (sleep used for the example gif, not needed in use but below for completeness sake).
 macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-<img src="https://github.com/dataJAR/Notifier/assets/2464974/8741ccea-f481-46a0-8f15-b97acde2e0c1" width="475" height="230">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/dd1f1775-3392-4d24-84b2-dd55aca6d02d" width="475" height="230">
+<img src="https://github.com/dataJAR/Notifier/assets/2464974/8741ccea-f481-46a0-8f15-b97acde2e0c1" width="317" height="154">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/dd1f1775-3392-4d24-84b2-dd55aca6d02d" width="317" height="154">
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "Please Logout" --messagebutton "Logout"  --messagebuttonaction "logout" --title "Logout";
@@ -135,7 +135,7 @@ macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 **Example 4** This example shows selective remove of a delivered notificaition via `--remove prior`. Where applicable this would also remove notifications from within Notification Center itself.
 macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-<img src="https://github.com/dataJAR/Notifier/assets/2464974/854440ab-ee52-443b-8d65-ebcad501f194" width="475" height="230">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/a0e04d63-0e9f-474d-ba8e-1fa97bdf18be" width="475" height="230">
+<img src="https://github.com/dataJAR/Notifier/assets/2464974/854440ab-ee52-443b-8d65-ebcad501f194" width="317" height="154">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/a0e04d63-0e9f-474d-ba8e-1fa97bdf18be" width="317" height="154">
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message 'Look at me!!';
@@ -148,7 +148,7 @@ macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 
 macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-<img src="https://github.com/dataJAR/Notifier/assets/2464974/8f4abba7-7866-4e80-8aad-1bc77dcda50c" width="475" height="560">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/11902803-3e4e-4ac8-8dda-5c4f0994896e" width="475" height="560">
+<img src="https://github.com/dataJAR/Notifier/assets/2464974/8f4abba7-7866-4e80-8aad-1bc77dcda50c" width="317" height="374">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/11902803-3e4e-4ac8-8dda-5c4f0994896e" width="317" height="374">
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message message;
@@ -164,7 +164,7 @@ macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 **Example 6** This example shows Notifier 3.0+'s `--rebrand` argument in use, this allows for rebranding of Notifier without having to venture into Xcode etc.
 macOS 10.15.7 - Light Mode |  macOS 14.3 - Dark mode
 :-------------------------:|:-------------------------:
-<img src="https://github.com/dataJAR/Notifier/assets/2464974/ea45ad52-96ec-49a1-8679-4d1461451ea5" width="475" height="230">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/49894a04-17e8-4257-9923-e438418a6785" width="475" height="230">
+<img src="https://github.com/dataJAR/Notifier/assets/2464974/ea45ad52-96ec-49a1-8679-4d1461451ea5" width="317" height="154">  |  <img src="https://github.com/dataJAR/Notifier/assets/2464974/49894a04-17e8-4257-9923-e438418a6785" width="317" height="154">
 
 ```
 /Applications/Utilities/Notifier.app/Contents/MacOS/Notifier --type alert --message "message";
