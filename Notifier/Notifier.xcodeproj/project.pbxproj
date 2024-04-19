@@ -212,7 +212,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				845D68DE2B692A2900C5B467 /* PBXTargetDependency */,
 				84FA749C2B61C9D9009B4068 /* PBXTargetDependency */,
 				84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */,
 			);
@@ -272,7 +271,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = "dataJAR Ltd";
 				TargetAttributes = {
 					7C6D15772270BA2F0092D34E = {
@@ -390,10 +389,6 @@
 			isa = PBXTargetDependency;
 			productRef = 84524FD02B61BC280046367B /* SwiftLintPlugin */;
 		};
-		845D68DE2B692A2900C5B467 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 845D68DD2B692A2900C5B467 /* SwiftLintPlugin */;
-		};
 		84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */;
@@ -472,7 +467,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -544,7 +539,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -841,14 +836,6 @@
 				minimumVersion = 0.54.0;
 			};
 		};
-		845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.54.0;
-			};
-		};
 		845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
@@ -863,11 +850,6 @@
 		84524FD02B61BC280046367B /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
-		845D68DD2B692A2900C5B467 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
 		};
 		845D68E02B692A5100C5B467 /* ArgumentParser */ = {
