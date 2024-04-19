@@ -305,7 +305,6 @@
 			);
 			mainGroup = 7C6D156F2270BA2F0092D34E;
 			packageReferences = (
-				845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 7C6D15792270BA2F0092D34E /* Products */;
