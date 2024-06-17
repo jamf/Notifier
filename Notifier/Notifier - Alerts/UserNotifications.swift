@@ -259,13 +259,13 @@ func processNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any
                           """)
                 // If task failed to run
                 } else {
-                        // Post error
-                        postToNSLogAndStdOut(logLevel: "ERROR", logMessage:
-                                             """
-                                             Running: \(messageActionDict["taskPath"] ?? "")
-                                             \(messageActionDict["taskArguments"] ?? []) failed with \(taskOutput).
-                                             """, functionName: #function.components(separatedBy: "(")[0],
-                                             verboseMode: "enabled")
+                    // Post error
+                    postToNSLogAndStdOut(logLevel: "ERROR", logMessage:
+                                            """
+                                            Running: \(messageActionDict["taskPath"] ?? "")
+                                            \(messageActionDict["taskArguments"] ?? []) failed with \(taskOutput).
+                                            """, functionName: #function.components(separatedBy: "(")[0],
+                                            verboseMode: "enabled")
                 }
             }
         }

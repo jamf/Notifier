@@ -62,7 +62,7 @@ struct RootElements: Codable {
 struct UserInfo: Codable {
     // Optional - action to perform when the message is clicked
     var messageAction: [TaskObject]?
-    // Optional - alert only - action to perform when the message button is clicked
+    // Optional - action to perform when the message button is clicked
     var messageButtonAction: [TaskObject]?
     // Arguments for the task object
     struct TaskObject: Codable {

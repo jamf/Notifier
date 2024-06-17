@@ -50,39 +50,14 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var messageaction: String = ""
-    // Optional sound to play when notification is delivered
-    @Option(help: """
-                  The sound to play when notification is delivered. Pass \"default\" for the default \
-                  macOS sound, else the name of a sound in /Library/Sounds or /System/Library/Sounds.
-
-                  If the sound cannot be found, macOS will use the \"default\" sound.
-
-                  """)
-    var sound: String = ""
-    // Optional subtitle for the notification
-    @Option(help: """
-                  The notifications subtitle.
-
-                  """)
-    var subtitle: String = ""
-    // Optional Title for the notification
-    @Option(help: """
-                  The notifications title.
-
-                  """)
-    var title: String = ""
     // Optional message button text
     @Option(help: """
-                  alert type only.
-
                   Adds a button to the message, with the label being what is passed.
 
                   """)
     var messagebutton: String = ""
     // Optional action when the alert button is clicked
     @Option(help: """
-                  alert type only.
-
                   The action to be performed under the users account when the optional message button is clicked.
 
                   • Passing 'logout' will prompt the user to logout.
@@ -111,6 +86,27 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var remove: String = ""
+    // Optional sound to play when notification is delivered
+    @Option(help: """
+                  The sound to play when notification is delivered. Pass \"default\" for the default \
+                  macOS sound, else the name of a sound in /Library/Sounds or /System/Library/Sounds.
+
+                  If the sound cannot be found, macOS will use the \"default\" sound.
+
+                  """)
+    var sound: String = ""
+    // Optional subtitle for the notification
+    @Option(help: """
+                  The notifications subtitle.
+
+                  """)
+    var subtitle: String = ""
+    // Optional Title for the notification
+    @Option(help: """
+                  The notifications title.
+
+                  """)
+    var title: String = ""
     // Enables verbose logging
     @Flag(help: """
                 Enables logging of actions. Check console for 'Notifier' messages.

@@ -82,6 +82,16 @@ func processArguments(messageContent: MessageContent, notificationCenter: UNUser
             notificationContent.userInfo["messageAction"] = getNotificationBodyAction(messageContent: messageContent,
                                                                                       rootElements: rootElements)
         }
+        // messageButton needs defining, even when not called. So processing it here along with messageButtonAction
+        let (tempMessageButtonAction, tempCategory) = processMessageButton(notificationCenter: notificationCenter,
+                                                            messageContent: messageContent, rootElements: rootElements)
+        // Set the notifications category
+        notificationCenter.setNotificationCategories([tempCategory])
+        // If tempMessageButtonAction has a value
+        if !tempMessageButtonAction.isEmpty {
+            // Add messageButtonAction to userInfo
+            notificationContent.userInfo["messageButtonAction"] = tempMessageButtonAction
+        }
         // If we have a value for messageSound passed
         if messageContent.messageSound != nil {
             // Set the notifications sound

@@ -11,6 +11,10 @@ struct MessageContent: Codable {
     var messageAction: [TaskObject]?
     // The notifications message (required)
     var messageBody: String?
+    // Optional - message button label
+    var messageButton: String?
+    // Optional - action to perform when the message button is clicked
+    var messageButtonAction: [TaskObject]?
     // Optional - the sound played when the notification has been delivered
     var messageSound: String?
     // Optional - the notifications subtitle
@@ -25,10 +29,13 @@ struct MessageContent: Codable {
         var taskArguments: [String]?
     }
     // Initialize MessageContent
-    init(messageAction: [TaskObject]? = nil, messageBody: String? = nil, messageSound: String? = nil,
-         messageSubtitle: String? = nil, messageTitle: String? = nil) {
+    init(messageAction: [TaskObject]? = nil, messageBody: String? = nil, messageButton: String? = nil,
+         messageButtonAction: [TaskObject]? = nil, messageSound: String? = nil, messageSubtitle: String? = nil,
+         messageTitle: String? = nil) {
         self.messageAction = messageAction
         self.messageBody = messageBody
+        self.messageButton = messageButton
+        self.messageButtonAction = messageButtonAction
         self.messageSound = messageSound
         self.messageSubtitle = messageSubtitle
         self.messageTitle = messageTitle
@@ -55,6 +62,8 @@ struct RootElements: Codable {
 struct UserInfo: Codable {
     // Optional - action to perform when the message is clicked
     var messageAction: [TaskObject]?
+    // Optional - action to perform when the message button is clicked
+    var messageButtonAction: [TaskObject]?
     // Arguments for the task object
     struct TaskObject: Codable {
         // The tasks executable
@@ -63,7 +72,8 @@ struct UserInfo: Codable {
         var taskArguments: [String]?
     }
     // Initialize ParsedArguments
-    init(messageAction: [TaskObject]? = nil) {
+    init(messageAction: [TaskObject]? = nil, messageButtonAction: [TaskObject]? = nil) {
         self.messageAction = messageAction
+        self.messageButtonAction = messageButtonAction
     }
 }
