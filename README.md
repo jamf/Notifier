@@ -1,6 +1,6 @@
 <details>
 <summary>Licensed under the Apache License, Version 2.0 </summary>
-Copyright 2024 DATA JAR LTD
+Copyright 2024 Jamf LTD
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
@@ -17,7 +17,7 @@ Notifications are delivered via the [UserNotifications Framework](https://develo
 # Usage
 ## Basic Usage
 ```
-OVERVIEW: Notifier 3.0: Posts alert or banner notifications.
+OVERVIEW: Notifier 3.1: Posts alert or banner notifications.
 
 USAGE: --type <alert/banner> --message <some message> <options>
        --type <alert/banner> --remove prior <some message> <options>
@@ -42,27 +42,11 @@ OPTIONS:
                           For example: "/usr/bin/open" will work, "open" will
                           not.
 
-  --sound <sound>         The sound to play when notification is delivered.
-                          Pass "default" for the default macOS sound, else the
-                          name of a sound in /Library/Sounds or
-                          /System/Library/Sounds.
-
-                          If the sound cannot be found, macOS will use the
-                          "default" sound.
-
-  --subtitle <subtitle>   The notifications subtitle.
-
-  --title <title>         The notifications title.
-
   --messagebutton <messagebutton>
-                          alert type only.
-
                           Adds a button to the message, with the label being
                           what is passed.
 
   --messagebuttonaction <messagebuttonaction>
-                          alert type only.
-
                           The action to be performed under the users account
                           when the optional message button is clicked.
 
@@ -89,6 +73,18 @@ OPTIONS:
   --remove <remove>       "prior" or "all". If passing "prior", the full
                           message will be required too. Including all passed
                           flags.
+
+  --sound <sound>         The sound to play when notification is delivered.
+                          Pass "default" for the default macOS sound, else the
+                          name of a sound in /Library/Sounds or
+                          /System/Library/Sounds.
+
+                          If the sound cannot be found, macOS will use the
+                          "default" sound.
+
+  --subtitle <subtitle>   The notifications subtitle.
+
+  --title <title>         The notifications title.
 
   --verbose               Enables logging of actions. Check console for
                           'Notifier' messages.
