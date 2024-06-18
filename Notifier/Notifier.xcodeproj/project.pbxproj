@@ -208,11 +208,11 @@
 				7C6D15762270BA2F0092D34E /* Resources */,
 				7CF89A4023BF9F6000723A3B /* CopyFiles */,
 				7CAB609623DF4C8B0029E310 /* CopyFiles */,
+				84CC99F32C21904900396D3F /* Swiftlint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8415893B2C207EAC008B1103 /* PBXTargetDependency */,
 				84FA749C2B61C9D9009B4068 /* PBXTargetDependency */,
 				84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */,
 			);
@@ -235,7 +235,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				84524FD12B61BC280046367B /* PBXTargetDependency */,
 			);
 			name = "Notifier - Notifications";
 			packageProductDependencies = (
@@ -255,7 +254,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */,
 			);
 			name = "Notifier - Alerts";
 			packageProductDependencies = (
@@ -306,7 +304,6 @@
 			mainGroup = 7C6D156F2270BA2F0092D34E;
 			packageReferences = (
 				845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
-				841589392C207EA1008B1103 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 7C6D15792270BA2F0092D34E /* Products */;
 			projectDirPath = "";
@@ -349,6 +346,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		84CC99F32C21904900396D3F /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# If the dir /opt/homebrew/bin/ exists\nif [ -d '/opt/homebrew/bin/' ]\nthen\n  # Add homebrew dir to PATH\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\n# Get path so swiftlint (if installed)\nswiftlintPath=$(which swiftlint)\n\n# If we can find swiftlint\nif [ -n \"${swiftlintPath}\" ]\nthen\n    # Run swiftlint\n    swiftlint\n# If we can't find swiftlint\nelse\n    # Log error\n    /bin/echo \"ERROR: SwiftLint not installed, exiting...\"\n    # Exit\n    exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7C6D15742270BA2F0092D34E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -387,18 +406,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8415893B2C207EAC008B1103 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 8415893A2C207EAC008B1103 /* SwiftLintBuildToolPlugin */;
-		};
-		84524FD12B61BC280046367B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 84524FD02B61BC280046367B /* SwiftLintPlugin */;
-		};
-		84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */;
-		};
 		84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E1A6B72B61C00400D7F7C9 /* Notifier - Alerts */;
@@ -591,6 +598,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = Notifier/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -625,6 +633,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = Notifier/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -832,22 +841,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		841589392C207EA1008B1103 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.55.1;
-			};
-		};
-		841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.54.0;
-			};
-		};
 		845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
@@ -859,25 +852,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8415893A2C207EAC008B1103 /* SwiftLintBuildToolPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 841589392C207EA1008B1103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintBuildToolPlugin";
-		};
-		84524FD02B61BC280046367B /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
 		845D68E02B692A5100C5B467 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
-		};
-		84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
