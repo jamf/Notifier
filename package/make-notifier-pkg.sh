@@ -39,7 +39,7 @@ scriptExtension=${0##*.}
 swTitle="$(/usr/bin/basename "$0" ."$scriptExtension")"
 
 # Script Version
-ver="1.0"
+ver="1.0.1"
 
 # Full path to the dir this script is in
 scriptDir="$(/usr/bin/dirname "$0")"
@@ -149,8 +149,7 @@ USAGE: Ths script needs to be ran as root/sudo, and requires the following argum
          https://developer.apple.com/help/account/create-certificates/create-developer-id-certificates/
     \$2 - Name of an App-specific password within the running users keychain, to be used for notarization:
          https://support.apple.com/en-us/102654
-    \$3 - pkg receipt identifier
-         uk.dataJAR.Notifier
+    \$3 - pkg receipt identifier (for example: uk.dataJAR.Notifier)
 "
 }
 

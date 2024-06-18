@@ -134,6 +134,60 @@ func handleNotification(forResponse response: UNNotificationResponse) {
     exit(0)
 }
 
+// Adds messageButton (always needed) and messageButtonAction (when defined)
+func processMessageButton(notificationCenter: UNUserNotificationCenter, messageContent: MessageContent,
+                          rootElements: RootElements) ->
+        ([AnyHashable: Any], UNNotificationCategory) {
+    // Var declaration
+    var tempCategory = UNNotificationCategory(identifier: "banner", actions: [], intentIdentifiers: [],
+                                              options: .customDismissAction)
+    var messageButtonAction = [AnyHashable: Any]()
+    // If we have a value for messageButton passed
+    if messageContent.messageButton != nil {
+        // Create an action object
+        let notificationAction = UNNotificationAction(identifier: "messagebutton",
+                                                      title: messageContent.messageButton ?? "",
+                                                      options: [])
+        // Amend tempCategory
+        tempCategory = UNNotificationCategory(identifier: "banner", actions: [notificationAction],
+                                              intentIdentifiers: [],
+                                              options: .customDismissAction)
+        // If verbose mode is enabled
+        if rootElements.verboseMode != nil {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - messagebutton processed")
+        }
+        // If we have a values for messageButton and messageButtonAction passed
+        if messageContent.messageButtonAction != nil {
+            // Add taskPath from messagAction to messageButtonAction
+            messageButtonAction["taskPath"] = messageContent.messageButtonAction?[0].taskPath
+            // Add taskArguments from messageButtonAction
+            messageButtonAction["taskArguments"] =
+            messageContent.messageButtonAction?[0].taskArguments
+            // If verbose mode is enabled
+            if rootElements.verboseMode != nil {
+                // Progress log
+                NSLog("""
+                      \(#function.components(separatedBy: "(")[0]) - messageButtonAction - taskPath: \
+                      \(messageButtonAction["taskPath"] ?? ""),
+                      taskArguments: \(messageButtonAction["taskArguments"] ?? [])
+                      """)
+            }
+            // Return tempCategory and tempUserInfo
+            return (messageButtonAction, tempCategory)
+        }
+        // If we don't have a value for messageButton
+    } else {
+        // If verbose mode is enabled
+        if rootElements.verboseMode != nil {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - no messagebutton defined")
+        }
+    }
+    // Return empty userInfo for messageButtonAction and tempCategory
+    return ([:], tempCategory)
+}
+
 // Post the notification
 func postNotification(notificationCenter: UNUserNotificationCenter, notificationContent: UNMutableNotificationContent,
                       messageContent: MessageContent, passedBase64: String, rootElements: RootElements) {
@@ -207,11 +261,11 @@ func processNotificationActions(userInfoKey: String, userInfo: [AnyHashable: Any
                 } else {
                     // Post error
                     postToNSLogAndStdOut(logLevel: "ERROR", logMessage:
-                                         """
-                                         Running: \(messageActionDict["taskPath"] ?? "")
-                                         \(messageActionDict["taskArguments"] ?? []) failed with \(taskOutput).
-                                         """, functionName: #function.components(separatedBy: "(")[0],
-                                         verboseMode: "enabled")
+                                            """
+                                            Running: \(messageActionDict["taskPath"] ?? "")
+                                            \(messageActionDict["taskArguments"] ?? []) failed with \(taskOutput).
+                                            """, functionName: #function.components(separatedBy: "(")[0],
+                                            verboseMode: "enabled")
                 }
             }
         }

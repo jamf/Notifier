@@ -208,11 +208,11 @@
 				7C6D15762270BA2F0092D34E /* Resources */,
 				7CF89A4023BF9F6000723A3B /* CopyFiles */,
 				7CAB609623DF4C8B0029E310 /* CopyFiles */,
+				84CC99F32C21904900396D3F /* Swiftlint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				845D68DE2B692A2900C5B467 /* PBXTargetDependency */,
 				84FA749C2B61C9D9009B4068 /* PBXTargetDependency */,
 				84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */,
 			);
@@ -235,7 +235,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				84524FD12B61BC280046367B /* PBXTargetDependency */,
 			);
 			name = "Notifier - Notifications";
 			packageProductDependencies = (
@@ -255,7 +254,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */,
 			);
 			name = "Notifier - Alerts";
 			packageProductDependencies = (
@@ -272,7 +270,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = "dataJAR Ltd";
 				TargetAttributes = {
 					7C6D15772270BA2F0092D34E = {
@@ -305,7 +303,6 @@
 			);
 			mainGroup = 7C6D156F2270BA2F0092D34E;
 			packageReferences = (
-				845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 			);
 			productRefGroup = 7C6D15792270BA2F0092D34E /* Products */;
@@ -349,6 +346,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		84CC99F32C21904900396D3F /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# If the dir /opt/homebrew/bin/ exists\nif [ -d '/opt/homebrew/bin/' ]\nthen\n  # Add homebrew dir to PATH\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\n# Get path so swiftlint (if installed)\nswiftlintPath=$(which swiftlint)\n\n# If we can find swiftlint\nif [ -n \"${swiftlintPath}\" ]\nthen\n    # Run swiftlint\n    swiftlint\n# If we can't find swiftlint\nelse\n    # Log error\n    /bin/echo \"ERROR: SwiftLint not installed, exiting...\"\n    # Exit\n    exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7C6D15742270BA2F0092D34E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -387,18 +406,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		84524FD12B61BC280046367B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 84524FD02B61BC280046367B /* SwiftLintPlugin */;
-		};
-		845D68DE2B692A2900C5B467 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 845D68DD2B692A2900C5B467 /* SwiftLintPlugin */;
-		};
-		84E1A6C62B61C01600D7F7C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */;
-		};
 		84E1A6CA2B61C02C00D7F7C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E1A6B72B61C00400D7F7C9 /* Notifier - Alerts */;
@@ -473,7 +480,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -545,7 +552,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -579,7 +586,6 @@
 		7C6D15872270BA300092D34E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -592,6 +598,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = Notifier/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -600,7 +607,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -614,7 +621,6 @@
 		7C6D15882270BA300092D34E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -627,6 +633,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 82K2XFN8L6;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = Notifier/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
@@ -635,7 +642,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -672,7 +679,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
@@ -711,7 +718,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -747,7 +754,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -783,7 +790,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -834,22 +841,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.54.0;
-			};
-		};
-		845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.54.0;
-			};
-		};
 		845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
@@ -861,25 +852,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		84524FD02B61BC280046367B /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
-		845D68DD2B692A2900C5B467 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 845D68DA2B692A1700C5B467 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
 		845D68E02B692A5100C5B467 /* ArgumentParser */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 845D68DF2B692A4800C5B467 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
-		};
-		84E1A6C52B61C01600D7F7C9 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 841F5F3C2B618C1500473103 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

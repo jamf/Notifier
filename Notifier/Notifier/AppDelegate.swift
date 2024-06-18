@@ -191,19 +191,16 @@ func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgPar
             NSLog("\(#function.components(separatedBy: "(")[0]) - removeOption: \(rootElements.removeOption!))")
         }
     }
-    // If we're dealing with an alert, check for additional items
-    if parsedResult.type.lowercased() == "alert" {
-        // If we've been passed a messagebutton, and messagebuttonaction
-        if parsedResult.messagebutton != "" {
-            // Set messageButton and messagebuttonaction
-            messageContent.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
-            // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
-            if parsedResult.messagebuttonaction != "" {
-                // Set messageButtonAction
-                messageContent.messageButtonAction = parseAction(actionString:
-                                                                  parsedResult.messagebuttonaction,
-                                                                  parsedResult: parsedResult)
-            }
+    // If we've been passed a messagebutton, and messagebuttonaction
+    if parsedResult.messagebutton != "" {
+        // Set messageButton and messagebuttonaction
+        messageContent.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
+        // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
+        if parsedResult.messagebuttonaction != "" {
+            // Set messageButtonAction
+            messageContent.messageButtonAction = parseAction(actionString:
+                                                              parsedResult.messagebuttonaction,
+                                                              parsedResult: parsedResult)
         }
     }
     // Create the JSON to pass to the notifying app

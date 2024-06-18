@@ -24,9 +24,9 @@ struct MessageContent: Codable {
     var messageAction: [TaskObject]?
     // The notifications message (required)
     var messageBody: String?
-    // Optional - alert only - message button label
+    // Optional - message button label
     var messageButton: String?
-    // Optional - alert only - action to perform when the message button is clicked
+    // Optional - action to perform when the message button is clicked
     var messageButtonAction: [TaskObject]?
     // Optional - the sound played when the notification has been delivered
     var messageSound: String?
