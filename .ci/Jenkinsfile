@@ -1,0 +1,122 @@
+#!/usr/bin/env groovy
+
+@Library('tools') _
+import com.jamf.jenkins.KanikoBuild
+import java.text.SimpleDateFormat
+
+pipeline {
+    agent {
+        kubernetes {
+            defaultContainer 'sonar'
+            yaml '''
+                    apiVersion: v1
+                    kind: Pod
+                    spec:
+                      serviceAccountName: ecr-ci-sa
+                      containers:
+                      - name: sonar
+                        image: docker.jamf.build/sonarsource/sonar-scanner-cli:latest
+                        tty: true
+                        command:
+                        - cat
+                 '''
+        }
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '6')) // Keeps only the last 6 builds
+    }
+
+    environment {
+        PROJECT = 'Notifier'
+        SONARPROJECT = "com.jamf.team-red-dawg:Notifier"
+        SONAR_URL = "https://sonarqube.jamf.build"
+    }
+
+    stages {
+        //Sonarqube Analysis
+        stage('SonarQube Analysis') {
+            when {
+                beforeAgent true
+                anyOf {
+                    branch 'main'
+                    branch 'dev'
+                    not { changeRequest() }
+                }
+            }
+            steps {
+                container('sonar') {
+                    script {
+                        performSonarQubeAnalysis()
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            publishHTML([
+                allowMissing: true,
+                alwaysLinkToLastBuild: false,
+                reportDir: 'build/reports/tests/test',
+                reportFiles: 'index.html',
+                reportName: 'Gradle Build Report',
+                keepAll: true
+            ])
+        }
+    }
+}
+
+
+// Define all custom Jenkins utility functions
+
+// Define a reusable function for time logging
+def logCurrentTime(String context = "Time Log") {
+    def sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z")
+    echo "${context}: ${sdf.format(new Date())}"
+}
+
+// Define a reusable function Git Setup
+def setupGitConfig() {
+    echo 'Setting up git configuration'
+    env.GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no'
+    sh """
+    git config --global user.email "${env.GIT_COMMITTER_EMAIL}"
+    git config --global user.name "${env.GIT_COMMITTER_NAME}"
+    """
+}
+
+// Define a reusable function for repo setup
+def cloneRepository(String repoDirectory) {
+    try {
+        echo "Cloning repository from ${env.HELM_MANIFEST_REPO} into ${repoDirectory}"
+        
+        sh """
+        set -x
+        git clone --single-branch --branch ${env.HELM_REPO_BRANCH} ${env.HELM_MANIFEST_REPO} ${repoDirectory}
+        """
+        
+        echo "Repository cloned successfully into ${repoDirectory}"
+    } catch (Exception e) {
+        echo "Error while cloning repository: ${e.getMessage()}"
+        throw e // Rethrow the exception to handle it at a higher level or fail the build
+    }
+}
+
+// Define a reusable function for SonarQube Analysis
+def performSonarQubeAnalysis() {
+    withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_AUTH_TOKEN')]) {
+        def gitUrl = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
+        echo "Git URL: $gitUrl"
+
+        sh '''
+            sonar-scanner \
+            -Dsonar.host.url="${SONAR_URL}" \
+            -Dsonar.login="${SONAR_AUTH_TOKEN}" \
+            -Dsonar.branch.name="${BRANCH_NAME}" \
+            -Dsonar.projectKey="${SONARPROJECT}" \
+            -Dsonar.python.version="3" \
+            -Dsonar.sources=.
+        '''
+    }
+}
