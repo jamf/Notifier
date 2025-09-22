@@ -1,11 +1,17 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: datajar
   annotations:
     sonarqube.org/project-key: com.jamf.team-red-dawg:Notifier
+  description: Notifier is a Swift app which can post alert or banner notifications on macOS 10.15+ clients.
+  name: notifier
+  tags:
+    - datajar
+    - autoupdate
+    - swift
 spec:
-  type: service
-  owner: datajar
+  type: application
   lifecycle: production
-  system: datajar
+  owner: zubry
+  system: jamf-auto-update
+  serviceTier: 5
