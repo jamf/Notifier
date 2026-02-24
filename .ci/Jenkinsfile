@@ -15,7 +15,7 @@ pipeline {
                       serviceAccountName: ecr-ci-sa
                       containers:
                       - name: sonar
-                        image: docker.jamf.build/sonarsource/sonar-scanner-cli:latest
+                        image: 359585083818.dkr.ecr.us-east-1.amazonaws.com/docker.io/sonarsource/sonar-scanner-cli:latest
                         tty: true
                         command:
                         - cat
