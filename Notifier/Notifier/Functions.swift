@@ -399,7 +399,7 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
     NSWorkspace.shared.setIcon(nil, forFile: objectPath, options: NSWorkspace.IconCreationOptions([]))
     // Set the icon, returns bool
     let rebrandStatus = NSWorkspace.shared.setIcon(imageData, forFile: objectPath)
-    // If we have succesfully branded the item at objectPath
+    // If we have successfully branded the item at objectPath
     if rebrandStatus {
         // If verbose mode is enabled
         if parsedResult.verbose {
