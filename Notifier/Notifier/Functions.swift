@@ -395,7 +395,7 @@ func runTask(parsedResult: ArgParser, taskArguments: [String], taskPath: String)
 
 // Attempts to update the app passed to objectPath's icon
 func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, parsedResult: ArgParser) {
-    // Revert the icon, always returns false and this helps the OS realise that ther has been an icon change
+    // Revert the icon, always returns false and this helps the OS realise that there has been an icon change
     NSWorkspace.shared.setIcon(nil, forFile: objectPath, options: NSWorkspace.IconCreationOptions([]))
     // Set the icon, returns bool
     let rebrandStatus = NSWorkspace.shared.setIcon(imageData, forFile: objectPath)
