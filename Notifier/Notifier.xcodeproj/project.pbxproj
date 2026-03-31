@@ -270,7 +270,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 2640;
 				ORGANIZATIONNAME = "dataJAR Ltd";
 				TargetAttributes = {
 					7C6D15772270BA2F0092D34E = {
@@ -512,6 +512,7 @@
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -577,6 +578,7 @@
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -606,8 +608,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 3.1.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -641,8 +643,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 3.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 3.1.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.Notifier;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -678,7 +680,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 3.1;
 				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
@@ -717,7 +719,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 3.1;
 				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierNotifications;
@@ -753,7 +755,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
@@ -789,7 +791,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.dataJAR.NotifierAlerts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
