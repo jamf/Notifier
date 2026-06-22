@@ -15,7 +15,7 @@ func getNotificationBody(messageContent: MessageContent, rootElements: RootEleme
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - messageBody: \(messageContent.messageBody!)")
     }
-    // Return messageBody, forcing as this is set unless we remove all.. and if we aren we won't get here
+    // Return messageBody, forcing as this is set unless we remove all.. and if we aren't we won't get here
     return messageContent.messageBody!
 }
 

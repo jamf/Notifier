@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     @IBOutlet weak var window: NSWindow!
     // When we've finished launching
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // If .userInfo ios populated, we've baen launched by interation with a prior posted notification
+        // If .userInfo is populated, we've been launched by interaction with a prior posted notification
         if let response = (aNotification as NSNotification).userInfo?[
             NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
             // Handle the notification

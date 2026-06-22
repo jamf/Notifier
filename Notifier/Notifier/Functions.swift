@@ -22,7 +22,7 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
     let imageData = getImageDetails(brandingImage: brandingImage, parsedResult: parsedResult)
     // For each application in brandingArray
     for notifierApp in [GlobalVariables.mainAppPath, GlobalVariables.alertAppPath, GlobalVariables.bannerAppPath] {
-        // Rebrand each app starting ewith the Notifier.app, this way if this fails the rest are skipped
+        // Rebrand each app starting with the Notifier.app, this way if this fails the rest are skipped
         updateIcon(brandingImage: brandingImage, imageData: imageData!, objectPath: notifierApp,
                    parsedResult: parsedResult)
     }
@@ -33,7 +33,7 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
     }
     // If someone is logged in
     if loggedInUser != "" {
-        // If we're logged in and/or Notification Center is runnning register the applications with Notification Center
+        // If we're logged in and/or Notification Center is running, register the applications with Notification Center
         registerApplications(parsedResult: parsedResult)
     // If no-one is logged in
     } else {
@@ -76,7 +76,8 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
     if parsedResult.verbose {
         // Progress log
         NSLog("""
-              \(#function.components(separatedBy: "(")[0]) - contentJSON: \(String(data: contentJSON, encoding: .utf8)!)
+              \(#function.components(separatedBy: "(")[0]) - contentJSON: \(String(decoding: contentJSON,
+                    as: UTF8.self))
               """)
     }
     // Add to contentJSON, but base64 encoded
@@ -98,7 +99,7 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
     // If verbose mode is enabled
     if parsedResult.verbose {
         // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - rootJSON: \(String(data: fullJSON, encoding: .utf8)!)")
+        NSLog("\(#function.components(separatedBy: "(")[0]) - rootJSON: \(String(decoding: fullJSON, as: UTF8.self))")
     }
     // Return fullJSON, base64 encoded
     return fullJSON.base64EncodedString()
@@ -400,7 +401,7 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
     // Set the icon, returns bool
     let rebrandStatus = NSWorkspace.shared.setIcon(imageData, forFile: objectPath, options:
                                                    NSWorkspace.IconCreationOptions([]))
-    // If we have succesfully branded the item at objectPath
+    // If we have successfully branded the item at objectPath
     if rebrandStatus {
         // If verbose mode is enabled
         if parsedResult.verbose {
@@ -410,7 +411,7 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
                   with icon: \(brandingImage)
                   """)
         }
-    // If we encountered and issue when rebranding...
+    // If we encountered an issue when rebranding...
     } else {
         // Post error
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """

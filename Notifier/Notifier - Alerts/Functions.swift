@@ -12,8 +12,7 @@ import Cocoa
 func base64Decode(base64String: String) -> String {
     // Create a data object from the string, and decode to string
     guard let base64EncodedData = base64String.data(using: .utf8),
-        let encodedData = Data(base64Encoded: base64EncodedData),
-        let decodedString = String(data: encodedData, encoding: .utf8)
+        let encodedData = Data(base64Encoded: base64EncodedData)
     else {
         // Post error
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "Failed to decode: \(base64String) from base64...",
@@ -22,7 +21,7 @@ func base64Decode(base64String: String) -> String {
         exit(1)
     }
     // Return's a string decoded from base64
-    return decodedString
+    return String(decoding: encodedData, as: UTF8.self)
 }
 
 // Decodes the passed JSON
@@ -166,7 +165,7 @@ func runTask(taskPath: String, taskArguments: [String], userInfo: [AnyHashable: 
     // Get output
     let outdata = outPipe.fileHandleForReading.readDataToEndOfFile()
     // Convert to string
-    let cmdOut = String(data: outdata, encoding: String.Encoding.utf8) ?? ""
+    let cmdOut = String(decoding: outdata, as: UTF8.self)
     // Return boolean
     if task.terminationStatus == 0 {
         // Return true
