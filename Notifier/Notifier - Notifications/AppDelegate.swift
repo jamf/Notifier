@@ -20,10 +20,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // If .userInfo is populated, we've been launched by interaction with a prior posted notification
         if let response = (aNotification as NSNotification).userInfo?[
             NSApplication.launchUserNotificationUserInfoKey] as? UNNotificationResponse {
-            // Handle the notification
+            // Handle the notification - handleNotification exits internally so no exit needed here
             handleNotification(forResponse: response)
-            // Exit
-            exit(0)
         }
         // Get the args passed to the binary
         let passedCLIArguments = Array(CommandLine.arguments)
@@ -39,23 +37,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             let (messageContent, passedBase64, rootElements) = decodeJSON(passedJSON: passedCLIArguments[1])
             // Exit if Notification Center isn't running
             isNotificationCenterRunning(verboseMode: rootElements.verboseMode ?? "")
-            // Ask permission
-            requestAuthorisation(verboseMode: rootElements.verboseMode ?? "")
             // Create a notification center object
-            let notificationCenter =  UNUserNotificationCenter.current()
-            // Set delegate
+            let notificationCenter = UNUserNotificationCenter.current()
+            // Set delegate before any notification center interactions
             notificationCenter.delegate = self
-            // Process the arguments as needed
-            processArguments(messageContent: messageContent, notificationCenter: notificationCenter,
-                             passedBase64: passedBase64, passedCLIArguments: passedCLIArguments,
-                             rootElements: rootElements)
+            // Ask permission, then process arguments only if authorised
+            requestAuthorisation(verboseMode: rootElements.verboseMode ?? "") {
+                processArguments(messageContent: messageContent, notificationCenter: notificationCenter,
+                                 passedBase64: passedBase64, rootElements: rootElements)
+            }
         }
     }
 }
 
 // Process the arguments as needed
 func processArguments(messageContent: MessageContent, notificationCenter: UNUserNotificationCenter,
-                      passedBase64: String, passedCLIArguments: [String], rootElements: RootElements) {
+                      passedBase64: String, rootElements: RootElements) {
     // Create a notification content object
     let notificationContent = UNMutableNotificationContent()
     // Add category identifier to notificationContent required anyway so setting here
@@ -72,7 +69,12 @@ func processArguments(messageContent: MessageContent, notificationCenter: UNUser
         // Remove all notifications
         removeAllPriorNotifications(notificationCenter: notificationCenter, messageContent: messageContent,
                                     rootElements: rootElements)
-    // If we're not removing
+    // If we're to remove a specific prior posted notification
+    } else if rootElements.removeOption == "prior" {
+        // Remove a specific prior posted notification
+        removePriorNotification(notificationCenter: notificationCenter, messageContent: messageContent,
+                                passedBase64: passedBase64, rootElements: rootElements)
+    // Otherwise build the notification content and post
     } else {
         // Set the message to the body of the notification as not removing all, we have to have this
         notificationContent.body = getNotificationBody(messageContent: messageContent, rootElements: rootElements)
@@ -108,15 +110,13 @@ func processArguments(messageContent: MessageContent, notificationCenter: UNUser
             // Set the notifications title
             notificationContent.title = getNotificationTitle(messageContent: messageContent, rootElements: rootElements)
         }
-        // If we're to remove a prior posted notification
-        if rootElements.removeOption == "prior" {
-            // Remove a specific prior posted notification
-            removePriorNotification(notificationCenter: notificationCenter, messageContent: messageContent,
-                                    passedBase64: passedBase64, rootElements: rootElements)
-        } else {
-            // Post the notification
-            postNotification(notificationCenter: notificationCenter, notificationContent: notificationContent,
-                             messageContent: messageContent, passedBase64: passedBase64, rootElements: rootElements)
+        // If time sensitive was passed, set the interruption level
+        if rootElements.timeSensitive != nil {
+            // Set the notification as time sensitive
+            notificationContent.interruptionLevel = .timeSensitive
         }
+        // Post the notification
+        postNotification(notificationCenter: notificationCenter, notificationContent: notificationContent,
+                         messageContent: messageContent, passedBase64: passedBase64, rootElements: rootElements)
     }
 }

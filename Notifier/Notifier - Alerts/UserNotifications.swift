@@ -202,17 +202,49 @@ func postNotification(notificationCenter: UNUserNotificationCenter, notification
     // Create the request object
     let notificationRequest = UNNotificationRequest(identifier: passedBase64, content: notificationContent,
                                                     trigger: nil)
-    // Post the notification
-    notificationCenter.add(notificationRequest)
-    // If we're in verbose mode
-    if rootElements.verboseMode != nil {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - notification delivered")
+    // Post the notification, using the completion handler to catch any scheduling errors
+    notificationCenter.add(notificationRequest) { error in
+        // If the notification failed to schedule
+        if let error = error {
+            // Post error
+            postToNSLogAndStdOut(logLevel: "ERROR",
+                                 logMessage: "Failed to post notification: \(error.localizedDescription)",
+                                 functionName: #function.components(separatedBy: "(")[0],
+                                 verboseMode: rootElements.verboseMode ?? "")
+            // Exit
+            exit(1)
+        }
+        // If we're in verbose mode
+        if rootElements.verboseMode != nil {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - notification scheduled")
+        }
+        // Sleep, so we don't exit before the notification has been delivered
+        sleep(1)
+        // Check with Notification Center what was delivered
+        notificationCenter.getDeliveredNotifications { notifications in
+            // Find the notification we posted by its identifier
+            if let delivered = notifications.first(where: { $0.request.identifier == passedBase64 }) {
+                // Log the app name and the notification body as confirmed by Notification Center
+                NSLog("""
+                      \(#function.components(separatedBy: "(")[0]) - \
+                      \(Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "unknown") \
+                      posted notification - body: \(delivered.request.content.body)
+                      """)
+            } else {
+                // Log that the notification was not found in delivered notifications
+                NSLog("""
+                      \(#function.components(separatedBy: "(")[0]) - \
+                      \(Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "unknown") \
+                      - notification not found in delivered notifications
+                      """)
+                // Exit with code 2 to indicate notification was not shown
+                exit(2)
+            }
+            // Exit
+            exit(0)
+        }
     }
-    // Sleep, so we don't exit before the notification has been delivered
-    sleep(1)
-    // Exit
-    exit(0)
 }
 
 // Process actions when interacted
@@ -314,18 +346,25 @@ func removeAllPriorNotifications(notificationCenter: UNUserNotificationCenter, m
     exit(0)
 }
 
-// Request authorisation
-func requestAuthorisation(verboseMode: String) {
-        // Check authorization status with the UNUserNotificationCenter object
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, _) in
-        if !granted {
-            // Post error
+// Check authorisation status, calling onAuthorized only if permission is granted
+func requestAuthorisation(verboseMode: String, onAuthorized: @escaping () -> Void) {
+    // Check current authorization status without prompting the user
+    UNUserNotificationCenter.current().getNotificationSettings { settings in
+        // Act based on the current authorization status
+        switch settings.authorizationStatus {
+        // Authorized or provisional - proceed
+        case .authorized, .provisional:
+            // Call the closure to process arguments and post the notification
+            onAuthorized()
+        // Denied, not determined, or any other status - post error and exit
+        default:
+            // Post to both NSLog and stdout.
             postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
                                  Authorisation not granted to post notifications, either manually approve \
                                  notifications for this application or deploy a Notification PPPCP to this Mac, and \
                                  try posting the message again...
                                  """, functionName: #function.components(separatedBy: "(")[0],
-                                 verboseMode: "verboseMode")
+                                 verboseMode: verboseMode)
             // Exit
             exit(1)
         }

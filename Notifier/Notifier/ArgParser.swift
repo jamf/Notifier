@@ -107,6 +107,12 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var title: String = ""
+    // Posts a time sensitive notification
+    @Flag(help: """
+                Posts a time sensitive notification.
+
+                """)
+    var timesensitive = false
     // Enables verbose logging
     @Flag(help: """
                 Enables logging of actions. Check console for 'Notifier' messages.

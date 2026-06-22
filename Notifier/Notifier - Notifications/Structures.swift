@@ -48,12 +48,16 @@ struct RootElements: Codable {
     var messageContent: String?
     // Optional - removes a specific notification or all notifications delivered
     var removeOption: String?
+    // Optional - sets the notification as time sensitive
+    var timeSensitive: String?
     // Optional - enables verbose logging
     var verboseMode: String?
     // Initialize MessageContent
-    init(messageContent: String? = nil, removeOption: String? = nil, verboseMode: String? = nil) {
+    init(messageContent: String? = nil, removeOption: String? = nil, timeSensitive: String? = nil,
+         verboseMode: String? = nil) {
         self.messageContent = messageContent
         self.removeOption = removeOption
+        self.timeSensitive = timeSensitive
         self.verboseMode = verboseMode
     }
 }

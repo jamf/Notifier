@@ -158,6 +158,11 @@ func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgPar
         // Set verboseMode
         rootElements.verboseMode = "enabled"
     }
+    // If --timesensitive was passed
+    if parsedResult.timesensitive {
+        // Set timeSensitive
+        rootElements.timeSensitive = "enabled"
+    }
     // Set the message to the body of the notification as not removing all, we have to have this
     messageContent.messageBody = setNotificationBody(parsedResult: parsedResult)
     // If we've been passed a messageaction
