@@ -69,7 +69,8 @@ struct ArgParser: ParsableCommand {
                --type <alert/banner> --message <some message> <options>
                --type <alert/banner> --message <some message> --messageaction <action>
                --type <alert/banner> --message <some message> --messagebutton <label> --messagebuttonaction <action>
-               --type <alert/banner> --message <some message> --messagebutton <label> --messagebutton2 <label> --messagebutton2action <action>
+               --type <alert/banner> --message <some message> --messagebutton <label> --messagebutton2 <label> \
+               --messagebutton2action <action>
                --type <alert/banner> --message <some message> --messagedismissaction <action>
                --type <alert/banner> --remove prior <some message> <options>
                --type <alert/banner> --remove all
