@@ -26,18 +26,18 @@ func changeIcons(brandingImage: String, loggedInUser: String, parsedResult: ArgP
         updateIcon(brandingImage: brandingImage, imageData: imageData!, objectPath: notifierApp,
                    parsedResult: parsedResult)
     }
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - Successfully rebranded Notifier")
     }
-    // If someone is logged in
+    // If someone is logged in...
     if loggedInUser != "" {
         // If we're logged in and/or Notification Center is running, register the applications with Notification Center
         registerApplications(parsedResult: parsedResult)
-    // If no-one is logged in
+    // If no-one is logged in...
     } else {
-        // If verbose mode is enabled
+        // If verbose mode is enabled...
         if parsedResult.verbose {
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - Skipping registration as not logged in")
@@ -53,7 +53,7 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
     var contentJSON = Data()
     var fullJSON = Data()
     var rootContent = rootElements
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - messageContent: \(messageContent)")
@@ -72,7 +72,7 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: error.localizedDescription, functionName:
                              #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
     }
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("""
@@ -90,13 +90,13 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
         jsonEncoder.outputFormatting = .sortedKeys
         // Turn jsonContent into JSON
         fullJSON = try jsonEncoder.encode(rootContent)
-    // If encoding into JSON fails
+    // If encoding into JSON fails...
     } catch {
         // Post error
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: error.localizedDescription, functionName:
                              #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
     }
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - rootJSON: \(String(decoding: fullJSON, as: UTF8.self))")
@@ -109,11 +109,11 @@ func createJSON(messageContent: MessageContent, parsedResult: ArgParser, rootEle
 func getImageDetails(brandingImage: String, parsedResult: ArgParser) -> (NSImage?) {
     // Var declaration
     var imageData: NSImage?
-    // If the file exists
+    // If the file exists...
     if FileManager.default.fileExists(atPath: brandingImage) {
         // Create imageData from the file passed to brandingImage
         imageData = NSImage(contentsOfFile: brandingImage)
-        // If imageData isValid is nil, then brandingImage is not a valid icon
+        // If imageData isValid is nil, then brandingImage is not a valid icon...
         if (imageData?.isValid) == nil {
             // Post error
             postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "\(brandingImage) is not a valid image...",
@@ -123,7 +123,7 @@ func getImageDetails(brandingImage: String, parsedResult: ArgParser) -> (NSImage
         }
         // Return the image data
         return imageData
-    // If the file doesn't exist
+    // If the file doesn't exist...
     } else {
         // Post error
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: "Cannot locate: \(brandingImage)....", functionName:
@@ -144,7 +144,7 @@ func isNotificationCenterRunning(parsedResult: ArgParser) {
         // Exit
         exit(1)
     }
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - Notification Center is running")
@@ -155,7 +155,7 @@ func isNotificationCenterRunning(parsedResult: ArgParser) {
 func loggedInUser() -> String {
     // Get the name of the logged in user
     let loggedInUser = SCDynamicStoreCopyConsoleUser(nil, nil, nil)! as String
-    // If no-one or loginwindow is returned
+    // If no-one or loginwindow is returned...
     if loggedInUser == "loginwindow" || loggedInUser == "" {
         return ""
     // Else if we have someone logged in
@@ -172,7 +172,7 @@ func parseAction(actionString: String, parsedResult: ArgParser) -> [MessageConte
     var taskArguments = [String]()
     var taskPath = String()
     var tempActionString = actionString
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - actionString: \(actionString)")
@@ -193,7 +193,7 @@ func parseAction(actionString: String, parsedResult: ArgParser) -> [MessageConte
             actionString[swiftRange].description.replacingOccurrences(of: " ", with: "%20")
         }
     }
-    // If we have items in regexDict
+    // If we have items in regexDict...
     if !regexDict.isEmpty {
         // For each key value pair we have in regexDict
         for (matchedKey, matchedValue) in regexDict {
@@ -210,31 +210,31 @@ func parseAction(actionString: String, parsedResult: ArgParser) -> [MessageConte
             taskArguments[arrayIndex!] = arrayElement.replacingOccurrences(of: "%20", with: " ")
                 .replacingOccurrences(of: "\'", with: "").replacingOccurrences(of: "\"", with: "")
         }
-    // If regexDict is empty
+    // If regexDict is empty...
     } else {
         // Set taskArguments to the passed action
         taskArguments = Array(tempActionString.components(separatedBy: " "))
     }
-    // If we only have a single task
+    // If we only have a single task...
     if taskArguments.count == 1 {
-        // If we've been passed logout
+        // If we've been passed logout...
         if taskArguments[0].lowercased() == "logout" {
             // Set the tasks path to open, this is to mimic pre-3.0 behaviour
             taskPath = "logout"
             // Clear taskArguments
             taskArguments = []
-        // If one item and not passed logout
+        // If one item and not passed logout...
         } else {
             // Set the tasks path to open, this is to mimic pre-3.0 behaviour
             taskPath = "/usr/bin/open"
         }
-    // If we have more than one task, the 1st argument starts with /
+    // If we have more than one task, the 1st argument starts with /...
     } else if taskArguments[0].hasPrefix("/") {
         // Set the tasks path to the 1st item within the taskArguments
         taskPath = taskArguments[0]
         // Remove the above from the taskArguments
         taskArguments.remove(at: 0)
-    // If we have more than one task, and the 1st argument does not start with /
+    // If we have more than one task, and the 1st argument does not start with /...
     } else {
         // Post warning
         postToNSLogAndStdOut(logLevel: "WARNING", logMessage: """
@@ -243,7 +243,7 @@ func parseAction(actionString: String, parsedResult: ArgParser) -> [MessageConte
         // Return an empty TaskObject
         return [MessageContent.TaskObject(taskPath: "", taskArguments: [])]
     }
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - taskPath: \(taskPath), taskArguments: \(taskArguments)")
@@ -257,7 +257,7 @@ func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, 
     // Var declaration
     var taskArguments = [String]()
     var taskPath = String()
-    // If the user running the app isn't the logged in user (root for example)
+    // If the user running the app isn't the logged in user (root for example)...
     if NSUserName() != loggedInUser {
         // Set taskPath to su as we need to use that to run as the user
         taskPath = "/usr/bin/su"
@@ -265,41 +265,25 @@ func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, 
         taskArguments = [
             "-l", "\(loggedInUser)", "-c", "\'\(notifierPath)\' \(commandJSON)"
         ]
-    // If the person running the app is the logged in user
+    // If the person running the app is the logged in user...
     } else {
         // Set taskPath to the notifying apps path
         taskPath = notifierPath
         // Set taskArguments to the base64 of messageContentJSON
         taskArguments = [commandJSON]
     }
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - taskPath: \(taskPath), taskArguments: \(taskArguments)")
     }
     // Launch the wanted notification app as the user
     let exitCode = runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
-    // If we're not rebranding
+    // If we're not rebranding...
     if parsedResult.rebrand == "" {
-        // Log a message based on the exit code received from the helper app
-        switch exitCode {
-        // If the helper app returns exit code 0...
-        case 0:
-            // Notification was posted and confirmed delivered by Notification Center
-            postToNSLogAndStdOut(logLevel: "INFO", logMessage: "notification posted successfully",
-                                 functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
-        // If the helper app returns exit code 1...
-        case 1:
-            // Failed to post notification, or the helper app was not authorised - helper already posted to stdout.
-        // If the helper app returns exit code 2...
-        case 2:
-            // Raise a warning that the notification was not shown to the user.
-            postToNSLogAndStdOut(logLevel: "WARNING",
-                                 logMessage: "notification not shown",
-                                 functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
-        // If we hit an unexpected error...
-        default:
-            // Raise an error...
+        // If we get an exit code that isn't 0-2...
+        if ![0, 1, 2].contains(exitCode) {
+            // Post to NSLog and stdout
             postToNSLogAndStdOut(logLevel: "ERROR",
                                  logMessage: "helper app exited with unexpected code: \(exitCode)",
                                  functionName: #function.components(separatedBy: "(")[0], parsedResult: parsedResult)
@@ -311,7 +295,7 @@ func passToApp(commandJSON: String, loggedInUser: String, notifierPath: String, 
 
 // Post to both NSLog and stdout
 func postToNSLogAndStdOut(logLevel: String, logMessage: String, functionName: String, parsedResult: ArgParser) {
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(logLevel): \(functionName) - \(logMessage)")
@@ -327,7 +311,7 @@ func registerApplications(parsedResult: ArgParser) {
     // Var declaration
     var taskArguments = [String]()
     var taskPath = String()
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0])")
@@ -346,7 +330,7 @@ func registerApplications(parsedResult: ArgParser) {
         // Pass commandJSON to the relevant app, exiting afterwards
         passToApp(commandJSON: commandJSON, loggedInUser: loggedInUser, notifierPath: notifierPath,
                   parsedResult: parsedResult)
-        // If verbose mode is enabled
+        // If verbose mode is enabled...
         if parsedResult.verbose {
             // Progress log
             NSLog("""
@@ -355,18 +339,18 @@ func registerApplications(parsedResult: ArgParser) {
                   """)
         }
     }
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - restarting Notification Center")
     }
-    // If we're logged in
+    // If we're logged in...
     if loggedInUser != "" {
         // Path for the task
         taskPath = "/usr/bin/su"
         // Arguments for the task
         taskArguments = ["-l", loggedInUser, "-c", "/usr/bin/killall -u \(loggedInUser) NotificationCenter"]
-        // If verbose mode is enabled
+        // If verbose mode is enabled...
         if parsedResult.verbose {
             // Progress log
             NSLog("""
@@ -375,9 +359,9 @@ func registerApplications(parsedResult: ArgParser) {
         }
         // Run the task, ignoring returned exit status
         runTask(parsedResult: parsedResult, taskArguments: taskArguments, taskPath: taskPath)
-    // If we're not logged in
+    // If we're not logged in...
     } else {
-        // If verbose mode is enabled
+        // If verbose mode is enabled...
         if parsedResult.verbose {
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - not logged in, skipping Notification Center restart")
@@ -387,7 +371,7 @@ func registerApplications(parsedResult: ArgParser) {
 
 // Make sure we're running as root, exit if not
 func rootCheck(parsedResult: ArgParser, passedArg: String) {
-    // If we're not root
+    // If we're not root...
     if NSUserName() != "root" {
         // Post error
         postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
@@ -401,7 +385,7 @@ func rootCheck(parsedResult: ArgParser, passedArg: String) {
 // Runs the passed task
 @discardableResult
 func runTask(parsedResult: ArgParser, taskArguments: [String], taskPath: String) -> Int32 {
-    // If verbose mode is enabled
+    // If verbose mode is enabled...
     if parsedResult.verbose {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - taskPath: \(taskPath), taskArguments: \(taskArguments)")
@@ -427,9 +411,9 @@ func updateIcon(brandingImage: String, imageData: NSImage, objectPath: String, p
     // Set the icon, returns bool
     let rebrandStatus = NSWorkspace.shared.setIcon(imageData, forFile: objectPath, options:
                                                    NSWorkspace.IconCreationOptions([]))
-    // If we have successfully branded the item at objectPath
+    // If we have successfully branded the item at objectPath...
     if rebrandStatus {
-        // If verbose mode is enabled
+        // If verbose mode is enabled...
         if parsedResult.verbose {
             // Progress log
             NSLog("""

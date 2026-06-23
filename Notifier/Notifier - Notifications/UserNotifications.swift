@@ -224,21 +224,22 @@ func postNotification(notificationCenter: UNUserNotificationCenter, notification
         // Check with Notification Center what was delivered
         notificationCenter.getDeliveredNotifications { notifications in
             // Find the notification we posted by its identifier
-            if let delivered = notifications.first(where: { $0.request.identifier == passedBase64 }) {
-                // Log the app name and the notification body as confirmed by Notification Center
-                NSLog("""
-                      \(#function.components(separatedBy: "(")[0]) - \
-                      \(Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "unknown") \
-                      posted notification - body: \(delivered.request.content.body)
-                      """)
+            if notifications.first(where: { $0.request.identifier == passedBase64 }) != nil {
+                // Post progress...
+                postToNSLogAndStdOut(logLevel: "INFO", logMessage: "notification delivered successfully!",
+                                     functionName: #function.components(separatedBy: "(")[0],
+                                     verboseMode: rootElements.verboseMode ?? "")
+            // If we cannot find the notification we posted...
             } else {
-                // Log that the notification was not found in delivered notifications
-                NSLog("""
-                      \(#function.components(separatedBy: "(")[0]) - \
-                      \(Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "unknown") \
-                      - notification not found in delivered notifications
-                      """)
-                // Exit with code 2 to indicate notification was not shown
+                // Post warning...
+                postToNSLogAndStdOut(logLevel: "WARNING", logMessage:
+                                     """
+                                     Notification delivered but not shown as DND/Focus mode is enabled. The \
+                                     notification can be found within Notification Centre.
+                                     """,
+                                     functionName: #function.components(separatedBy: "(")[0],
+                                     verboseMode: rootElements.verboseMode ?? "")
+                // Exit with code 2 to indicate notification was not shown.
                 exit(2)
             }
             // Exit
@@ -346,25 +347,49 @@ func removeAllPriorNotifications(notificationCenter: UNUserNotificationCenter, m
     exit(0)
 }
 
-// Check authorisation status, calling onAuthorized only if permission is granted
-func requestAuthorisation(verboseMode: String, onAuthorized: @escaping () -> Void) {
-    // Check current authorization status without prompting the user
-    UNUserNotificationCenter.current().getNotificationSettings { settings in
-        // Act based on the current authorization status
-        switch settings.authorizationStatus {
-        // Authorized or provisional - proceed
-        case .authorized, .provisional:
-            // Call the closure to process arguments and post the notification
-            onAuthorized()
-        // Denied, not determined, or any other status - post error and exit
-        default:
-            postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
-                                 Authorisation not granted to post notifications, either manually approve \
-                                 notifications for this application or deploy a Notification PPPCP to this Mac, and \
-                                 try posting the message again...
-                                 """, functionName: #function.components(separatedBy: "(")[0],
-                                 verboseMode: verboseMode)
-            exit(1)
+// Check authorisation status, exit if not granted
+func requestAuthorisation(verboseMode: String) async {
+    // Attempt to request authorisation, catching any system-level errors
+    do {
+        // Request authorization, capturing the result as a variable
+        let granted = try await UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound])
+        // If authorisation was not granted
+        if !granted {
+            // Check whether authorisation is denied or not yet determined
+            let settings = await UNUserNotificationCenter.current().notificationSettings()
+            // Declare a human-readable description of the authorisation status
+            let statusDescription: String
+            // Switch on the status to produce a descriptive string
+            switch settings.authorizationStatus {
+            // Authorisation was explicitly denied by the user
+            case .denied:
+                statusDescription = "denied"
+            // Authorisation has not been approved yet
+            case .notDetermined:
+                statusDescription = "not approved"
+            // Any other status that does not permit notifications
+            default:
+                statusDescription = "not granted (status: \(settings.authorizationStatus.rawValue))"
+            }
+            // Post authorisation error
+            authorisationNotGranted(statusDescription: statusDescription)
         }
+    // If the authorisation request itself threw an error...
+    } catch {
+        // If we get here, then the status is: "not approved"
+        authorisationNotGranted(statusDescription: "not approved")
     }
+}
+
+// If we cannot post notifications
+func authorisationNotGranted(statusDescription: String) {
+    // Post error to NSLog and std out
+    postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
+                         Authorisation status: \(statusDescription). Either manually approve notifications for this \
+                         application or deploy a Notification PPPCP to this Mac, and try posting the notification again.
+                         """, functionName: #function.components(separatedBy: "(")[0],
+                         verboseMode: "verboseMode")
+    // Exit
+    exit(1)
 }

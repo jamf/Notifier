@@ -41,10 +41,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             let notificationCenter = UNUserNotificationCenter.current()
             // Set delegate before any notification center interactions
             notificationCenter.delegate = self
-            // Ask permission, then process arguments only if authorised
-            requestAuthorisation(verboseMode: rootElements.verboseMode ?? "") {
+            // Check auth status then process arguments sequentially in async context
+            let workTask = Task {
+                // Retrieve the current notification authorization settings
+                let settings = await notificationCenter.notificationSettings()
+                // Switch on the current authorization status
+                switch settings.authorizationStatus {
+                    // Already authorized - skip requesting and proceed directly
+                case .authorized, .provisional, .ephemeral:
+                    // No action needed, authorization already granted
+                    break
+                    // Not determined or denied - request or report authorization
+                default:
+                    // Request authorisation - exits internally if denied or on error
+                    await requestAuthorisation(verboseMode: rootElements.verboseMode ?? "")
+                }
+                // Process the arguments as needed
                 processArguments(messageContent: messageContent, notificationCenter: notificationCenter,
                                  passedBase64: passedBase64, rootElements: rootElements)
+            }
+            // Watchdog task - cancels work and exits if it exceeds 5 seconds
+            Task {
+                // Wait 5 seconds before intervening
+                try? await Task.sleep(nanoseconds: 5_000_000_000)
+                // Cancel the work task if it is still running
+                workTask.cancel()
+                // If we timeout, then the status is: "not approved"
+                authorisationNotGranted(statusDescription: "not approved")
             }
         }
     }
