@@ -68,6 +68,25 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var messagebuttonaction: String = ""
+    // Optional second message button text (requires --messagebutton to also be passed)
+    @Option(help: """
+                  Adds a second button to the message, with the label being what is passed. \
+                  Requires --messagebutton to also be passed.
+
+                  """)
+    var messagebutton2: String = ""
+    // Optional action when the second message button is clicked
+    @Option(help: """
+                  The action to be performed under the users account when the optional second message button is clicked.
+
+                  • Passing 'logout' will prompt the user to logout.
+                  • If passed a single item, this will be launched via: /usr/bin/open
+                  • More complex commands can be passed, but the 1st argument needs to be a binaries path.
+
+                  For example: \"/usr/bin/open\" will work, \"open\" will not.
+
+                  """)
+    var messagebutton2action: String = ""
     // Triggers rebrand function
     @Option(help: """
                   Requires root privileges and that the calling process needs either Full Disk Access (10.15+) or at \
@@ -107,12 +126,6 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var title: String = ""
-    // Posts a time sensitive notification
-    @Flag(help: """
-                Posts a time sensitive notification.
-
-                """)
-    var timesensitive = false
     // Enables verbose logging
     @Flag(help: """
                 Enables logging of actions. Check console for 'Notifier' messages.

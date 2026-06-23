@@ -108,14 +108,19 @@ func processArguments(messageContent: MessageContent, notificationCenter: UNUser
                                                                                       rootElements: rootElements)
         }
         // messageButton needs defining, even when not called. So processing it here along with messageButtonAction
-        let (tempMessageButtonAction, tempCategory) = processMessageButton(notificationCenter: notificationCenter,
-                                                            messageContent: messageContent, rootElements: rootElements)
+        let (tempMessageButtonAction, tempMessageButton2Action, tempCategory) = processMessageButton(
+            notificationCenter: notificationCenter, messageContent: messageContent, rootElements: rootElements)
         // Set the notifications category
         notificationCenter.setNotificationCategories([tempCategory])
         // If tempMessageButtonAction has a value
         if !tempMessageButtonAction.isEmpty {
             // Add messageButtonAction to userInfo
             notificationContent.userInfo["messageButtonAction"] = tempMessageButtonAction
+        }
+        // If tempMessageButton2Action has a value
+        if !tempMessageButton2Action.isEmpty {
+            // Add messageButton2Action to userInfo
+            notificationContent.userInfo["messageButton2Action"] = tempMessageButton2Action
         }
         // If we have a value for messageSound passed
         if messageContent.messageSound != nil {
@@ -132,11 +137,6 @@ func processArguments(messageContent: MessageContent, notificationCenter: UNUser
         if messageContent.messageTitle != nil {
             // Set the notifications title
             notificationContent.title = getNotificationTitle(messageContent: messageContent, rootElements: rootElements)
-        }
-        // If time sensitive was passed, set the interruption level
-        if rootElements.timeSensitive != nil {
-            // Set the notification as time sensitive
-            notificationContent.interruptionLevel = .timeSensitive
         }
         // Post the notification
         postNotification(notificationCenter: notificationCenter, notificationContent: notificationContent,

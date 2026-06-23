@@ -30,6 +30,17 @@ func setNotificationMessageButton(parsedResult: ArgParser) -> String {
     return parsedResult.messagebutton
 }
 
+// Sets the notifications second message button to what was passed to --messagebutton2
+func setNotificationMessageButton2(parsedResult: ArgParser) -> String {
+    // If verbose mode is enabled
+    if parsedResult.verbose {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]): \(parsedResult.messagebutton2)")
+    }
+    // Returns the value passed to --messagebutton2
+    return parsedResult.messagebutton2
+}
+
 // Sets the notifications sound to what was passed to --sound
 func setNotificationSound(parsedResult: ArgParser) -> String {
     // If verbose mode is enabled

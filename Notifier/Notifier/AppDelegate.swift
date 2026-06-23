@@ -147,10 +147,8 @@ func checkArgs(parsedResult: ArgParser) {
     }
 }
 
-// Format the args as needed
-func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgParser) {
-    // Initialize a messageContent object
-    var messageContent = MessageContent()
+// Builds a RootElements object from the parsed arguments
+func buildRootElements(parsedResult: ArgParser) -> RootElements {
     // Initialize a rootElements object
     var rootElements = RootElements()
     // If verbose mode is enabled
@@ -158,12 +156,51 @@ func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgPar
         // Set verboseMode
         rootElements.verboseMode = "enabled"
     }
-    // If --timesensitive was passed
-    if parsedResult.timesensitive {
-        // Set timeSensitive
-        rootElements.timeSensitive = "enabled"
+    // If we're to remove a prior posted notification
+    if parsedResult.remove.lowercased() == "prior" {
+        // Set removeOption
+        rootElements.removeOption = "prior"
+        // If verbose mode is enabled
+        if parsedResult.verbose {
+            // Progress log
+            NSLog("\(#function.components(separatedBy: "(")[0]) - removeOption: \(rootElements.removeOption!))")
+        }
     }
-    // Set the message to the body of the notification as not removing all, we have to have this
+    // Return the populated rootElements object
+    return rootElements
+}
+
+// Applies message button fields to the given MessageContent object
+func applyMessageButtons(parsedResult: ArgParser, to messageContent: inout MessageContent) {
+    // If we've been passed a messagebutton
+    if parsedResult.messagebutton != "" {
+        // Set messageButton
+        messageContent.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
+        // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
+        if parsedResult.messagebuttonaction != "" {
+            // Set messageButtonAction
+            messageContent.messageButtonAction = parseAction(actionString: parsedResult.messagebuttonaction,
+                                                              parsedResult: parsedResult)
+        }
+        // If we've been passed a messagebutton2, only set if a messagebutton was also passed
+        if parsedResult.messagebutton2 != "" {
+            // Set messageButton2
+            messageContent.messageButton2 = setNotificationMessageButton2(parsedResult: parsedResult)
+            // If we've been passed a messagebutton2action, only set if a messagebutton2 was passed too
+            if parsedResult.messagebutton2action != "" {
+                // Set messageButton2Action
+                messageContent.messageButton2Action = parseAction(actionString: parsedResult.messagebutton2action,
+                                                                    parsedResult: parsedResult)
+            }
+        }
+    }
+}
+
+// Builds a MessageContent object from the parsed arguments
+func buildMessageContent(parsedResult: ArgParser) -> MessageContent {
+    // Initialize a messageContent object
+    var messageContent = MessageContent()
+    // Set the message body - required for all non-remove notifications
     messageContent.messageBody = setNotificationBody(parsedResult: parsedResult)
     // If we've been passed a messageaction
     if parsedResult.messageaction != "" {
@@ -186,28 +223,18 @@ func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgPar
         // Set messageTitle
         messageContent.messageTitle = setNotificationTitle(parsedResult: parsedResult)
     }
-    // If we're to remove a prior posted notification
-    if parsedResult.remove.lowercased() == "prior" {
-        // Set removeOption
-        rootElements.removeOption = "prior"
-        // If verbose mode is enabled
-        if parsedResult.verbose {
-            // Progress log
-            NSLog("\(#function.components(separatedBy: "(")[0]) - removeOption: \(rootElements.removeOption!))")
-        }
-    }
-    // If we've been passed a messagebutton, and messagebuttonaction
-    if parsedResult.messagebutton != "" {
-        // Set messageButton and messagebuttonaction
-        messageContent.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
-        // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
-        if parsedResult.messagebuttonaction != "" {
-            // Set messageButtonAction
-            messageContent.messageButtonAction = parseAction(actionString:
-                                                              parsedResult.messagebuttonaction,
-                                                              parsedResult: parsedResult)
-        }
-    }
+    // Apply any message button fields
+    applyMessageButtons(parsedResult: parsedResult, to: &messageContent)
+    // Return the populated messageContent object
+    return messageContent
+}
+
+// Format the args as needed
+func formatArgs(loggedInUser: String, notifierPath: String, parsedResult: ArgParser) {
+    // Build rootElements from the parsed arguments
+    let rootElements = buildRootElements(parsedResult: parsedResult)
+    // Build messageContent from the parsed arguments
+    let messageContent = buildMessageContent(parsedResult: parsedResult)
     // Create the JSON to pass to the notifying app
     let commandJSON = createJSON(messageContent: messageContent, parsedResult: parsedResult,
                                  rootElements: rootElements)

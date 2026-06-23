@@ -79,6 +79,33 @@ func getNotificationTitle(messageContent: MessageContent, rootElements: RootElem
     return messageContent.messageTitle ?? ""
 }
 
+// Maps a notification action identifier to a userInfo key and a log message
+func resolveNotificationAction(for actionIdentifier: String) -> (userInfoKey: String?, logMessage: String?) {
+    // Switch on the action identifier to determine which action to perform
+    switch actionIdentifier {
+    // The notification message body was clicked
+    case "com.apple.UNNotificationDefaultActionIdentifier":
+        // Return the messageAction key and its log message
+        return ("messageAction", "message - clicked")
+    // The notification was dismissed without interaction
+    case "com.apple.UNNotificationDismissActionIdentifier":
+        // Return nil for the action key - no action to perform for dismissals
+        return (nil, "message - dismissed")
+    // The first message button was clicked
+    case "messagebutton":
+        // Return the messageButtonAction key and its log message
+        return ("messageButtonAction", "message button - clicked")
+    // The second message button was clicked
+    case "messagebutton2":
+        // Return the messageButton2Action key and its log message
+        return ("messageButton2Action", "message button 2 - clicked")
+    // Unknown action identifier - no action to perform
+    default:
+        // Return nil for both - no known action or log message for this identifier
+        return (nil, nil)
+    }
+}
+
 // Handles when a notification is interacted with
 func handleNotification(forResponse response: UNNotificationResponse) {
     // Retrieve userInfo from the response object
@@ -88,34 +115,17 @@ func handleNotification(forResponse response: UNNotificationResponse) {
         // Progress log
         NSLog("\(#function.components(separatedBy: "(")[0]) - message - interacted: \(userInfo)")
     }
-    // Triggered when the notification message is clicked
-    if response.actionIdentifier == "com.apple.UNNotificationDefaultActionIdentifier" {
-        // If verbose mode is set
-        if userInfo["verboseMode"] != nil {
-            // Progress log
-            NSLog("\(#function.components(separatedBy: "(")[0]) - message - clicked")
-        }
-        // Performs any actions set when the user clicks the message
-        processNotificationActions(userInfoKey: "messageAction", userInfo: userInfo)
-    // If the notification was dismissed
-    } else if response.actionIdentifier == "com.apple.UNNotificationDismissActionIdentifier" {
-        // If verbose mode is set
-        if userInfo["verboseMode"] != nil {
-            // Progress log
-            NSLog("\(#function.components(separatedBy: "(")[0]) - message - message was dismissed")
-        }
-    // If the messageButton was clicked
-    } else {
-        // If verbose mode is set
-        if userInfo["verboseMode"] != nil {
-            // Progress log
-            NSLog("""
-                  \(#function.components(separatedBy: "(")[0]) - message button - \
-                  clicked - userInfo \(String(describing: userInfo))
-                  """)
-        }
-        // Performs any actions set when the user clicks the messagebutton
-        processNotificationActions(userInfoKey: "messageButtonAction", userInfo: userInfo)
+    // Resolve the action identifier to a userInfo key and log message
+    let (actionKey, logMessage) = resolveNotificationAction(for: response.actionIdentifier)
+    // If verbose mode is set and there is a log message for this action
+    if userInfo["verboseMode"] != nil, let logMessage = logMessage {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - \(logMessage)")
+    }
+    // If there is a userInfo key for this action, process the associated action
+    if let actionKey = actionKey {
+        // Performs any actions set for this interaction type
+        processNotificationActions(userInfoKey: actionKey, userInfo: userInfo)
     }
     // If verbose mode is set
     if userInfo["verboseMode"] != nil {
@@ -134,21 +144,75 @@ func handleNotification(forResponse response: UNNotificationResponse) {
     exit(0)
 }
 
-// Adds messageButton (always needed) and messageButtonAction (when defined)
+// Builds an action dictionary from the first element of a TaskObject array
+func buildButtonActionDict(taskObjects: [MessageContent.TaskObject],
+                           verboseLabel: String, rootElements: RootElements) -> [AnyHashable: Any] {
+    // Var declaration
+    var actionDict = [AnyHashable: Any]()
+    // Add taskPath to the action dictionary
+    actionDict["taskPath"] = taskObjects[0].taskPath
+    // Add taskArguments to the action dictionary
+    actionDict["taskArguments"] = taskObjects[0].taskArguments
+    // If verbose mode is enabled
+    if rootElements.verboseMode != nil {
+        // Progress log
+        NSLog("""
+              \(#function.components(separatedBy: "(")[0]) - \(verboseLabel) - taskPath: \
+              \(actionDict["taskPath"] ?? ""),
+              taskArguments: \(actionDict["taskArguments"] ?? [])
+              """)
+    }
+    // Return the populated action dictionary
+    return actionDict
+}
+
+// Handles the second message button, updating the category to include both buttons
+func processMessageButton2(notificationAction: UNNotificationAction, messageContent: MessageContent,
+                           rootElements: RootElements) ->
+        ([AnyHashable: Any], UNNotificationCategory) {
+    // Create an action object for the second button
+    let notificationAction2 = UNNotificationAction(identifier: "messagebutton2",
+                                                   title: messageContent.messageButton2 ?? "",
+                                                   options: [])
+    // Build a category that includes both button actions
+    let updatedCategory = UNNotificationCategory(identifier: "alert",
+                                                 actions: [notificationAction, notificationAction2],
+                                                 intentIdentifiers: [],
+                                                 options: .customDismissAction)
+    // If verbose mode is enabled
+    if rootElements.verboseMode != nil {
+        // Progress log
+        NSLog("\(#function.components(separatedBy: "(")[0]) - messagebutton2 processed")
+    }
+    // If a second button action was also passed, build and return the action dictionary
+    if messageContent.messageButton2Action != nil {
+        // Build the second button action dictionary
+        let messageButton2Action = buildButtonActionDict(taskObjects: messageContent.messageButton2Action!,
+                                                        verboseLabel: "messageButton2Action",
+                                                        rootElements: rootElements)
+        // Return the second button action dict and the updated category
+        return (messageButton2Action, updatedCategory)
+    }
+    // Return an empty action dict and the updated category
+    return ([:], updatedCategory)
+}
+
+// Adds messageButton (always needed), messageButtonAction, messageButton2 and messageButton2Action (when defined)
 func processMessageButton(notificationCenter: UNUserNotificationCenter, messageContent: MessageContent,
                           rootElements: RootElements) ->
-        ([AnyHashable: Any], UNNotificationCategory) {
+        ([AnyHashable: Any], [AnyHashable: Any], UNNotificationCategory) {
     // Var declaration
     var tempCategory = UNNotificationCategory(identifier: "alert", actions: [], intentIdentifiers: [],
                                               options: .customDismissAction)
-    var messageButtonAction = [AnyHashable: Any]()
+    // Var declaration for the second message button action
+    var messageButton2Action = [AnyHashable: Any]()
     // If we have a value for messageButton passed
     if messageContent.messageButton != nil {
-        // Create an action object
+        // Create an action object for the first button
         let notificationAction = UNNotificationAction(identifier: "messagebutton",
                                                       title: messageContent.messageButton ?? "",
                                                       options: [])
-        // Amend tempCategory
+        // Amend tempCategory to include the first button action
         tempCategory = UNNotificationCategory(identifier: "alert", actions: [notificationAction],
                                               intentIdentifiers: [],
                                               options: .customDismissAction)
@@ -157,26 +221,23 @@ func processMessageButton(notificationCenter: UNUserNotificationCenter, messageC
             // Progress log
             NSLog("\(#function.components(separatedBy: "(")[0]) - messagebutton processed")
         }
-        // If we have a values for messageButton and messageButtonAction passed
-        if messageContent.messageButtonAction != nil {
-            // Add taskPath from messagAction to messageButtonAction
-            messageButtonAction["taskPath"] = messageContent.messageButtonAction?[0].taskPath
-            // Add taskArguments from messageButtonAction
-            messageButtonAction["taskArguments"] =
-            messageContent.messageButtonAction?[0].taskArguments
-            // If verbose mode is enabled
-            if rootElements.verboseMode != nil {
-                // Progress log
-                NSLog("""
-                      \(#function.components(separatedBy: "(")[0]) - messageButtonAction - taskPath: \
-                      \(messageButtonAction["taskPath"] ?? ""),
-                      taskArguments: \(messageButtonAction["taskArguments"] ?? [])
-                      """)
-            }
-            // Return tempCategory and tempUserInfo
-            return (messageButtonAction, tempCategory)
+        // If a second message button label was also passed
+        if messageContent.messageButton2 != nil {
+            // Process the second button, updating the category to include both buttons
+            (messageButton2Action, tempCategory) = processMessageButton2(notificationAction: notificationAction,
+                                                                         messageContent: messageContent,
+                                                                         rootElements: rootElements)
         }
-        // If we don't have a value for messageButton
+        // If we have values for messageButton and messageButtonAction passed
+        if messageContent.messageButtonAction != nil {
+            // Build the first button action dictionary
+            let messageButtonAction = buildButtonActionDict(taskObjects: messageContent.messageButtonAction!,
+                                                            verboseLabel: "messageButtonAction",
+                                                            rootElements: rootElements)
+            // Return messageButtonAction, messageButton2Action and tempCategory
+            return (messageButtonAction, messageButton2Action, tempCategory)
+        }
+    // If we don't have a value for messageButton
     } else {
         // If verbose mode is enabled
         if rootElements.verboseMode != nil {
@@ -184,8 +245,8 @@ func processMessageButton(notificationCenter: UNUserNotificationCenter, messageC
             NSLog("\(#function.components(separatedBy: "(")[0]) - no messagebutton defined")
         }
     }
-    // Return empty userInfo for messageButtonAction and tempCategory
-    return ([:], tempCategory)
+    // Return empty dicts for messageButtonAction and messageButton2Action, along with tempCategory
+    return ([:], [:], tempCategory)
 }
 
 // Post the notification

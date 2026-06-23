@@ -28,6 +28,10 @@ struct MessageContent: Codable {
     var messageButton: String?
     // Optional - action to perform when the message button is clicked
     var messageButtonAction: [TaskObject]?
+    // Optional - second message button label (requires messageButton to also be set)
+    var messageButton2: String?
+    // Optional - action to perform when the second message button is clicked
+    var messageButton2Action: [TaskObject]?
     // Optional - the sound played when the notification has been delivered
     var messageSound: String?
     // Optional - the notifications subtitle
@@ -43,11 +47,16 @@ struct MessageContent: Codable {
     }
     // Initialize MessageContent
     init(messageAction: [TaskObject]? = nil, messageBody: String? = nil, messageButton: String? = nil,
+         messageButton2: String? = nil, messageButton2Action: [TaskObject]? = nil,
          messageButtonAction: [TaskObject]? = nil, messageSound: String? = nil, messageSubtitle: String? = nil,
          messageTitle: String? = nil) {
         self.messageAction = messageAction
         self.messageBody = messageBody
         self.messageButton = messageButton
+        // Assign the second message button label
+        self.messageButton2 = messageButton2
+        // Assign the second message button action
+        self.messageButton2Action = messageButton2Action
         self.messageButtonAction = messageButtonAction
         self.messageSound = messageSound
         self.messageSubtitle = messageSubtitle
@@ -61,16 +70,12 @@ struct RootElements: Codable {
     var messageContent: String?
     // Optional - removes a specific notification or all notifications delivered
     var removeOption: String?
-    // Optional - sets the notification as time sensitive
-    var timeSensitive: String?
     // Optional - enables verbose logging
     var verboseMode: String?
     // Initialize MessageContent
-    init(messageContent: String? = nil, removeOption: String? = nil, timeSensitive: String? = nil,
-         verboseMode: String? = nil) {
+    init(messageContent: String? = nil, removeOption: String? = nil, verboseMode: String? = nil) {
         self.messageContent = messageContent
         self.removeOption = removeOption
-        self.timeSensitive = timeSensitive
         self.verboseMode = verboseMode
     }
 }
