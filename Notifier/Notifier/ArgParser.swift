@@ -16,13 +16,13 @@ struct NotificationActionOptions: ParsableArguments {
         discussion: """
                     \t\t Each message action applies to a different element of a notitication, these are detailed below:
 
-                    \t\t • <messageaction>        - Applies to the clicking the notification itself, excluding \
+                    \t\t • --messageaction        - Applies to the clicking the notification itself, excluding \
                     the below elements.
-                    \t\t • <messagebuttonaction>  - Requires <messagebutton> to be passed. Applies to clicks on the \
-                    passed message button: <messagebutton>.
-                    \t\t • <messagebutton2action> - Requires <message2button> to be passed. Applies to clicks on the \
-                    passed message button: <message2button>.
-                    \t\t • <messagedismissaction> - Applies when a message is dismissed.
+                    \t\t • --messagebuttonaction  - Requires <messagebutton> to be passed. Applies to clicks on the \
+                    --messagebutton generated button.
+                    \t\t • --messagebutton2action - Requires <message2button> to be passed. Applies to clicks on the \
+                    --message2button generated button.
+                    \t\t • --messagedismissaction - Applies when a message is dismissed.
 
                     \t\t See below for the arguments that can be passed to any message action:
 
@@ -38,19 +38,19 @@ struct NotificationActionOptions: ParsableArguments {
     var messageaction: String = ""
     // Action when the first message button is clicked
     @Option(help: """
-                  Requires <messagebutton> to be passed. See <messageaction> help for more information.
+                  Requires --messagebutton to be passed. See --messageaction for more information.
 
                   """)
     var messagebuttonaction: String = ""
     // Action when the second message button is clicked
     @Option(help: """
-                  Requires <message2button> to be passed. See <messageaction> help for more information.
+                  Requires --message2button to be passed. See --messageaction for more information.
 
                   """)
     var messagebutton2action: String = ""
     // Action when the notification is dismissed
     @Option(help: """
-                  See <messageaction> help for more information.
+                  See --messageaction for more information.
 
                   """)
     var messagedismissaction: String = ""
@@ -60,6 +60,8 @@ struct NotificationActionOptions: ParsableArguments {
 struct ArgParser: ParsableCommand {
     // Set overview and usage text
     static let configuration = CommandConfiguration(
+        // Set the command name to the full path of the running binary
+        commandName: CommandLine.arguments[0],
         abstract: """
                   Notifier \(String(describing:
                                     Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")!)): \
