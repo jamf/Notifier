@@ -315,11 +315,10 @@ func removePriorNotification(notificationCenter: UNUserNotificationCenter, messa
     }
     // Remove any prior notifications with the same identifier as ncContentbase64
     notificationCenter.removeDeliveredNotifications(withIdentifiers: [passedBase64])
-    // If we're in verbose mode
-    if rootElements.verboseMode != nil {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - remove prior - done")
-    }
+    // Post success...
+    postToNSLogAndStdOut(logLevel: "INFO", logMessage: "removed requested prior delivered banner notification!",
+                         functionName: #function.components(separatedBy: "(")[0],
+                         verboseMode: rootElements.verboseMode ?? "")
     // Sleep, so we don't exit before notification(s) have been removed
     sleep(1)
     // Exit
@@ -336,11 +335,10 @@ func removeAllPriorNotifications(notificationCenter: UNUserNotificationCenter, m
     }
     // Remove all delivered notifications
     notificationCenter.removeAllDeliveredNotifications()
-    // If we're in verbose mode
-    if rootElements.verboseMode != nil {
-        // Progress log
-        NSLog("\(#function.components(separatedBy: "(")[0]) - remove all - done")
-    }
+    // Post success...
+    postToNSLogAndStdOut(logLevel: "INFO", logMessage: "removed all prior delivered banner notifications!",
+                         functionName: #function.components(separatedBy: "(")[0],
+                         verboseMode: rootElements.verboseMode ?? "")
     // Sleep, so we don't exit before notification(s) have been removed
     sleep(1)
     // Exit
@@ -373,23 +371,23 @@ func requestAuthorisation(verboseMode: String) async {
                 statusDescription = "not granted (status: \(settings.authorizationStatus.rawValue))"
             }
             // Post authorisation error
-            authorisationNotGranted(statusDescription: statusDescription)
+            authorisationNotGranted(statusDescription: statusDescription, verboseMode: verboseMode)
         }
     // If the authorisation request itself threw an error...
     } catch {
         // If we get here, then the status is: "not approved"
-        authorisationNotGranted(statusDescription: "not approved")
+        authorisationNotGranted(statusDescription: "not approved", verboseMode: verboseMode)
     }
 }
 
 // If we cannot post notifications
-func authorisationNotGranted(statusDescription: String) {
+func authorisationNotGranted(statusDescription: String, verboseMode: String) {
     // Post error to NSLog and std out
     postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
                          Authorisation status: \(statusDescription). Either manually approve notifications for this \
                          application or deploy a Notification PPPCP to this Mac, and try posting the notification again.
                          """, functionName: #function.components(separatedBy: "(")[0],
-                         verboseMode: "verboseMode")
+                         verboseMode: verboseMode)
     // Exit
     exit(1)
 }

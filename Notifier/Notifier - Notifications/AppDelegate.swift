@@ -67,7 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
                 // Cancel the work task if it is still running
                 workTask.cancel()
                 // If we timeout, then the status is: "not approved"
-                authorisationNotGranted(statusDescription: "not approved")
+                authorisationNotGranted(statusDescription: "not approved", verboseMode: rootElements.verboseMode ?? "")
             }
         }
     }
