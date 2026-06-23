@@ -8,6 +8,18 @@
 // Imports
 import UserNotifications
 
+// If we cannot post notifications
+func authorisationNotGranted(statusDescription: String, verboseMode: String) {
+    // Post error to NSLog and std out
+    postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
+                         Authorisation status: \(statusDescription). Either manually approve notifications for this \
+                         application or deploy a Notification PPPCP to this Mac, and try posting the notification again.
+                         """, functionName: #function.components(separatedBy: "(")[0],
+                         verboseMode: verboseMode)
+    // Exit
+    exit(1)
+}
+
 // Returns the notifications body
 func getNotificationBody(messageContent: MessageContent, rootElements: RootElements) -> String {
     // If verbose mode is enabled
@@ -89,8 +101,8 @@ func resolveNotificationAction(for actionIdentifier: String) -> (userInfoKey: St
         return ("messageAction", "message - clicked")
     // The notification was dismissed without interaction
     case "com.apple.UNNotificationDismissActionIdentifier":
-        // Return nil for the action key - no action to perform for dismissals
-        return (nil, "message - dismissed")
+        // Return the messageDismissAction key and its log message
+        return ("messageDismissAction", "message - dismissed")
     // The first message button was clicked
     case "messagebutton":
         // Return the messageButtonAction key and its log message
@@ -439,16 +451,4 @@ func requestAuthorisation(verboseMode: String) async {
         // If we get here, then the status is: "not approved"
         authorisationNotGranted(statusDescription: "not approved", verboseMode: verboseMode)
     }
-}
-
-// If we cannot post notifications
-func authorisationNotGranted(statusDescription: String, verboseMode: String) {
-    // Post error to NSLog and std out
-    postToNSLogAndStdOut(logLevel: "ERROR", logMessage: """
-                         Authorisation status: \(statusDescription). Either manually approve notifications for this \
-                         application or deploy a Notification PPPCP to this Mac, and try posting the notification again.
-                         """, functionName: #function.components(separatedBy: "(")[0],
-                         verboseMode: verboseMode)
-    // Exit
-    exit(1)
 }

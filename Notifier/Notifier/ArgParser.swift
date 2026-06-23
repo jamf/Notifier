@@ -9,6 +9,53 @@
 import ArgumentParser
 import Foundation
 
+// Struct grouping the three notification action options into their own help section
+struct NotificationActionOptions: ParsableArguments {
+    // Action when the message button is clicked - carries the shared format documentation
+    @Option(help: ArgumentHelp(
+        discussion: """
+                    \t\t Each message action applies to a different element of a notitication, these are detailed below:
+
+                    \t\t • <messageaction>        - This applies to the clicking the notification itself, excluding \
+                    the below elements.
+                    \t\t • <messagebuttonaction>  - Requires <messagebutton> to be passed. Applies to clicks on the \
+                    passed message button: <messagebutton>.
+                    \t\t • <messagebutton2action> - Requires <message2button> to be passed. Applies to clicks on the \
+                    passed message button: <message2button>.
+                    \t\t • <messagedismissaction> - Applies when a message is dismissed.
+
+                    \t\t See below for the arguments that can be passed to any message action:
+
+                    \t\t • Passing 'logout' will prompt the user to logout.
+                    \t\t • If passed a single item, this will be launched via: /usr/bin/open
+                    \t\t • More complex commands can be passed, but the 1st argument needs to be a binaries path.
+
+                    \t\t For example: \"/usr/bin/open\" will work, \"open\" will not.
+
+                    """
+    ))
+    // Action when the message is clicked
+    var messageaction: String = ""
+    // Action when the first message button is clicked
+    @Option(help: """
+                  Requires <messagebutton> to be passed. See <messageaction> help for more information.
+
+                  """)
+    var messagebuttonaction: String = ""
+    // Action when the second message button is clicked
+    @Option(help: """
+                  Requires <message2button> to be passed. See <messageaction> help for more information.
+
+                  """)
+    var messagebutton2action: String = ""
+    // Action when the notification is dismissed
+    @Option(help: """
+                  See <messageaction> help for more information.
+
+                  """)
+    var messagedismissaction: String = ""
+}
+
 // Struct for ArgParser
 struct ArgParser: ParsableCommand {
     // Set overview and usage text
@@ -20,6 +67,10 @@ struct ArgParser: ParsableCommand {
                   """,
         usage: """
                --type <alert/banner> --message <some message> <options>
+               --type <alert/banner> --message <some message> --messageaction <action>
+               --type <alert/banner> --message <some message> --messagebutton <label> --messagebuttonaction <action>
+               --type <alert/banner> --message <some message> --messagebutton <label> --messagebutton2 <label> --messagebutton2action <action>
+               --type <alert/banner> --message <some message> --messagedismissaction <action>
                --type <alert/banner> --remove prior <some message> <options>
                --type <alert/banner> --remove all
                --rebrand <path to image>
@@ -38,36 +89,12 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var message: String = ""
-    // Optional action
-    @Option(help: """
-                  The action to be performed under the users account when the message is clicked.
-
-                  • Passing 'logout' will prompt the user to logout.
-                  • If passed a single item, this will be launched via: /usr/bin/open
-                  • More complex commands can be passed, but the 1st argument needs to be a binaries path.
-
-                  For example: \"/usr/bin/open\" will work, \"open\" will not.
-
-                  """)
-    var messageaction: String = ""
     // Optional message button text
     @Option(help: """
                   Adds a button to the message, with the label being what is passed.
 
                   """)
     var messagebutton: String = ""
-    // Optional action when the alert button is clicked
-    @Option(help: """
-                  The action to be performed under the users account when the optional message button is clicked.
-
-                  • Passing 'logout' will prompt the user to logout.
-                  • If passed a single item, this will be launched via: /usr/bin/open
-                  • More complex commands can be passed, but the 1st argument needs to be a binaries path.
-
-                  For example: \"/usr/bin/open\" will work, \"open\" will not.
-
-                  """)
-    var messagebuttonaction: String = ""
     // Optional second message button text (requires --messagebutton to also be passed)
     @Option(help: """
                   Adds a second button to the message, with the label being what is passed. \
@@ -75,18 +102,9 @@ struct ArgParser: ParsableCommand {
 
                   """)
     var messagebutton2: String = ""
-    // Optional action when the second message button is clicked
-    @Option(help: """
-                  The action to be performed under the users account when the optional second message button is clicked.
-
-                  • Passing 'logout' will prompt the user to logout.
-                  • If passed a single item, this will be launched via: /usr/bin/open
-                  • More complex commands can be passed, but the 1st argument needs to be a binaries path.
-
-                  For example: \"/usr/bin/open\" will work, \"open\" will not.
-
-                  """)
-    var messagebutton2action: String = ""
+    // Notification action options grouped into their own help section
+    @OptionGroup(title: "Notification Actions")
+    var actionOptions: NotificationActionOptions
     // Triggers rebrand function
     @Option(help: """
                   Requires root privileges and that the calling process needs either Full Disk Access (10.15+) or at \

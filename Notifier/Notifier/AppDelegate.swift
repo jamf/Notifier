@@ -177,19 +177,21 @@ func applyMessageButtons(parsedResult: ArgParser, to messageContent: inout Messa
         // Set messageButton
         messageContent.messageButton = setNotificationMessageButton(parsedResult: parsedResult)
         // If we've been passed a messagebuttonaction, only set if a messagebutton was passed too
-        if parsedResult.messagebuttonaction != "" {
+        if parsedResult.actionOptions.messagebuttonaction != "" {
             // Set messageButtonAction
-            messageContent.messageButtonAction = parseAction(actionString: parsedResult.messagebuttonaction,
-                                                              parsedResult: parsedResult)
+            messageContent.messageButtonAction = parseAction(actionString:
+                                                                parsedResult.actionOptions.messagebuttonaction,
+                                                                parsedResult: parsedResult)
         }
         // If we've been passed a messagebutton2, only set if a messagebutton was also passed
         if parsedResult.messagebutton2 != "" {
             // Set messageButton2
             messageContent.messageButton2 = setNotificationMessageButton2(parsedResult: parsedResult)
             // If we've been passed a messagebutton2action, only set if a messagebutton2 was passed too
-            if parsedResult.messagebutton2action != "" {
+            if parsedResult.actionOptions.messagebutton2action != "" {
                 // Set messageButton2Action
-                messageContent.messageButton2Action = parseAction(actionString: parsedResult.messagebutton2action,
+                messageContent.messageButton2Action = parseAction(actionString:
+                                                                    parsedResult.actionOptions.messagebutton2action,
                                                                     parsedResult: parsedResult)
             }
         }
@@ -203,10 +205,16 @@ func buildMessageContent(parsedResult: ArgParser) -> MessageContent {
     // Set the message body - required for all non-remove notifications
     messageContent.messageBody = setNotificationBody(parsedResult: parsedResult)
     // If we've been passed a messageaction
-    if parsedResult.messageaction != "" {
+    if parsedResult.actionOptions.messageaction != "" {
         // Set messageAction
-        messageContent.messageAction = parseAction(actionString: parsedResult.messageaction,
+        messageContent.messageAction = parseAction(actionString: parsedResult.actionOptions.messageaction,
                                                     parsedResult: parsedResult)
+    }
+    // If we've been passed a messagedismissaction
+    if parsedResult.actionOptions.messagedismissaction != "" {
+        // Set messageDismissAction
+        messageContent.messageDismissAction = parseAction(actionString: parsedResult.actionOptions.messagedismissaction,
+                                                          parsedResult: parsedResult)
     }
     // If we've been passed a sound
     if parsedResult.sound != "" {
