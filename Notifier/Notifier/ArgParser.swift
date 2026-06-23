@@ -16,7 +16,7 @@ struct NotificationActionOptions: ParsableArguments {
         discussion: """
                     \t\t Each message action applies to a different element of a notitication, these are detailed below:
 
-                    \t\t • <messageaction>        - This applies to the clicking the notification itself, excluding \
+                    \t\t • <messageaction>        - Applies to the clicking the notification itself, excluding \
                     the below elements.
                     \t\t • <messagebuttonaction>  - Requires <messagebutton> to be passed. Applies to clicks on the \
                     passed message button: <messagebutton>.
